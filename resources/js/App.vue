@@ -10,6 +10,7 @@ import Stats from './components/Stats.vue';
 import Reviews from './components/Reviews.vue';
 import Contact from './components/Contact.vue';
 import Footer from './components/Footer.vue';
+import MobileBottomNav from './components/MobileBottomNav.vue';
 import FloatingButtons from './components/FloatingButtons.vue';
 
 onMounted(() => {
@@ -18,7 +19,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="min-h-screen gradient-mesh">
+    <div class="min-h-screen gradient-mesh app-shell">
         <Navbar />
         <main>
             <Hero />
@@ -31,5 +32,6 @@ onMounted(() => {
         </main>
         <Footer />
         <FloatingButtons />
+        <MobileBottomNav />
     </div>
 </template>

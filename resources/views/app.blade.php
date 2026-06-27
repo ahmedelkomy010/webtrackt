@@ -2,7 +2,7 @@
 <html lang="ar-SA" dir="rtl">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    @include('partials.mobile-meta')
 
     @include('partials.favicon')
 
@@ -123,6 +123,6 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="antialiased bg-slate-50 text-slate-800">
-    <div id="app"></div>
+    <div id="app" class="app-shell"></div>
 </body>
 </html>

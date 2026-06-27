@@ -1,5 +1,6 @@
 export default {
     nav: {
+        home: 'ہوم',
         services: 'ہماری خدمات',
         about: 'ہمارے بارے میں',
         whyUs: 'ٹریکٹ کیوں',

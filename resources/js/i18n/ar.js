@@ -1,5 +1,6 @@
 export default {
     nav: {
+        home: 'الرئيسية',
         services: 'خدماتنا',
         about: 'من نحن',
         whyUs: 'لماذا تراكت',

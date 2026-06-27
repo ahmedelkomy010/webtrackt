@@ -1,5 +1,6 @@
 export default {
     nav: {
+        home: 'Home',
         services: 'Our Services',
         about: 'About Us',
         whyUs: 'Why Trakkt',

@@ -14,7 +14,7 @@
 @section('canonical', $canonical)
 
 @section('content')
-<section class="py-12 lg:py-20 bg-gradient-to-br from-tract-600 to-tract-900 text-white">
+<section class="py-10 sm:py-12 lg:py-20 bg-gradient-to-br from-tract-600 to-tract-900 text-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <nav class="text-sm text-tract-200 mb-8">
             <a href="/" class="hover:text-white">{{ $locale === 'en' ? 'Home' : ($locale === 'ur' ? 'ہوم' : 'الرئيسية') }}</a>
@@ -29,7 +29,7 @@
                 @if ($service->highlight)
                     <span class="inline-block px-3 py-1 rounded-full bg-white/20 text-sm font-semibold mb-4">{{ $locale === 'en' ? 'Featured Service' : ($locale === 'ur' ? 'نمایاں خدمت' : 'خدمة مميزة') }}</span>
                 @endif
-                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">{{ $title }}</h1>
+                <h1 class="text-2xl sm:text-4xl lg:text-5xl font-bold mb-4">{{ $title }}</h1>
                 <p class="text-lg text-tract-100 leading-relaxed">{{ $description }}</p>
             </div>
         </div>
@@ -68,7 +68,7 @@
         </div>
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
             @foreach ($offers as $offer)
-                <article class="relative p-8 rounded-2xl border transition-all hover:shadow-xl {{ ($offer['highlight'] ?? false) ? 'border-tract-400 ring-2 ring-tract-200 bg-gradient-to-b from-tract-50 to-white shadow-lg scale-[1.02]' : 'border-slate-200 bg-slate-50 hover:border-tract-200' }}">
+                <article class="relative p-6 sm:p-8 rounded-2xl border transition-all hover:shadow-xl {{ ($offer['highlight'] ?? false) ? 'border-tract-400 ring-2 ring-tract-200 bg-gradient-to-b from-tract-50 to-white shadow-lg lg:scale-[1.02]' : 'border-slate-200 bg-slate-50 hover:border-tract-200' }}">
                     @if ($offer['highlight'] ?? false)
                         <span class="absolute -top-3 start-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-tract-600 text-white text-xs font-bold">{{ $locale === 'en' ? 'Most Popular' : ($locale === 'ur' ? 'سب سے مقبول' : 'الأكثر طلباً') }}</span>
                     @endif

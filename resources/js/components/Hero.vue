@@ -15,7 +15,7 @@ const heroDescription = computed(() => {
 </script>
 
 <template>
-    <section class="relative pt-28 pb-20 lg:pt-36 lg:pb-32 overflow-hidden">
+    <section class="relative pt-24 pb-16 sm:pt-28 sm:pb-20 lg:pt-36 lg:pb-32 overflow-hidden">
         <div class="absolute inset-0 pointer-events-none">
             <div class="absolute top-20 start-1/4 w-72 h-72 bg-tract-400/20 rounded-full blur-3xl animate-float" />
             <div class="absolute bottom-10 end-1/4 w-96 h-96 bg-gold-500/10 rounded-full blur-3xl animate-float" style="animation-delay: -3s" />
@@ -25,12 +25,28 @@ const heroDescription = computed(() => {
             <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                 <div class="fade-in-up text-center lg:text-start">
                     <!-- Specialty badge -->
-                    <div class="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-gradient-to-r from-tract-600 to-tract-700 text-white text-sm font-semibold mb-6 shadow-lg shadow-tract-600/25">
+                    <div class="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-gradient-to-r from-tract-600 to-tract-700 text-white text-sm font-semibold mb-4 shadow-lg shadow-tract-600/25">
                         <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
                         {{ t('hero.specialty') }}
                     </div>
 
-                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 leading-tight mb-6">
+                    <!-- Selected country with flag -->
+                    <div
+                        class="inline-flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-white border border-slate-200 shadow-sm mb-6 transition-all duration-300"
+                        :key="country.code"
+                    >
+                        <span
+                            class="text-3xl leading-none select-none"
+                            role="img"
+                            :aria-label="countryName"
+                        >{{ country.flag }}</span>
+                        <div class="text-start">
+                            <p class="text-xs text-slate-500">{{ t('nav.country') }}</p>
+                            <p class="text-sm font-semibold text-slate-800">{{ countryName }}</p>
+                        </div>
+                    </div>
+
+                    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-bold text-slate-900 leading-tight mb-6">
                         {{ t('hero.headline') }}
                         <span class="text-gradient block sm:inline">{{ t('hero.headlineHighlight') }}</span>
                     </h1>
@@ -46,6 +62,7 @@ const heroDescription = computed(() => {
                         </p>
                         <p class="text-sm text-tract-700">{{ config.taglineAr }}</p>
                         <p class="mt-3 text-xs text-slate-500 flex items-center gap-2 justify-center lg:justify-start">
+                            <span class="text-lg leading-none">{{ country.flag }}</span>
                             <span>{{ countryName }}</span>
                             <span class="text-slate-300">|</span>
                             <span>{{ country.currency.code }} ({{ country.currency.symbol }})</span>
@@ -83,10 +100,17 @@ const heroDescription = computed(() => {
                     </div>
                 </div>
 
-                <div class="relative hidden sm:block">
+                <div class="relative mt-8 lg:mt-0">
                     <div class="relative mx-auto max-w-md lg:max-w-none">
                         <div class="absolute inset-0 bg-gradient-to-br from-tract-500/20 to-gold-500/20 rounded-3xl blur-2xl transform rotate-3" />
                         <div class="relative bg-white/80 backdrop-blur rounded-3xl shadow-2xl border border-white/50 p-8 space-y-5">
+                            <div class="flex items-center justify-between gap-3 pb-4 border-b border-slate-100">
+                                <p class="text-sm font-medium text-slate-600">{{ t('nav.country') }}</p>
+                                <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-50 border border-slate-100">
+                                    <span class="text-2xl leading-none">{{ country.flag }}</span>
+                                    <span class="text-sm font-semibold text-slate-800">{{ countryName }}</span>
+                                </div>
+                            </div>
                             <div class="flex items-start gap-4 p-5 rounded-2xl bg-tract-50 border border-tract-200 ring-1 ring-tract-100">
                                 <div class="w-12 h-12 rounded-xl bg-tract-600 flex items-center justify-center shrink-0">
                                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
