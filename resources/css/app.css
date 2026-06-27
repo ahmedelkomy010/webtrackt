@@ -1,0 +1,93 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+@source '../**/*.vue';
+
+@theme {
+    --font-sans: 'Almarai', 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-en: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-ar: 'Almarai', ui-sans-serif, system-ui, sans-serif;
+    --font-ur: 'Noto Nastaliq Urdu', 'Almarai', ui-sans-serif, system-ui, sans-serif;
+    --color-tract-50: #ecfdf5;
+    --color-tract-100: #d1fae5;
+    --color-tract-200: #a7f3d0;
+    --color-tract-300: #6ee7b7;
+    --color-tract-400: #34d399;
+    --color-tract-500: #10b981;
+    --color-tract-600: #059669;
+    --color-tract-700: #047857;
+    --color-tract-800: #065f46;
+    --color-tract-900: #064e3b;
+    --color-tract-950: #022c22;
+    --color-gold-400: #fbbf24;
+    --color-gold-500: #f59e0b;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-sans);
+}
+
+html[lang="en"] body {
+    font-family: var(--font-en);
+}
+
+html[lang="ar-SA"] body,
+html[lang="ar"] body {
+    font-family: var(--font-ar);
+}
+
+html[lang="ur"] body {
+    font-family: var(--font-ur);
+    line-height: 1.9;
+}
+
+.gradient-mesh {
+    background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(16, 185, 129, 0.25), transparent),
+        radial-gradient(ellipse 60% 40% at 100% 50%, rgba(245, 158, 11, 0.08), transparent),
+        radial-gradient(ellipse 50% 30% at 0% 80%, rgba(16, 185, 129, 0.12), transparent);
+}
+
+.glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.text-gradient {
+    background: linear-gradient(135deg, #059669 0%, #10b981 50%, #f59e0b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
