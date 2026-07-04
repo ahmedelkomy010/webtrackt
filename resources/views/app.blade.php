@@ -7,11 +7,8 @@
     @include('partials.favicon')
 
     @php
-        $siteUrl = rtrim(config('tract.website'), '/');
-        $seoTitle = config('tract.seo.title');
-        $seoDesc = config('tract.seo.description');
-        $seoKeywords = config('tract.seo.keywords');
-        $seoKeywordsEn = config('tract.seo.keywords_en');
+        $seo = app(\App\Services\SeoService::class);
+        $siteUrl = $seo->siteUrl();
         $phoneIntl = config('tract.phone_intl');
         $whatsapp = config('tract.whatsapp');
         $email = config('tract.email');
@@ -36,76 +33,40 @@
         $jsonLd = [
             '@context' => 'https://schema.org',
             '@graph' => [
-                [
-                    '@type' => 'Organization',
-                    '@id' => $siteUrl . '/#organization',
-                    'name' => config('tract.name_en'),
-                    'alternateName' => config('tract.name'),
-                    'url' => $siteUrl,
-                    'logo' => $siteUrl . '/images/logo.png',
-                    'email' => $email,
-                    'telephone' => $phoneIntl,
-                    'description' => $seoDesc,
-                    'address' => [
-                        '@type' => 'PostalAddress',
-                        'addressCountry' => 'SA',
-                        'addressRegion' => config('tract.location'),
-                    ],
-                    'sameAs' => [
-                        'https://wa.me/' . $whatsapp,
-                    ],
-                ],
+                $seo->organizationSchema(),
                 [
                     '@type' => 'WebSite',
-                    '@id' => $siteUrl . '/#website',
+                    '@id' => $siteUrl.'/#website',
                     'url' => $siteUrl,
-                    'name' => config('tract.name') . ' — ' . config('tract.name_en'),
-                    'description' => $seoDesc,
-                    'publisher' => ['@id' => $siteUrl . '/#organization'],
+                    'name' => config('tract.name').' — '.config('tract.name_en'),
+                    'description' => $seo->description('ar'),
+                    'publisher' => ['@id' => $siteUrl.'/#organization'],
                     'inLanguage' => ['ar-SA', 'en', 'ur'],
                 ],
                 [
                     '@type' => 'ProfessionalService',
-                    '@id' => $siteUrl . '/#service',
+                    '@id' => $siteUrl.'/#service',
                     'name' => config('tract.name'),
                     'url' => $siteUrl,
                     'telephone' => $phoneIntl,
                     'email' => $email,
                     'description' => 'أول نظام مقاولات متخصص في العقد الموحد. ERP، تسويق إلكتروني، مواقع ومتاجر.',
                     'areaServed' => ['SA', 'AE', 'KW', 'BH', 'OM', 'QA', 'EG'],
-                    'serviceType' => [
-                        'ERP Systems',
-                        'Unified Contract Management',
-                        'Turnkey Projects',
-                        'Digital Marketing',
-                        'Web Development',
-                        'E-Commerce',
-                    ],
-                    'provider' => ['@id' => $siteUrl . '/#organization'],
+                    'serviceType' => ['ERP Systems', 'Unified Contract Management', 'Turnkey Projects', 'Digital Marketing', 'Web Development', 'E-Commerce'],
+                    'provider' => ['@id' => $siteUrl.'/#organization'],
                 ],
             ],
         ];
     @endphp
 
-    <title>{{ $seoTitle }}</title>
-    <meta name="description" content="{{ $seoDesc }}">
-    <meta name="keywords" content="{{ $seoKeywords }}, {{ $seoKeywordsEn }}">
-    <meta name="author" content="{{ config('tract.name') }} — {{ config('tract.name_en') }}">
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-    <link rel="canonical" href="{{ $siteUrl }}/">
-
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ $siteUrl }}/">
-    <meta property="og:title" content="{{ $seoTitle }}">
-    <meta property="og:description" content="{{ $seoDesc }}">
-    <meta property="og:site_name" content="{{ config('tract.name') }}">
-    <meta property="og:locale" content="ar_SA">
-    <meta property="og:locale:alternate" content="en_US">
-    <meta property="og:locale:alternate" content="ur_PK">
-
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ $seoTitle }}">
-    <meta name="twitter:description" content="{{ $seoDesc }}">
+    @include('partials.seo-head', [
+        'title' => $seo->title('ar'),
+        'description' => $seo->description('ar'),
+        'keywords' => $seo->keywords('ar').', '.$seo->keywords('en'),
+        'canonical' => $siteUrl.'/',
+        'ogImage' => $seo->ogImageUrl(),
+        'jsonLd' => $jsonLd,
+    ])
 
     <meta name="geo.region" content="SA">
     <meta name="geo.placename" content="{{ config('tract.location') }}">
@@ -113,8 +74,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Noto+Nastaliq+Urdu:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <script type="application/ld+json">@json($jsonLd)</script>
 
     <script>
         window.__TRACT__ = @json($tractConfig);

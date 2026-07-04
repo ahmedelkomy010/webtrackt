@@ -5,7 +5,7 @@
     $description = $post->seoDescription($locale);
     $keywords = $post->seoKeywords($locale);
     $canonical = $siteUrl.'/blog/'.$post->slug.($locale !== 'ar' ? '?lang='.$locale : '');
-    $image = $post->featured_image ? $siteUrl.'/storage/'.$post->featured_image : $siteUrl.'/images/logo.png';
+    $image = $post->featured_image ? $siteUrl.'/storage/'.$post->featured_image : app(\App\Services\SeoService::class)->ogImageUrl();
 @endphp
 
 @section('title', $title)
@@ -41,7 +41,7 @@
                 'publisher' => [
                     '@type' => 'Organization',
                     'name' => config('tract.name_en'),
-                    'logo' => ['@type' => 'ImageObject', 'url' => $siteUrl.'/images/logo.png'],
+                    'logo' => ['@type' => 'ImageObject', 'url' => app(\App\Services\SeoService::class)->logoUrl(), 'width' => 512, 'height' => 512],
                 ],
                 'mainEntityOfPage' => ['@type' => 'WebPage', '@id' => $canonical],
                 'inLanguage' => $locale === 'ar' ? 'ar-SA' : ($locale === 'ur' ? 'ur' : 'en'),

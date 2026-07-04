@@ -19,5 +19,6 @@ return [
         'description' => 'تراكت trakkt.com — أول نظام مقاولات متخصص في العقد الموحد ومشاريع تسليم مفتاح. أنظمة ERP، تسويق إلكتروني، مواقع ومتاجر في السعودية والخليج. اتصل 0502943846',
         'keywords' => 'تراكت, trakkt, نظام مقاولات, العقد الموحد, ERP, أنظمة ERP, تسليم مفتاح, تسويق إلكتروني, مواقع إلكترونية, متاجر إلكترونية, برمجة, السعودية, الرياض, مقاولات, إدارة مشاريع, ZATCA, فوترة إلكترونية',
         'keywords_en' => 'Trakkt, trakkt, contracting system, unified contract, ERP systems, turnkey projects, digital marketing, e-commerce, Saudi Arabia, web development',
+        'google_site_verification' => env('GOOGLE_SITE_VERIFICATION', 'AM3j7zqCC9nuCbibeHZAYkElYFJesXX0zw7Hmtqt9cc'),
     ],
 ];

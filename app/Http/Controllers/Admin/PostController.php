@@ -20,7 +20,9 @@ class PostController extends Controller
 
     public function create(): View
     {
-        return view('admin.posts.form', ['post' => new Post()]);
+        $minWords = app(\App\Services\SeoService::class)->minArticleWords();
+
+        return view('admin.posts.form', ['post' => new Post(), 'minWords' => $minWords]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -35,7 +37,9 @@ class PostController extends Controller
 
     public function edit(Post $post): View
     {
-        return view('admin.posts.form', compact('post'));
+        $minWords = app(\App\Services\SeoService::class)->minArticleWords();
+
+        return view('admin.posts.form', compact('post', 'minWords'));
     }
 
     public function update(Request $request, Post $post): RedirectResponse
@@ -63,6 +67,19 @@ class PostController extends Controller
         $post->delete();
 
         return redirect()->route('admin.posts.index')->with('success', 'تم حذف المقال.');
+    }
+
+    public function uploadImage(Request $request)
+    {
+        $request->validate([
+            'image' => ['required', 'image', 'max:4096'],
+        ]);
+
+        $path = $request->file('image')->store('blog/content', 'public');
+
+        return response()->json([
+            'url' => asset('storage/'.$path),
+        ]);
     }
 
     protected function validated(Request $request, ?Post $post = null): array

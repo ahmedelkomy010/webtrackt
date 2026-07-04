@@ -6,7 +6,9 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\NavLinkController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\ReviewController;
+use App\Http\Controllers\Admin\SeoController;
 use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\StatController;
 use App\Http\Controllers\Admin\WhyUsController;
 use App\Http\Controllers\BlogController;
@@ -44,6 +46,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('why-us', WhyUsController::class)->except(['show'])->parameters(['why-us' => 'why_u']);
         Route::resource('nav-links', NavLinkController::class)->except(['show'])->parameters(['nav-links' => 'nav_link']);
         Route::resource('posts', PostController::class)->except(['show']);
+        Route::post('posts/upload-image', [PostController::class, 'uploadImage'])->name('posts.upload-image');
+        Route::get('seo', [SeoController::class, 'edit'])->name('seo.edit');
+        Route::put('seo', [SeoController::class, 'update'])->name('seo.update');
+        Route::resource('users', UserController::class)->except(['show']);
+        Route::get('profile', [UserController::class, 'profile'])->name('profile.edit');
+        Route::put('profile', [UserController::class, 'updateProfile'])->name('profile.update');
         Route::resource('reviews', ReviewController::class)->except(['show']);
         Route::patch('reviews/{review}/approve', [ReviewController::class, 'approve'])->name('reviews.approve');
 
