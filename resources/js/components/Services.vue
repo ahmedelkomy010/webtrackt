@@ -71,7 +71,7 @@ const services = computed(() => {
                             {{ feature }}
                         </li>
                     </ul>
-                    <span class="text-tract-600 text-sm font-semibold group-hover:text-tract-700">{{ t('services.viewDetails') }} ←</span>
+                    <span class="text-tract-700 text-sm font-semibold group-hover:text-tract-800">{{ t('services.viewDetails') }} ←</span>
                 </a>
             </div>
         </div>

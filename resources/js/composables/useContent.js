@@ -1,7 +1,8 @@
 import { ref } from 'vue';
 import axios from 'axios';
 
-const content = ref(null);
+/* Use server-injected data if available (SSR preload from HomeController) */
+const content = ref(window.__TRACT_CONTENT__ ?? null);
 const loading = ref(false);
 let fetchPromise = null;
 
@@ -19,6 +20,7 @@ export function locFeatures(features, locale) {
 }
 
 export async function fetchContent() {
+    /* Already loaded from SSR preload — skip API call */
     if (content.value) return content.value;
     if (fetchPromise) return fetchPromise;
 

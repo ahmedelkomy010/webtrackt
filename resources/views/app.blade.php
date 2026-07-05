@@ -77,11 +77,18 @@
 
     <script>
         window.__TRACT__ = @json($tractConfig);
+        window.__TRACT_CONTENT__ = @json($ssrContent);
+        /* Hide SSR shell immediately for JS users to avoid flash */
+        document.documentElement.classList.add('js-ready');
     </script>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="antialiased bg-slate-50 text-slate-800">
+
+    {{-- SSR Shell: Google reads this immediately, hidden for JS users via .js-ready class --}}
+    @include('partials.ssr-shell', ['content' => $ssrContent])
+
     <div id="app" class="app-shell"></div>
 </body>
 </html>

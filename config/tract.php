@@ -10,7 +10,7 @@ return [
     'website' => env('TRACT_WEBSITE', 'https://trakkt.com'),
     'commercial_register' => env('TRACT_COMMERCIAL_REGISTER', ''),
     'tax_number' => env('TRACT_TAX_NUMBER', ''),
-    'email' => env('TRACT_EMAIL', 'info@trakkt.com'),
+    'email' => env('TRACT_EMAIL', 'info@trackkt.com'),
     'phone' => env('TRACT_PHONE', '0502943846'),
     'phone_intl' => env('TRACT_PHONE_INTL', '+966 50 294 3846'),
     'whatsapp' => env('TRACT_WHATSAPP', '966502943846'),

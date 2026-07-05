@@ -6,6 +6,22 @@
 @source '../**/*.js';
 @source '../**/*.vue';
 
+/*
+ * Hide SSR shell for JS users immediately to prevent double-content flash.
+ * The .js-ready class is added synchronously in <head> before any rendering.
+ */
+.js-ready #ssr-shell {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+}
+
 @theme {
     --font-sans: 'Almarai', 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
     --font-en: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;

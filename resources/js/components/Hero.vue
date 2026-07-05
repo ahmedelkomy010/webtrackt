@@ -72,7 +72,7 @@ const heroDescription = computed(() => {
                     <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                         <a
                             href="#contact"
-                            class="inline-flex items-center justify-center px-8 py-4 rounded-2xl bg-tract-600 text-white font-semibold hover:bg-tract-700 shadow-xl shadow-tract-600/30 transition-all hover:-translate-y-1"
+                            class="inline-flex items-center justify-center px-8 py-4 rounded-2xl bg-tract-700 text-white font-semibold hover:bg-tract-800 shadow-xl shadow-tract-700/30 transition-all hover:-translate-y-1"
                         >
                             {{ t('hero.ctaPrimary') }}
                         </a>

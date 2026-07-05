@@ -45,7 +45,7 @@ const serviceList = computed(() => {
             <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
                 <div class="sm:col-span-2 lg:col-span-1">
                     <div class="flex items-center gap-3 mb-4">
-                        <img src="/images/logo.png" :alt="config.name" class="h-10 w-10 object-contain">
+                        <img src="/images/logo.png" :alt="config.name" width="40" height="40" loading="lazy" class="h-10 w-10 object-contain">
                         <div>
                             <span class="block font-bold text-white">{{ config.name }}</span>
                             <span class="block text-xs text-tract-400">{{ config.nameEn }}</span>
@@ -56,7 +56,7 @@ const serviceList = computed(() => {
                 </div>
 
                 <div>
-                    <h4 class="font-semibold text-white mb-4">{{ t('footer.quickLinks') }}</h4>
+                    <h3 class="font-semibold text-white mb-4 text-base">{{ t('footer.quickLinks') }}</h3>
                     <ul class="space-y-2">
                         <li v-for="link in links" :key="link.href">
                             <a :href="link.href" class="text-sm hover:text-tract-400 transition-colors">{{ link.label }}</a>
@@ -65,14 +65,14 @@ const serviceList = computed(() => {
                 </div>
 
                 <div>
-                    <h4 class="font-semibold text-white mb-4">{{ t('footer.ourServices') }}</h4>
+                    <h3 class="font-semibold text-white mb-4 text-base">{{ t('footer.ourServices') }}</h3>
                     <ul class="space-y-2 text-sm">
                         <li v-for="service in serviceList" :key="service">{{ service }}</li>
                     </ul>
                 </div>
 
                 <div>
-                    <h4 class="font-semibold text-white mb-4">{{ t('footer.companyInfo') }}</h4>
+                    <h3 class="font-semibold text-white mb-4 text-base">{{ t('footer.companyInfo') }}</h3>
                     <ul class="space-y-2 text-sm">
                         <li>
                             <a :href="config.website" target="_blank" rel="noopener" class="hover:text-tract-400 transition-colors" dir="ltr">{{ config.website?.replace('https://', '') }}</a>

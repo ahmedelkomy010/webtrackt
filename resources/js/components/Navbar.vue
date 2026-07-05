@@ -94,6 +94,9 @@ onUnmounted(() => {
                     <img
                         src="/images/logo.png"
                         :alt="config.name"
+                        width="48"
+                        height="48"
+                        fetchpriority="high"
                         class="h-9 w-9 sm:h-10 sm:w-10 lg:h-12 lg:w-12 object-contain group-hover:scale-105 transition-transform drop-shadow-md shrink-0"
                     />
                     <div class="min-w-0">
@@ -118,12 +121,15 @@ onUnmounted(() => {
                     <div class="relative" @click.stop>
                         <button
                             type="button"
+                            :aria-label="`${t('nav.country')}: ${countryName}`"
+                            :aria-expanded="countryOpen"
+                            aria-haspopup="listbox"
                             class="flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-100 border border-slate-200/80 transition-colors"
                             @click="countryOpen = !countryOpen; langOpen = false"
                         >
-                            <span class="text-base">{{ currentCountry?.flag }}</span>
+                            <span class="text-base" aria-hidden="true">{{ currentCountry?.flag }}</span>
                             <span class="hidden sm:inline max-w-[80px] truncate">{{ countryName }}</span>
-                            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                            <svg class="w-4 h-4 shrink-0" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
                         </button>
                         <div
                             v-show="countryOpen"
@@ -133,11 +139,14 @@ onUnmounted(() => {
                                 v-for="c in countryList"
                                 :key="c.code"
                                 type="button"
+                                role="option"
+                                :aria-selected="countryCode === c.code"
+                                :aria-label="c.location[locale] || c.location.ar"
                                 class="w-full flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-tract-50 transition-colors"
                                 :class="countryCode === c.code ? 'text-tract-700 font-semibold bg-tract-50/50' : 'text-slate-700'"
                                 @click="selectCountry(c.code)"
                             >
-                                <span class="text-lg">{{ c.flag }}</span>
+                                <span class="text-lg" aria-hidden="true">{{ c.flag }}</span>
                                 <span>{{ c.location[locale] || c.location.ar }}</span>
                                 <span class="ms-auto text-xs text-slate-400">{{ c.currency.code }}</span>
                             </button>
@@ -148,12 +157,15 @@ onUnmounted(() => {
                     <div class="relative" @click.stop>
                         <button
                             type="button"
+                            :aria-label="`${t('nav.language')}: ${currentLang}`"
+                            :aria-expanded="langOpen"
+                            aria-haspopup="listbox"
                             class="flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-100 border border-slate-200/80 transition-colors"
                             @click="langOpen = !langOpen; countryOpen = false"
                         >
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" /></svg>
+                            <svg class="w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" /></svg>
                             <span class="hidden sm:inline">{{ currentLang }}</span>
-                            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                            <svg class="w-4 h-4 shrink-0" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
                         </button>
                         <div
                             v-show="langOpen"
@@ -174,7 +186,7 @@ onUnmounted(() => {
 
                     <a
                         href="#contact"
-                        class="hidden lg:inline-flex items-center px-5 py-2.5 rounded-xl bg-tract-600 text-white text-sm font-semibold hover:bg-tract-700 shadow-lg shadow-tract-600/25 transition-all hover:-translate-y-0.5"
+                        class="hidden lg:inline-flex items-center px-5 py-2.5 rounded-xl bg-tract-700 text-white text-sm font-semibold hover:bg-tract-800 shadow-lg shadow-tract-700/25 transition-all hover:-translate-y-0.5"
                     >
                         {{ t('nav.startProject') }}
                     </a>

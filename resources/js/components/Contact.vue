@@ -129,8 +129,8 @@ const submit = async () => {
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-2">{{ t('contact.service') }}</label>
-                        <select v-model="form.service" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-tract-500 focus:ring-2 focus:ring-tract-500/20 outline-none transition-all bg-white">
+                        <label for="contact-service" class="block text-sm font-medium text-slate-700 mb-2">{{ t('contact.service') }}</label>
+                        <select id="contact-service" v-model="form.service" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-tract-500 focus:ring-2 focus:ring-tract-500/20 outline-none transition-all bg-white" :aria-label="t('contact.service')">
                             <option value="" disabled>{{ t('contact.servicePlaceholder') }}</option>
                             <option v-for="s in serviceOptions" :key="s" :value="s">{{ s }}</option>
                         </select>
