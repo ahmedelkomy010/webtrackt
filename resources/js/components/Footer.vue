@@ -45,7 +45,10 @@ const serviceList = computed(() => {
             <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
                 <div class="sm:col-span-2 lg:col-span-1">
                     <div class="flex items-center gap-3 mb-4">
-                        <img src="/images/logo.png" :alt="config.name" width="40" height="40" loading="lazy" class="h-10 w-10 object-contain">
+                        <picture>
+                            <source srcset="/images/logo.webp" type="image/webp">
+                            <img src="/images/logo.png" :alt="config.name" width="40" height="40" loading="lazy" class="h-10 w-10 object-contain">
+                        </picture>
                         <div>
                             <span class="block font-bold text-white">{{ config.name }}</span>
                             <span class="block text-xs text-tract-400">{{ config.nameEn }}</span>

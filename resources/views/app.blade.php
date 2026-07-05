@@ -71,9 +71,27 @@
     <meta name="geo.region" content="SA">
     <meta name="geo.placename" content="{{ config('tract.location') }}">
 
+    {{-- Preload LCP image (logo) — tells browser to fetch it ASAP --}}
+    <link rel="preload" as="image" href="/images/logo.png" fetchpriority="high">
+
+    {{-- Non-blocking Google Fonts — prevents 750ms render block --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Noto+Nastaliq+Urdu:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preload" as="style"
+          href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+          onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    </noscript>
+    {{-- Urdu font loaded only when needed (heavy — load deferred) --}}
+    <script>
+        if (localStorage.getItem('tract_locale') === 'ur') {
+            var l = document.createElement('link');
+            l.rel = 'stylesheet';
+            l.href = 'https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;500;600;700&display=swap';
+            document.head.appendChild(l);
+        }
+    </script>
 
     <script>
         window.__TRACT__ = @json($tractConfig);
@@ -86,7 +104,22 @@
 </head>
 <body class="antialiased bg-slate-50 text-slate-800">
 
-    {{-- SSR Shell: Google reads this immediately, hidden for JS users via .js-ready class --}}
+    {{--
+        LCP prerender: Logo in initial HTML so browser discovers & loads it immediately.
+        Vue's Navbar replaces this after mount — hidden via inline style instantly.
+    --}}
+    <div id="lcp-logo" style="position:absolute;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none" aria-hidden="true">
+        <picture>
+            <source srcset="/images/logo.webp" type="image/webp">
+            <img src="/images/logo.png"
+                 alt="{{ config('tract.name') }}"
+                 width="48" height="48"
+                 fetchpriority="high"
+                 decoding="async">
+        </picture>
+    </div>
+
+    {{-- SSR Shell: Google reads this immediately, hidden for JS users --}}
     @include('partials.ssr-shell', ['content' => $ssrContent])
 
     <div id="app" class="app-shell"></div>

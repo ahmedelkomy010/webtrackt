@@ -91,14 +91,17 @@ onUnmounted(() => {
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-14 sm:h-16 lg:h-20 gap-2">
                 <a href="#" class="flex items-center gap-2.5 group shrink-0 min-w-0">
-                    <img
-                        src="/images/logo.png"
-                        :alt="config.name"
-                        width="48"
-                        height="48"
-                        fetchpriority="high"
-                        class="h-9 w-9 sm:h-10 sm:w-10 lg:h-12 lg:w-12 object-contain group-hover:scale-105 transition-transform drop-shadow-md shrink-0"
-                    />
+                    <picture>
+                        <source srcset="/images/logo.webp" type="image/webp">
+                        <img
+                            src="/images/logo.png"
+                            :alt="config.name"
+                            width="48"
+                            height="48"
+                            fetchpriority="high"
+                            class="h-9 w-9 sm:h-10 sm:w-10 lg:h-12 lg:w-12 object-contain group-hover:scale-105 transition-transform drop-shadow-md shrink-0"
+                        />
+                    </picture>
                     <div class="min-w-0">
                         <span class="block font-bold text-sm sm:text-lg text-slate-900 truncate">{{ config.name }}</span>
                         <span class="block text-[10px] sm:text-xs text-tract-600 font-medium tracking-wide truncate">{{ config.nameEn }}</span>
