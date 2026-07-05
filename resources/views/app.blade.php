@@ -78,9 +78,9 @@
     <script>
         window.__TRACT__ = @json($tractConfig);
         window.__TRACT_CONTENT__ = @json($ssrContent);
-        /* Hide SSR shell immediately for JS users to avoid flash */
-        document.documentElement.classList.add('js-ready');
     </script>
+    {{-- Inline style hides SSR shell immediately BEFORE body renders — no build needed --}}
+    <style>#ssr-shell{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;pointer-events:none}</style>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
