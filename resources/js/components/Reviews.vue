@@ -128,12 +128,12 @@ const submit = async () => {
 
                         <div class="grid sm:grid-cols-2 gap-5">
                             <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-2">{{ t('reviews.name') }}</label>
-                                <input v-model="form.name" type="text" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-tract-500 focus:ring-2 focus:ring-tract-500/20 outline-none" :placeholder="t('reviews.namePlaceholder')">
+                                <label for="review-name" class="block text-sm font-medium text-slate-700 mb-2">{{ t('reviews.name') }}</label>
+                                <input id="review-name" v-model="form.name" type="text" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-tract-500 focus:ring-2 focus:ring-tract-500/20 outline-none" :placeholder="t('reviews.namePlaceholder')">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-2">{{ t('reviews.company') }}</label>
-                                <input v-model="form.company" type="text" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-tract-500 focus:ring-2 focus:ring-tract-500/20 outline-none" :placeholder="t('reviews.companyPlaceholder')">
+                                <label for="review-company" class="block text-sm font-medium text-slate-700 mb-2">{{ t('reviews.company') }}</label>
+                                <input id="review-company" v-model="form.company" type="text" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-tract-500 focus:ring-2 focus:ring-tract-500/20 outline-none" :placeholder="t('reviews.companyPlaceholder')">
                             </div>
                         </div>
 
@@ -157,14 +157,15 @@ const submit = async () => {
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-2">{{ t('reviews.comment') }}</label>
-                            <textarea v-model="form.comment" required rows="4" maxlength="2000" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-tract-500 focus:ring-2 focus:ring-tract-500/20 outline-none resize-none" :placeholder="t('reviews.commentPlaceholder')" />
+                            <label for="review-comment" class="block text-sm font-medium text-slate-700 mb-2">{{ t('reviews.comment') }}</label>
+                            <textarea id="review-comment" v-model="form.comment" required rows="4" maxlength="2000" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-tract-500 focus:ring-2 focus:ring-tract-500/20 outline-none resize-none" :placeholder="t('reviews.commentPlaceholder')" :aria-describedby="'review-char-count'" />
+                            <p id="review-char-count" class="text-xs text-slate-400 mt-1 text-end">{{ form.comment.length }} / 2000</p>
                         </div>
 
                         <button
                             type="submit"
                             :disabled="loading"
-                            class="w-full py-4 rounded-xl bg-tract-600 text-white font-semibold hover:bg-tract-700 disabled:opacity-60 transition-all"
+                            class="w-full py-4 rounded-xl bg-tract-700 text-white font-semibold hover:bg-tract-800 disabled:opacity-60 transition-all shadow-lg shadow-tract-700/20"
                         >
                             {{ loading ? t('reviews.submitting') : t('reviews.submit') }}
                         </button>

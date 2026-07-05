@@ -113,18 +113,18 @@ const submit = async () => {
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-2">{{ t('contact.name') }}</label>
-                        <input v-model="form.name" type="text" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-tract-500 focus:ring-2 focus:ring-tract-500/20 outline-none transition-all" :placeholder="t('contact.namePlaceholder')">
+                        <label for="contact-name" class="block text-sm font-medium text-slate-700 mb-2">{{ t('contact.name') }}</label>
+                        <input id="contact-name" v-model="form.name" type="text" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-tract-500 focus:ring-2 focus:ring-tract-500/20 outline-none transition-all" :placeholder="t('contact.namePlaceholder')">
                     </div>
 
                     <div class="grid sm:grid-cols-2 gap-5">
                         <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-2">{{ t('contact.emailLabel') }}</label>
-                            <input v-model="form.email" type="email" required dir="ltr" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-tract-500 focus:ring-2 focus:ring-tract-500/20 outline-none transition-all" placeholder="email@example.com">
+                            <label for="contact-email" class="block text-sm font-medium text-slate-700 mb-2">{{ t('contact.emailLabel') }}</label>
+                            <input id="contact-email" v-model="form.email" type="email" required dir="ltr" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-tract-500 focus:ring-2 focus:ring-tract-500/20 outline-none transition-all" placeholder="email@example.com">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-2">{{ t('contact.phoneLabel') }}</label>
-                            <input v-model="form.phone" type="tel" required dir="ltr" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-tract-500 focus:ring-2 focus:ring-tract-500/20 outline-none transition-all" :placeholder="phonePlaceholder">
+                            <label for="contact-phone" class="block text-sm font-medium text-slate-700 mb-2">{{ t('contact.phoneLabel') }}</label>
+                            <input id="contact-phone" v-model="form.phone" type="tel" required dir="ltr" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-tract-500 focus:ring-2 focus:ring-tract-500/20 outline-none transition-all" :placeholder="phonePlaceholder">
                         </div>
                     </div>
 
@@ -137,14 +137,14 @@ const submit = async () => {
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-2">{{ t('contact.message') }}</label>
-                        <textarea v-model="form.message" required rows="4" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-tract-500 focus:ring-2 focus:ring-tract-500/20 outline-none transition-all resize-none" :placeholder="t('contact.messagePlaceholder')" />
+                        <label for="contact-message" class="block text-sm font-medium text-slate-700 mb-2">{{ t('contact.message') }}</label>
+                        <textarea id="contact-message" v-model="form.message" required rows="4" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-tract-500 focus:ring-2 focus:ring-tract-500/20 outline-none transition-all resize-none" :placeholder="t('contact.messagePlaceholder')" />
                     </div>
 
                     <button
                         type="submit"
                         :disabled="loading"
-                        class="w-full py-4 rounded-xl bg-tract-600 text-white font-semibold hover:bg-tract-700 disabled:opacity-60 disabled:cursor-not-allowed shadow-lg shadow-tract-600/25 transition-all hover:-translate-y-0.5"
+                        class="w-full py-4 rounded-xl bg-tract-700 text-white font-semibold hover:bg-tract-800 disabled:opacity-60 disabled:cursor-not-allowed shadow-lg shadow-tract-700/25 transition-all hover:-translate-y-0.5"
                     >
                         {{ loading ? t('contact.submitting') : t('contact.submit') }}
                     </button>
