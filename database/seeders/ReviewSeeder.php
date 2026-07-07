@@ -18,8 +18,8 @@ class ReviewSeeder extends Seeder
                 'is_featured' => true,
                 'comment' => [
                     'ar' => 'تعاملنا مع تراكت في نظام ERP للعقود الموحدة وكانت تجربة ممتازة. فريق محترف، التزام بالمواعيد، ودعم مستمر بعد التسليم.',
-                    'en' => 'We worked with Trakkt on an ERP unified contract system — excellent experience. Professional team, on-time delivery, and ongoing support.',
-                    'ur' => 'Trakkt کے ساتھ ERP نظام پر کام کیا — بہترین تجربہ۔ پیشہ ور ٹیم اور وقت پر فراہمی۔',
+                    'en' => 'We worked with Trackkt on an ERP unified contract system — excellent experience. Professional team, on-time delivery, and ongoing support.',
+                    'ur' => 'Trackkt کے ساتھ ERP نظام پر کام کیا — بہترین تجربہ۔ پیشہ ور ٹیم اور وقت پر فراہمی۔',
                 ],
             ],
             [
@@ -30,8 +30,8 @@ class ReviewSeeder extends Seeder
                 'is_featured' => false,
                 'comment' => [
                     'ar' => 'متجرنا الإلكتروني أصبح أسرع وأجمل بفضل تراكت. المبيعات زادت 40% خلال 3 أشهر من الإطلاق.',
-                    'en' => 'Our e-commerce store became faster and better thanks to Trakkt. Sales increased 40% within 3 months of launch.',
-                    'ur' => 'Trakkt کی وجہ سے ہمارا اسٹور تیز اور بہتر ہوا۔ 3 ماہ میں فروخت 40% بڑھی۔',
+                    'en' => 'Our e-commerce store became faster and better thanks to Trackkt. Sales increased 40% within 3 months of launch.',
+                    'ur' => 'Trackkt کی وجہ سے ہمارا اسٹور تیز اور بہتر ہوا۔ 3 ماہ میں فروخت 40% بڑھی۔',
                 ],
             ],
             [

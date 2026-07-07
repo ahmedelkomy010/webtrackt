@@ -5,7 +5,7 @@
     @include('partials.mobile-meta')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @include('partials.favicon')
-    <title>@yield('title', 'لوحة التحكم') — Trakkt Admin</title>
+    <title>@yield('title', 'لوحة التحكم') — Trackkt Admin</title>
     @vite(['resources/css/app.css'])
 </head>
 <body class="antialiased bg-slate-100 text-slate-800 min-h-screen">
@@ -28,10 +28,10 @@
         <aside class="w-64 bg-slate-900 text-white shrink-0 hidden lg:flex flex-col">
             <div class="p-6 border-b border-slate-700">
                 <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3">
-                    <img src="/images/logo.png" alt="Trakkt" class="h-10 w-10 object-contain">
+                    <img src="/images/logo.png" alt="Trackkt" class="h-10 w-10 object-contain">
                     <div>
                         <span class="block font-bold text-sm">لوحة التحكم</span>
-                        <span class="block text-xs text-slate-400">Trakkt Marketing</span>
+                        <span class="block text-xs text-slate-400">Trackkt Marketing</span>
                     </div>
                 </a>
             </div>
@@ -62,7 +62,7 @@
         <div class="flex-1 flex flex-col min-w-0">
             <header class="bg-white border-b border-slate-200 px-4 lg:px-8 py-3 flex items-center justify-between lg:hidden safe-top">
                 <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-2 min-w-0">
-                    <img src="/images/logo.png" alt="Trakkt" class="h-8 w-8 shrink-0">
+                    <img src="/images/logo.png" alt="Trackkt" class="h-8 w-8 shrink-0">
                     <span class="font-bold text-sm truncate">لوحة التحكم</span>
                 </a>
                 <button type="button" class="touch-target p-2 rounded-xl hover:bg-slate-100" data-mobile-menu-toggle aria-label="Menu">

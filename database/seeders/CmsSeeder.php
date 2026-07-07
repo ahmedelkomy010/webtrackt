@@ -112,7 +112,7 @@ class CmsSeeder extends Seeder
         $navLinks = [
             ['href' => '#services', 'sort_order' => 1, 'label' => ['ar' => 'خدماتنا', 'en' => 'Services', 'ur' => 'خدمات']],
             ['href' => '#about', 'sort_order' => 2, 'label' => ['ar' => 'من نحن', 'en' => 'About', 'ur' => 'ہمارے بارے میں']],
-            ['href' => '#why-us', 'sort_order' => 3, 'label' => ['ar' => 'لماذا تراكت', 'en' => 'Why Trakkt', 'ur' => 'کیوں Trakkt']],
+            ['href' => '#why-us', 'sort_order' => 3, 'label' => ['ar' => 'لماذا تراكت', 'en' => 'Why Trackkt', 'ur' => 'کیوں Trackkt']],
             ['href' => '#reviews', 'sort_order' => 4, 'label' => ['ar' => 'آراء العملاء', 'en' => 'Reviews', 'ur' => 'کلائنٹس کی رائے']],
             ['href' => '/blog', 'sort_order' => 5, 'label' => ['ar' => 'المدونة', 'en' => 'Blog', 'ur' => 'بلاگ']],
             ['href' => '#contact', 'sort_order' => 6, 'label' => ['ar' => 'تواصل معنا', 'en' => 'Contact', 'ur' => 'رابطہ']],

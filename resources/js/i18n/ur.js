@@ -102,7 +102,7 @@ export default {
         companyPlaceholder: 'کمپنی کا نام',
         rating: 'درجہ بندی',
         comment: 'آپ کی رائے',
-        commentPlaceholder: 'Trakkt کے ساتھ اپنا تجربہ لکھیں...',
+        commentPlaceholder: 'Trackkt کے ساتھ اپنا تجربہ لکھیں...',
         submit: 'جائزہ بھیجیں',
         submitting: 'بھیجا جا رہا ہے...',
         success: 'شکریہ! آپ کا جائزہ بھیج دیا گیا اور منظوری کے بعد ظاہر ہوگا۔',

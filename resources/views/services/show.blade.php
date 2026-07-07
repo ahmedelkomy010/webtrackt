@@ -111,7 +111,7 @@
 <section class="py-16 bg-gradient-to-r from-tract-600 to-tract-800">
     <div class="max-w-3xl mx-auto px-4 text-center text-white">
         <h2 class="text-2xl sm:text-3xl font-bold mb-4">{{ $locale === 'en' ? 'Ready to get started?' : ($locale === 'ur' ? 'شروع کرنے کے لیے تیار ہیں؟' : 'جاهز لبدء مشروعك؟') }}</h2>
-        <p class="text-tract-100 mb-6">{{ $locale === 'en' ? 'Contact Trakkt for a free consultation about '.$title : ($locale === 'ur' ? 'مفت مشاورت کے لیے Trakkt سے رابطہ کریں' : 'تواصل مع Trakkt للحصول على استشارة مجانية حول '.$title) }}</p>
+        <p class="text-tract-100 mb-6">{{ $locale === 'en' ? 'Contact Trackkt for a free consultation about '.$title : ($locale === 'ur' ? 'مفت مشاورت کے لیے Trackkt سے رابطہ کریں' : 'تواصل مع Trackkt للحصول على استشارة مجانية حول '.$title) }}</p>
         <a href="/#contact" class="inline-flex px-8 py-3 rounded-xl bg-white text-tract-700 font-semibold hover:bg-tract-50 transition-colors">{{ $locale === 'en' ? 'Contact us now' : ($locale === 'ur' ? 'ابھی رابطہ کریں' : 'تواصل معنا الآن') }}</a>
     </div>
 </section>

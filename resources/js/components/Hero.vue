@@ -35,11 +35,13 @@ const heroDescription = computed(() => {
                         class="inline-flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-white border border-slate-200 shadow-sm mb-6 transition-all duration-300"
                         :key="country.code"
                     >
-                        <span
-                            class="text-3xl leading-none select-none"
-                            role="img"
-                            :aria-label="countryName"
-                        >{{ country.flag }}</span>
+                        <img
+                            :src="country.flagImg"
+                            :alt="countryName"
+                            width="32" height="24"
+                            class="w-8 h-6 object-cover rounded shadow-sm shrink-0"
+                            loading="lazy"
+                        >
                         <div class="text-start">
                             <p class="text-xs text-slate-500">{{ t('nav.country') }}</p>
                             <p class="text-sm font-semibold text-slate-800">{{ countryName }}</p>
@@ -62,7 +64,7 @@ const heroDescription = computed(() => {
                         </p>
                         <p class="text-sm text-tract-700">{{ config.taglineAr }}</p>
                         <p class="mt-3 text-xs text-slate-500 flex items-center gap-2 justify-center lg:justify-start">
-                            <span class="text-lg leading-none">{{ country.flag }}</span>
+                            <img :src="country.flagImg" :alt="countryName" width="20" height="15" class="w-5 h-4 object-cover rounded shrink-0" loading="lazy">
                             <span>{{ countryName }}</span>
                             <span class="text-slate-300">|</span>
                             <span>{{ country.currency.code }} ({{ country.currency.symbol }})</span>
@@ -107,7 +109,7 @@ const heroDescription = computed(() => {
                             <div class="flex items-center justify-between gap-3 pb-4 border-b border-slate-100">
                                 <p class="text-sm font-medium text-slate-600">{{ t('nav.country') }}</p>
                                 <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-50 border border-slate-100">
-                                    <span class="text-2xl leading-none">{{ country.flag }}</span>
+                                    <img :src="country.flagImg" :alt="countryName" width="24" height="18" class="w-6 h-4 object-cover rounded shrink-0" loading="lazy">
                                     <span class="text-sm font-semibold text-slate-800">{{ countryName }}</span>
                                 </div>
                             </div>

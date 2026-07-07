@@ -2,13 +2,17 @@ export const baseContact = {
     phone: '0502943846',
     phoneIntl: '+966 50 294 3846',
     whatsapp: '966502943846',
-    email: 'info@trakkt.com',
+    email: 'info@trackkt.com',
 };
+
+/* Returns a flag image URL from flagcdn.com for a given 2-letter country code */
+export const flagImg = (code) => `https://flagcdn.com/w40/${code.toLowerCase()}.png`;
 
 export const countries = {
     sa: {
         code: 'sa',
         flag: '🇸🇦',
+        flagImg: flagImg('sa'),
         currency: { code: 'SAR', symbol: 'ر.س' },
         location: { ar: 'المملكة العربية السعودية', en: 'Saudi Arabia', ur: 'سعودی عرب' },
         phone: baseContact.phoneIntl,
@@ -19,6 +23,7 @@ export const countries = {
     ae: {
         code: 'ae',
         flag: '🇦🇪',
+        flagImg: flagImg('ae'),
         currency: { code: 'AED', symbol: 'د.إ' },
         location: { ar: 'الإمارات العربية المتحدة', en: 'United Arab Emirates', ur: 'متحدہ عرب امارات' },
         phone: baseContact.phoneIntl,
@@ -29,6 +34,7 @@ export const countries = {
     kw: {
         code: 'kw',
         flag: '🇰🇼',
+        flagImg: flagImg('kw'),
         currency: { code: 'KWD', symbol: 'د.ك' },
         location: { ar: 'دولة الكويت', en: 'Kuwait', ur: 'کویت' },
         phone: baseContact.phoneIntl,
@@ -39,6 +45,7 @@ export const countries = {
     bh: {
         code: 'bh',
         flag: '🇧🇭',
+        flagImg: flagImg('bh'),
         currency: { code: 'BHD', symbol: 'د.ب' },
         location: { ar: 'مملكة البحرين', en: 'Bahrain', ur: 'بحرین' },
         phone: baseContact.phoneIntl,
@@ -49,6 +56,7 @@ export const countries = {
     om: {
         code: 'om',
         flag: '🇴🇲',
+        flagImg: flagImg('om'),
         currency: { code: 'OMR', symbol: 'ر.ع' },
         location: { ar: 'سلطنة عُمان', en: 'Oman', ur: 'عمان' },
         phone: baseContact.phoneIntl,
@@ -59,6 +67,7 @@ export const countries = {
     qa: {
         code: 'qa',
         flag: '🇶🇦',
+        flagImg: flagImg('qa'),
         currency: { code: 'QAR', symbol: 'ر.ق' },
         location: { ar: 'دولة قطر', en: 'Qatar', ur: 'قطر' },
         phone: baseContact.phoneIntl,
@@ -69,6 +78,7 @@ export const countries = {
     eg: {
         code: 'eg',
         flag: '🇪🇬',
+        flagImg: flagImg('eg'),
         currency: { code: 'EGP', symbol: 'ج.م' },
         location: { ar: 'جمهورية مصر العربية', en: 'Egypt', ur: 'مصر' },
         phone: baseContact.phoneIntl,

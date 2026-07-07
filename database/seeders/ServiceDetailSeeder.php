@@ -13,9 +13,9 @@ class ServiceDetailSeeder extends Seeder
             'erp-systems' => [
                 'slug' => 'erp-systems',
                 'body' => [
-                    'ar' => '<p>نقدم في <strong>Trakkt</strong> حلول ERP متخصصة في <strong>نظام العقود الموحدة</strong> للمقاولات والشركات في السعودية والخليج. من إدارة المشاريع والميزانيات إلى الفوترة الإلكترونية ZATCA — نظام واحد يدير كل عملياتك.</p><p>فريقنا يصمم وينفّذ ويدعم أنظمة ERP مخصصة لقطاع المقاولات مع مشاريع تسليم مفتاح كاملة.</p>',
-                    'en' => '<p>At <strong>Trakkt</strong>, we deliver specialized ERP solutions for the <strong>unified contract system</strong> in Saudi Arabia and GCC. From project management to ZATCA e-invoicing — one system for all operations.</p>',
-                    'ur' => '<p><strong>Trakkt</strong> متحد معاہدہ نظام کے لیے خصوصی ERP حل فراہم کرتا ہے۔</p>',
+                    'ar' => '<p>نقدم في <strong>Trackkt</strong> حلول ERP متخصصة في <strong>نظام العقود الموحدة</strong> للمقاولات والشركات في السعودية والخليج. من إدارة المشاريع والميزانيات إلى الفوترة الإلكترونية ZATCA — نظام واحد يدير كل عملياتك.</p><p>فريقنا يصمم وينفّذ ويدعم أنظمة ERP مخصصة لقطاع المقاولات مع مشاريع تسليم مفتاح كاملة.</p>',
+                    'en' => '<p>At <strong>Trackkt</strong>, we deliver specialized ERP solutions for the <strong>unified contract system</strong> in Saudi Arabia and GCC. From project management to ZATCA e-invoicing — one system for all operations.</p>',
+                    'ur' => '<p><strong>Trackkt</strong> متحد معاہدہ نظام کے لیے خصوصی ERP حل فراہم کرتا ہے۔</p>',
                 ],
                 'offers' => [
                     [

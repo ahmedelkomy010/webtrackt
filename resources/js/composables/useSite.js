@@ -24,7 +24,7 @@ watch(countryCode, (value) => {
 export function useSite() {
     const config = window.__TRACT__ ?? {
         name: 'تراكت',
-        nameEn: 'Trakkt',
+        nameEn: 'Trackkt',
         tagline: 'Track Every Step. Control Every Result.',
         taglineAr: 'تابع كل خطوة. تحكم في كل نتيجة.',
         description: '',

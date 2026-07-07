@@ -2,7 +2,7 @@
 
 @php
     $pageTitle = $locale === 'en' ? 'Our Services' : ($locale === 'ur' ? 'ہماری خدمات' : 'خدماتنا');
-    $pageDesc = $locale === 'en' ? 'Integrated digital solutions — ERP, websites, e-commerce, and digital marketing by Trakkt.' : ($locale === 'ur' ? 'مکمل ڈیجیٹل حل — ERP، ویب سائٹس، ای کامرس اور ڈیجیٹل مارکیٹنگ۔' : 'حلول رقمية متكاملة — ERP، مواقع، متاجر إلكترونية، وتسويق رقمي من Trakkt.');
+    $pageDesc = $locale === 'en' ? 'Integrated digital solutions — ERP, websites, e-commerce, and digital marketing by Trackkt.' : ($locale === 'ur' ? 'مکمل ڈیجیٹل حل — ERP، ویب سائٹس، ای کامرس اور ڈیجیٹل مارکیٹنگ۔' : 'حلول رقمية متكاملة — ERP، مواقع، متاجر إلكترونية، وتسويق رقمي من Trackkt.');
 @endphp
 
 @section('title', $pageTitle)

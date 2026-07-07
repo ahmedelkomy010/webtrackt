@@ -9,12 +9,12 @@
     $pageDesc = match ($locale) {
         'en' => 'Expert articles on ERP systems, unified contracts, digital marketing, and web development in Saudi Arabia and GCC.',
         'ur' => 'ERP، ڈیجیٹل مارکیٹنگ اور ویب ڈvelopment پر ماہر مضامین۔',
-        default => 'مقالات متخصصة في أنظمة ERP، العقد الموحد، التسويق الإلكتروني، وتطوير المواقع في السعودية والخليج — تراكت trakkt.com',
+        default => 'مقالات متخصصة في أنظمة ERP، العقد الموحد، التسويق الإلكتروني، وتطوير المواقع في السعودية والخليج — تراكت Trackkt.com',
     };
     $pageKeywords = match ($locale) {
-        'en' => 'Trakkt blog, ERP Saudi Arabia, digital marketing, SEO articles, contracting system',
-        'ur' => 'Trakkt بلاگ, ERP, ڈیجیٹل مارکیٹنگ, SEO',
-        default => 'مدونة تراكت, مقالات SEO, تسويق إلكتروني, ERP السعودية, نظام مقاولات, العقد الموحد, trakkt, تحسين محركات البحث',
+        'en' => 'Trackkt blog, ERP Saudi Arabia, digital marketing, SEO articles, contracting system',
+        'ur' => 'Trackkt بلاگ, ERP, ڈیجیٹل مارکیٹنگ, SEO',
+        default => 'مدونة تراكت, مقالات SEO, تسويق إلكتروني, ERP السعودية, نظام مقاولات, العقد الموحد, Trackkt, تحسين محركات البحث',
     };
 @endphp
 

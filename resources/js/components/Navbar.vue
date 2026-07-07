@@ -130,7 +130,7 @@ onUnmounted(() => {
                             class="flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-100 border border-slate-200/80 transition-colors"
                             @click="countryOpen = !countryOpen; langOpen = false"
                         >
-                            <span class="text-base" aria-hidden="true">{{ currentCountry?.flag }}</span>
+                            <img :src="currentCountry?.flagImg" :alt="countryName" width="20" height="15" class="w-5 h-4 object-cover rounded shrink-0" aria-hidden="true" loading="lazy">
                             <span class="hidden sm:inline max-w-[80px] truncate">{{ countryName }}</span>
                             <svg class="w-4 h-4 shrink-0" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
                         </button>
@@ -149,7 +149,7 @@ onUnmounted(() => {
                                 :class="countryCode === c.code ? 'text-tract-700 font-semibold bg-tract-50/50' : 'text-slate-700'"
                                 @click="selectCountry(c.code)"
                             >
-                                <span class="text-lg" aria-hidden="true">{{ c.flag }}</span>
+                                <img :src="c.flagImg" :alt="c.location[locale] || c.location.ar" width="20" height="15" class="w-5 h-4 object-cover rounded shrink-0" loading="lazy" aria-hidden="true">
                                 <span>{{ c.location[locale] || c.location.ar }}</span>
                                 <span class="ms-auto text-xs text-slate-400">{{ c.currency.code }}</span>
                             </button>
@@ -243,7 +243,7 @@ onUnmounted(() => {
                             :class="countryCode === c.code ? 'border-tract-300 bg-tract-50 text-tract-700' : 'border-slate-200 text-slate-700'"
                             @click="selectCountry(c.code)"
                         >
-                            <span class="text-xl">{{ c.flag }}</span>
+                            <img :src="c.flagImg" :alt="c.location[locale] || c.location.ar" width="24" height="18" class="w-6 h-4 object-cover rounded shrink-0" loading="lazy" aria-hidden="true">
                             <span class="truncate">{{ c.location[locale] || c.location.ar }}</span>
                         </button>
                     </div>

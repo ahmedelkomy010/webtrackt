@@ -2,12 +2,12 @@
 
 return [
     'name' => 'تراكت',
-    'name_en' => 'Trakkt',
+    'name_en' => 'Trackkt',
     'tagline' => 'Track Every Step. Control Every Result.',
     'tagline_ar' => 'تابع كل خطوة. تحكم في كل نتيجة.',
     'description' => 'تراكت — أول نظام مقاولات متخصص في العقد الموحد. حلول ERP، تسويق إلكتروني، مواقع ومتاجر إلكترونية في السعودية والخليج.',
     'location' => 'المملكة العربية السعودية',
-    'website' => env('TRACT_WEBSITE', 'https://trakkt.com'),
+    'website' => env('TRACT_WEBSITE', 'https://trackkt.com'),
     'commercial_register' => env('TRACT_COMMERCIAL_REGISTER', ''),
     'tax_number' => env('TRACT_TAX_NUMBER', ''),
     'email' => env('TRACT_EMAIL', 'info@trackkt.com'),
@@ -15,10 +15,10 @@ return [
     'phone_intl' => env('TRACT_PHONE_INTL', '+966 50 294 3846'),
     'whatsapp' => env('TRACT_WHATSAPP', '966502943846'),
     'seo' => [
-        'title' => 'تراكت Trakkt | نظام مقاولات العقد الموحد — ERP وتسويق إلكتروني',
-        'description' => 'تراكت trakkt.com — أول نظام مقاولات متخصص في العقد الموحد ومشاريع تسليم مفتاح. أنظمة ERP، تسويق إلكتروني، مواقع ومتاجر في السعودية والخليج. اتصل 0502943846',
-        'keywords' => 'تراكت, trakkt, نظام مقاولات, العقد الموحد, ERP, أنظمة ERP, تسليم مفتاح, تسويق إلكتروني, مواقع إلكترونية, متاجر إلكترونية, برمجة, السعودية, الرياض, مقاولات, إدارة مشاريع, ZATCA, فوترة إلكترونية',
-        'keywords_en' => 'Trakkt, trakkt, contracting system, unified contract, ERP systems, turnkey projects, digital marketing, e-commerce, Saudi Arabia, web development',
+        'title' => 'تراكت Trackkt | نظام مقاولات العقد الموحد — ERP وتسويق إلكتروني',
+        'description' => 'تراكت trackkt.com — أول نظام مقاولات متخصص في العقد الموحد ومشاريع تسليم مفتاح. أنظمة ERP، تسويق إلكتروني، مواقع ومتاجر في السعودية والخليج. اتصل 0502943846',
+        'keywords' => 'تراكت, trackkt, نظام مقاولات, العقد الموحد, ERP, أنظمة ERP, تسليم مفتاح, تسويق إلكتروني, مواقع إلكترونية, متاجر إلكترونية, برمجة, السعودية, الرياض, مقاولات, إدارة مشاريع, ZATCA, فوترة إلكترونية',
+        'keywords_en' => 'Trackkt, trackkt, contracting system, unified contract, ERP systems, turnkey projects, digital marketing, e-commerce, Saudi Arabia, web development',
         'google_site_verification' => env('GOOGLE_SITE_VERIFICATION', 'AM3j7zqCC9nuCbibeHZAYkElYFJesXX0zw7Hmtqt9cc'),
     ],
 ];

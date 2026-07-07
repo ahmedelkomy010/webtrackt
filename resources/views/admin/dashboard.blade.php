@@ -5,7 +5,7 @@
 @section('content')
 <div class="mb-8">
     <h1 class="text-2xl font-bold text-slate-900">مرحباً بك 👋</h1>
-    <p class="text-slate-600 mt-1">إدارة محتوى موقع Trakkt Marketing — أي تعديل هنا يظهر تلقائياً في الموقع</p>
+    <p class="text-slate-600 mt-1">إدارة محتوى موقع Trackkt Marketing — أي تعديل هنا يظهر تلقائياً في الموقع</p>
 </div>
 
 <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
