@@ -2,6 +2,7 @@
 import { computed } from 'vue';
 import { useSite } from '../composables/useSite';
 import { useContent, loc } from '../composables/useContent';
+import { publicAsset } from '../utils/assets';
 
 const { config, country, countryName, locale, t } = useSite();
 const { content } = useContent();
@@ -37,6 +38,9 @@ const serviceList = computed(() => {
         t('services.marketing.title'),
     ];
 });
+
+const logoPng = computed(() => publicAsset('images/logo.png'));
+const logoWebp = computed(() => publicAsset('images/logo.webp'));
 </script>
 
 <template>
@@ -46,8 +50,8 @@ const serviceList = computed(() => {
                 <div class="sm:col-span-2 lg:col-span-1">
                     <div class="flex items-center gap-3 mb-4">
                         <picture>
-                            <source srcset="/images/logo.webp" type="image/webp">
-                            <img src="/images/logo.png" :alt="config.name" width="40" height="40" loading="lazy" class="h-10 w-10 object-contain">
+                            <source :srcset="logoWebp" type="image/webp">
+                            <img :src="logoPng" :alt="config.name" width="40" height="40" loading="lazy" class="h-10 w-10 object-contain">
                         </picture>
                         <div>
                             <span class="block font-bold text-white">{{ config.name }}</span>

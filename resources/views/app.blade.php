@@ -106,7 +106,7 @@
     <meta name="geo.placename" content="{{ config('tract.location') }}">
 
     {{-- Preload LCP image (logo) — tells browser to fetch it ASAP --}}
-    <link rel="preload" as="image" href="/images/logo.png" fetchpriority="high">
+    <link rel="preload" as="image" href="{{ asset('images/logo.png') }}" fetchpriority="high">
 
     {{-- Non-blocking Google Fonts — prevents 750ms render block --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -144,8 +144,8 @@
     --}}
     <div id="lcp-logo" style="position:absolute;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none" aria-hidden="true">
         <picture>
-            <source srcset="/images/logo.webp" type="image/webp">
-            <img src="/images/logo.png"
+            <source srcset="{{ asset('images/logo.webp') }}" type="image/webp">
+            <img src="{{ asset('images/logo.png') }}"
                  alt="{{ config('tract.name') }}"
                  width="48" height="48"
                  fetchpriority="high"

@@ -1,5 +1,6 @@
 import { ref } from 'vue';
 import axios from 'axios';
+import { appBasePath } from '../utils/assets';
 
 /* Use server-injected data if available (SSR preload from HomeController) */
 const content = ref(window.__TRACT_CONTENT__ ?? null);
@@ -25,7 +26,7 @@ export async function fetchContent() {
     if (fetchPromise) return fetchPromise;
 
     loading.value = true;
-    fetchPromise = axios.get('/api/content')
+    fetchPromise = axios.get(`${appBasePath()}/api/content`)
         .then(({ data }) => {
             content.value = data;
             return data;

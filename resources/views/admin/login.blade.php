@@ -10,7 +10,7 @@
 <body class="antialiased bg-slate-900 min-h-screen flex items-center justify-center p-4">
     <div class="w-full max-w-md">
         <div class="text-center mb-8">
-            <img src="/images/logo.png" alt="Trackkt" class="h-16 w-16 mx-auto mb-4 object-contain">
+            <img src="{{ asset('images/logo.png') }}" alt="Trackkt" class="h-16 w-16 mx-auto mb-4 object-contain">
             <h1 class="text-2xl font-bold text-white">لوحة تحكم Trackkt</h1>
             <p class="text-slate-400 mt-2 text-sm">سجّل دخولك لإدارة محتوى الموقع</p>
         </div>

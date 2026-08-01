@@ -1,9 +1,14 @@
+import { appBasePath } from './assets';
+
 export function storageUrl(path) {
     if (!path) {
         return '';
     }
 
-    const base = window.__TRACT__?.storageUrl || '/storage';
+    const configured = window.__TRACT__?.storageUrl;
+    const base = configured
+        ? configured.replace(/\/$/, '')
+        : `${appBasePath()}/storage`.replace(/\/$/, '') || '/storage';
 
-    return `${base.replace(/\/$/, '')}/${String(path).replace(/^\//, '')}`;
+    return `${base}/${String(path).replace(/^\//, '')}`;
 }

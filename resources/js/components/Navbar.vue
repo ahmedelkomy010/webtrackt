@@ -4,6 +4,7 @@ import { useSite } from '../composables/useSite';
 import { useContent, loc } from '../composables/useContent';
 import { countryList } from '../data/countries';
 import { localizedPath } from '../utils/locale';
+import { publicAsset } from '../utils/assets';
 
 const { config, locale, countryCode, countryName, t, setLocale, setCountry } = useSite();
 const { content } = useContent();
@@ -52,6 +53,9 @@ const languages = [
 const currentLang = computed(() => languages.find((l) => l.code === locale.value)?.label || 'العربية');
 
 const currentCountry = computed(() => countryList.find((c) => c.code === countryCode.value));
+
+const logoPng = computed(() => publicAsset('images/logo.png'));
+const logoWebp = computed(() => publicAsset('images/logo.webp'));
 
 const handleScroll = () => {
     isScrolled.value = window.scrollY > 20;
@@ -103,9 +107,9 @@ onUnmounted(() => {
             <div class="flex items-center justify-between h-14 sm:h-16 lg:h-20 gap-2">
                 <a href="#" class="flex items-center gap-2.5 group shrink-0 min-w-0">
                     <picture>
-                        <source srcset="/images/logo.webp" type="image/webp">
+                        <source :srcset="logoWebp" type="image/webp">
                         <img
-                            src="/images/logo.png"
+                            :src="logoPng"
                             :alt="config.name"
                             width="48"
                             height="48"
