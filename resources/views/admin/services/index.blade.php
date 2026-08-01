@@ -18,6 +18,7 @@
         <thead class="bg-slate-50 border-b border-slate-200">
             <tr>
                 <th class="text-start px-6 py-3 font-semibold text-slate-600">#</th>
+                <th class="text-start px-6 py-3 font-semibold text-slate-600">الصورة</th>
                 <th class="text-start px-6 py-3 font-semibold text-slate-600">العنوان</th>
                 <th class="text-start px-6 py-3 font-semibold text-slate-600">الباقات</th>
                 <th class="text-start px-6 py-3 font-semibold text-slate-600">الأيقونة</th>
@@ -29,6 +30,13 @@
             @forelse ($services as $service)
                 <tr class="hover:bg-slate-50">
                     <td class="px-6 py-4 text-slate-500">{{ $service->sort_order }}</td>
+                    <td class="px-6 py-4">
+                        @if ($service->image)
+                            <img src="{{ asset('storage/'.$service->image) }}" alt="" class="w-14 h-14 rounded-lg object-cover border">
+                        @else
+                            <span class="text-xs text-slate-400">—</span>
+                        @endif
+                    </td>
                     <td class="px-6 py-4">
                         <p class="font-medium">{{ $service->title['ar'] ?? '' }}</p>
                         @if ($service->slug)
@@ -69,7 +77,7 @@
                     </td>
                 </tr>
             @empty
-                <tr><td colspan="6" class="px-6 py-8 text-center text-slate-500">لا توجد خدمات — <a href="{{ route('admin.services.create') }}" class="text-tract-600">أضف أول خدمة</a></td></tr>
+                <tr><td colspan="7" class="px-6 py-8 text-center text-slate-500">لا توجد خدمات — <a href="{{ route('admin.services.create') }}" class="text-tract-600">أضف أول خدمة</a></td></tr>
             @endforelse
         </tbody>
     </table>

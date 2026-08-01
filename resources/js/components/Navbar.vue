@@ -3,6 +3,7 @@ import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { useSite } from '../composables/useSite';
 import { useContent, loc } from '../composables/useContent';
 import { countryList } from '../data/countries';
+import { localizedPath } from '../utils/locale';
 
 const { config, locale, countryCode, countryName, t, setLocale, setCountry } = useSite();
 const { content } = useContent();
@@ -12,19 +13,29 @@ const mobileOpen = ref(false);
 const countryOpen = ref(false);
 const langOpen = ref(false);
 
+const resolveNavHref = (href) => {
+    if (href === '#services' || href === '/services' || href === 'services') {
+        return localizedPath('services', locale.value, countryCode.value);
+    }
+    if (href === '/blog' || href === 'blog') {
+        return localizedPath('blog', locale.value, countryCode.value);
+    }
+    return href;
+};
+
 const defaultLinks = computed(() => [
-    { href: '#services', label: t('nav.services') },
+    { href: localizedPath('services', locale.value, countryCode.value), label: t('nav.services') },
     { href: '#about', label: t('nav.about') },
     { href: '#why-us', label: t('nav.whyUs') },
     { href: '#reviews', label: t('nav.reviews') },
-    { href: '/blog', label: t('nav.blog'), external: false },
+    { href: localizedPath('blog', locale.value, countryCode.value), label: t('nav.blog'), external: false },
     { href: '#contact', label: t('nav.contact') },
 ]);
 
 const links = computed(() => {
     if (content.value?.navLinks?.length) {
         return content.value.navLinks.map((link) => ({
-            href: link.href,
+            href: resolveNavHref(link.href),
             label: loc(link.label, locale.value),
         }));
     }

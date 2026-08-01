@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Service;
+use App\Support\Locale;
 use Illuminate\Http\Response;
 
 class SitemapController extends Controller
@@ -14,28 +15,34 @@ class SitemapController extends Controller
         $posts = Post::published()->latest('published_at')->get();
         $services = Service::where('is_active', true)->whereNotNull('slug')->get();
 
-        $entries = [
-            [$siteUrl.'/', now()->toAtomString(), 'weekly', '1.0'],
-            [$siteUrl.'/services', now()->toAtomString(), 'weekly', '0.9'],
-            [$siteUrl.'/blog', now()->toAtomString(), 'daily', '0.9'],
-        ];
+        $entries = [];
+
+        foreach ([Locale::AR, Locale::EN, Locale::UR] as $locale) {
+            $entries[] = [$siteUrl.Locale::home($locale), now()->toAtomString(), 'weekly', '1.0'];
+            $entries[] = [$siteUrl.Locale::path('services', $locale), now()->toAtomString(), 'weekly', '0.9'];
+            $entries[] = [$siteUrl.Locale::path('blog', $locale), now()->toAtomString(), 'daily', '0.9'];
+        }
 
         foreach ($services as $service) {
-            $entries[] = [
-                $siteUrl.'/services/'.$service->slug,
-                $service->updated_at->toAtomString(),
-                'monthly',
-                '0.85',
-            ];
+            foreach ([Locale::AR, Locale::EN, Locale::UR] as $locale) {
+                $entries[] = [
+                    $siteUrl.Locale::path('services/'.$service->slug, $locale),
+                    $service->updated_at->toAtomString(),
+                    'monthly',
+                    '0.85',
+                ];
+            }
         }
 
         foreach ($posts as $post) {
-            $entries[] = [
-                $siteUrl.'/blog/'.$post->slug,
-                $post->updated_at->toAtomString(),
-                'monthly',
-                '0.8',
-            ];
+            foreach ([Locale::AR, Locale::EN, Locale::UR] as $locale) {
+                $entries[] = [
+                    $siteUrl.Locale::path('blog/'.$post->slug, $locale),
+                    $post->updated_at->toAtomString(),
+                    'monthly',
+                    '0.8',
+                ];
+            }
         }
 
         $xml = '<?xml version="1.0" encoding="UTF-8"?>'."\n";

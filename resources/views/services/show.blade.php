@@ -1,9 +1,13 @@
 @extends('layouts.site')
 
 @php
+    use App\Support\Locale;
+    use App\Support\SiteUrl;
+
+    $cty = $country ?? SiteUrl::DEFAULT_COUNTRY;
     $title = $service->localized('title', $locale);
     $description = $service->localized('description', $locale);
-    $canonical = $siteUrl.'/services/'.$service->slug.($locale !== 'ar' ? '?lang='.$locale : '');
+    $canonical = $siteUrl.Locale::path('services/'.$service->slug, $locale, $cty);
     $body = $service->localized('body', $locale);
     $features = $service->localizedFeatures($locale);
     $offers = $service->localizedOffers($locale);
@@ -17,14 +21,20 @@
 <section class="py-10 sm:py-12 lg:py-20 bg-gradient-to-br from-tract-600 to-tract-900 text-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <nav class="text-sm text-tract-200 mb-8">
-            <a href="/" class="hover:text-white">{{ $locale === 'en' ? 'Home' : ($locale === 'ur' ? 'ہوم' : 'الرئيسية') }}</a>
+            <a href="{{ Locale::home($locale, $cty) }}" class="hover:text-white">{{ $locale === 'en' ? 'Home' : ($locale === 'ur' ? 'ہوم' : 'الرئيسية') }}</a>
             <span class="mx-2">/</span>
-            <a href="{{ route('services.index', $locale !== 'ar' ? ['lang' => $locale] : []) }}" class="hover:text-white">{{ $locale === 'en' ? 'Services' : ($locale === 'ur' ? 'خدمات' : 'خدماتنا') }}</a>
+            <a href="{{ Locale::path('services', $locale, $cty) }}" class="hover:text-white">{{ $locale === 'en' ? 'Services' : ($locale === 'ur' ? 'خدمات' : 'خدماتنا') }}</a>
             <span class="mx-2">/</span>
             <span class="text-white">{{ $title }}</span>
         </nav>
         <div class="flex flex-col lg:flex-row lg:items-center gap-8">
-            <div class="shrink-0">@include('partials.service-icon', ['icon' => $service->icon])</div>
+            <div class="shrink-0">
+                @if ($service->image)
+                    <img src="{{ asset('storage/'.$service->image) }}" alt="{{ $title }}" class="w-full max-w-sm lg:max-w-md h-56 lg:h-64 object-cover rounded-2xl shadow-2xl ring-4 ring-white/20">
+                @else
+                    @include('partials.service-icon', ['icon' => $service->icon])
+                @endif
+            </div>
             <div class="max-w-3xl">
                 @if ($service->highlight)
                     <span class="inline-block px-3 py-1 rounded-full bg-white/20 text-sm font-semibold mb-4">{{ $locale === 'en' ? 'Featured Service' : ($locale === 'ur' ? 'نمایاں خدمت' : 'خدمة مميزة') }}</span>
@@ -98,9 +108,16 @@
         <h2 class="text-2xl font-bold text-slate-900 mb-8">{{ $locale === 'en' ? 'Other services' : ($locale === 'ur' ? 'دیگر خدمات' : 'خدمات أخرى') }}</h2>
         <div class="grid sm:grid-cols-3 gap-6">
             @foreach ($others as $other)
-                <a href="{{ route('services.show', ['slug' => $other->slug, 'lang' => $locale !== 'ar' ? $locale : null]) }}" class="p-6 rounded-2xl bg-white border hover:border-tract-200 hover:shadow-lg transition-all group">
-                    <h3 class="font-bold text-slate-900 group-hover:text-tract-700">{{ $other->localized('title', $locale) }}</h3>
-                    <p class="text-sm text-slate-500 mt-2 line-clamp-2">{{ $other->localized('description', $locale) }}</p>
+                <a href="{{ Locale::path('services/'.$other->slug, $locale, $cty) }}" class="flex gap-4 p-4 rounded-2xl bg-white border hover:border-tract-200 hover:shadow-lg transition-all group overflow-hidden">
+                    @if ($other->image)
+                        <img src="{{ asset('storage/'.$other->image) }}" alt="{{ $other->localized('title', $locale) }}" class="w-20 h-20 shrink-0 object-cover rounded-xl">
+                    @else
+                        <div class="w-20 h-20 shrink-0 rounded-xl bg-tract-50 flex items-center justify-center scale-75">@include('partials.service-icon', ['icon' => $other->icon])</div>
+                    @endif
+                    <div class="min-w-0">
+                        <h3 class="font-bold text-slate-900 group-hover:text-tract-700">{{ $other->localized('title', $locale) }}</h3>
+                        <p class="text-sm text-slate-500 mt-2 line-clamp-2">{{ $other->localized('description', $locale) }}</p>
+                    </div>
                 </a>
             @endforeach
         </div>
@@ -112,7 +129,7 @@
     <div class="max-w-3xl mx-auto px-4 text-center text-white">
         <h2 class="text-2xl sm:text-3xl font-bold mb-4">{{ $locale === 'en' ? 'Ready to get started?' : ($locale === 'ur' ? 'شروع کرنے کے لیے تیار ہیں؟' : 'جاهز لبدء مشروعك؟') }}</h2>
         <p class="text-tract-100 mb-6">{{ $locale === 'en' ? 'Contact Trackkt for a free consultation about '.$title : ($locale === 'ur' ? 'مفت مشاورت کے لیے Trackkt سے رابطہ کریں' : 'تواصل مع Trackkt للحصول على استشارة مجانية حول '.$title) }}</p>
-        <a href="/#contact" class="inline-flex px-8 py-3 rounded-xl bg-white text-tract-700 font-semibold hover:bg-tract-50 transition-colors">{{ $locale === 'en' ? 'Contact us now' : ($locale === 'ur' ? 'ابھی رابطہ کریں' : 'تواصل معنا الآن') }}</a>
+        <a href="{{ Locale::home($locale, $cty) }}#contact" class="inline-flex px-8 py-3 rounded-xl bg-white text-tract-700 font-semibold hover:bg-tract-50 transition-colors">{{ $locale === 'en' ? 'Contact us now' : ($locale === 'ur' ? 'ابھی رابطہ کریں' : 'تواصل معنا الآن') }}</a>
     </div>
 </section>
 @endsection

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AboutSettingsController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -11,20 +12,45 @@ use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\StatController;
 use App\Http\Controllers\Admin\WhyUsController;
+use App\Http\Controllers\Admin\ContactSettingsController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ServicePageController;
 use App\Http\Controllers\SitemapController;
+use App\Support\Locale;
+use App\Support\SiteUrl;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', HomeController::class);
+foreach (Locale::PREFIX as $localeCode => $localePrefix) {
+    foreach (SiteUrl::COUNTRIES as $countryCode) {
+        $prefix = SiteUrl::buildPrefix($localeCode, $countryCode);
+        $middleware = 'locale:'.$localeCode.','.$countryCode;
+        $isDefault = $localeCode === Locale::AR && $countryCode === SiteUrl::DEFAULT_COUNTRY;
 
-Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
-Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
+        $register = function () use ($isDefault) {
+            Route::get('/', HomeController::class);
 
-Route::get('/services', [ServicePageController::class, 'index'])->name('services.index');
-Route::get('/services/{slug}', [ServicePageController::class, 'show'])->name('services.show');
+            if ($isDefault) {
+                Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+                Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
+                Route::get('/services', [ServicePageController::class, 'index'])->name('services.index');
+                Route::get('/services/{slug}', [ServicePageController::class, 'show'])->name('services.show');
+            } else {
+                Route::get('/blog', [BlogController::class, 'index']);
+                Route::get('/blog/{slug}', [BlogController::class, 'show']);
+                Route::get('/services', [ServicePageController::class, 'index']);
+                Route::get('/services/{slug}', [ServicePageController::class, 'show']);
+            }
+        };
+
+        if ($prefix === '') {
+            Route::middleware($middleware)->group($register);
+        } else {
+            Route::prefix($prefix)->middleware($middleware)->group($register);
+        }
+    }
+}
 
 Route::get('/api/content', [ContentController::class, 'index']);
 Route::post('/api/contact', [App\Http\Controllers\ContactController::class, 'store']);
@@ -50,6 +76,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('posts/upload-image', [PostController::class, 'uploadImage'])->name('posts.upload-image');
         Route::get('seo', [SeoController::class, 'edit'])->name('seo.edit');
         Route::put('seo', [SeoController::class, 'update'])->name('seo.update');
+        Route::get('contact-settings', [ContactSettingsController::class, 'edit'])->name('contact.edit');
+        Route::put('contact-settings', [ContactSettingsController::class, 'update'])->name('contact.update');
+        Route::get('about-settings', [AboutSettingsController::class, 'edit'])->name('about.edit');
+        Route::put('about-settings', [AboutSettingsController::class, 'update'])->name('about.update');
         Route::resource('users', UserController::class)->except(['show']);
         Route::get('profile', [UserController::class, 'profile'])->name('profile.edit');
         Route::put('profile', [UserController::class, 'updateProfile'])->name('profile.update');

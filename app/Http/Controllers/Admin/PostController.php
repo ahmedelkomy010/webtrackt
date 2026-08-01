@@ -104,6 +104,9 @@ class PostController extends Controller
             'meta_keywords_ar' => ['nullable', 'string', 'max:500'],
             'meta_keywords_en' => ['nullable', 'string', 'max:500'],
             'meta_keywords_ur' => ['nullable', 'string', 'max:500'],
+            'schema_json_ar' => ['nullable', 'string'],
+            'schema_json_en' => ['nullable', 'string'],
+            'schema_json_ur' => ['nullable', 'string'],
             'featured_image_file' => ['nullable', 'image', 'max:2048'],
             'is_published' => ['nullable', 'boolean'],
             'published_at' => ['nullable', 'date'],
@@ -119,6 +122,11 @@ class PostController extends Controller
             'meta_title' => ['ar' => $data['meta_title_ar'] ?? '', 'en' => $data['meta_title_en'] ?? '', 'ur' => $data['meta_title_ur'] ?? ''],
             'meta_description' => ['ar' => $data['meta_description_ar'] ?? '', 'en' => $data['meta_description_en'] ?? '', 'ur' => $data['meta_description_ur'] ?? ''],
             'meta_keywords' => ['ar' => $data['meta_keywords_ar'] ?? '', 'en' => $data['meta_keywords_en'] ?? '', 'ur' => $data['meta_keywords_ur'] ?? ''],
+            'schema_json' => [
+                'ar' => $this->normalizeSchema($data['schema_json_ar'] ?? ''),
+                'en' => $this->normalizeSchema($data['schema_json_en'] ?? ''),
+                'ur' => $this->normalizeSchema($data['schema_json_ur'] ?? ''),
+            ],
             'is_published' => $request->boolean('is_published'),
             'published_at' => $request->boolean('is_published')
                 ? ($data['published_at'] ?? now())
@@ -133,5 +141,24 @@ class PostController extends Controller
         }
 
         return $request->file('featured_image_file')->store('blog', 'public');
+    }
+
+    protected function normalizeSchema(string $value): string
+    {
+        $value = trim($value);
+
+        if ($value === '') {
+            return '';
+        }
+
+        json_decode($value);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw \Illuminate\Validation\ValidationException::withMessages([
+                'schema_json' => 'صيغة JSON-LD غير صحيحة — تأكد من صحة JSON بدون وسم script.',
+            ]);
+        }
+
+        return $value;
     }
 }

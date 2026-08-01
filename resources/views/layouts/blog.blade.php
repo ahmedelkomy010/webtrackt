@@ -1,10 +1,9 @@
 @php
-    $dir = $locale === 'en' ? 'ltr' : 'rtl';
-    $lang = match ($locale) {
-        'en' => 'en',
-        'ur' => 'ur',
-        default => 'ar-SA',
-    };
+    use App\Support\Locale;
+
+    $dir = Locale::dir($locale ?? Locale::AR);
+    $lang = Locale::htmlLang($locale ?? Locale::AR);
+    $loc = $locale ?? Locale::AR;
 @endphp
 <!DOCTYPE html>
 <html lang="{{ $lang }}" dir="{{ $dir }}">
@@ -48,9 +47,9 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-center sm:text-start">
             <p>&copy; {{ date('Y') }} {{ config('tract.name') }} — {{ config('tract.name_en') }}</p>
             <div class="flex gap-4">
-                <a href="{{ route('blog.index', ['lang' => 'ar']) }}" class="hover:text-white {{ $locale === 'ar' ? 'text-white font-semibold' : '' }}">العربية</a>
-                <a href="{{ route('blog.index', ['lang' => 'en']) }}" class="hover:text-white {{ $locale === 'en' ? 'text-white font-semibold' : '' }}">English</a>
-                <a href="{{ route('blog.index', ['lang' => 'ur']) }}" class="hover:text-white {{ $locale === 'ur' ? 'text-white font-semibold' : '' }}">اردو</a>
+                <a href="{{ Locale::switchUrl(request(), Locale::AR) }}" class="hover:text-white {{ $locale === 'ar' ? 'text-white font-semibold' : '' }}">العربية</a>
+                <a href="{{ Locale::switchUrl(request(), Locale::EN) }}" class="hover:text-white {{ $locale === 'en' ? 'text-white font-semibold' : '' }}">English</a>
+                <a href="{{ Locale::switchUrl(request(), Locale::UR) }}" class="hover:text-white {{ $locale === 'ur' ? 'text-white font-semibold' : '' }}">اردو</a>
             </div>
         </div>
     </footer>

@@ -7,6 +7,7 @@ use App\Models\Service;
 use App\Services\ContentService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ServiceController extends Controller
@@ -27,7 +28,9 @@ class ServiceController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        Service::create($this->validated($request));
+        $data = $this->validated($request);
+        $data['image'] = $this->storeImage($request);
+        Service::create($data);
         $this->content->invalidate();
 
         return redirect()->route('admin.services.index')->with('success', 'تمت إضافة الخدمة بنجاح.');
@@ -40,7 +43,16 @@ class ServiceController extends Controller
 
     public function update(Request $request, Service $service): RedirectResponse
     {
-        $service->update($this->validated($request, $service));
+        $data = $this->validated($request, $service);
+
+        if ($request->hasFile('image_file')) {
+            if ($service->image) {
+                Storage::disk('public')->delete($service->image);
+            }
+            $data['image'] = $this->storeImage($request);
+        }
+
+        $service->update($data);
         $this->content->invalidate();
 
         return redirect()->route('admin.services.index')->with('success', 'تم تحديث الخدمة بنجاح.');
@@ -48,6 +60,10 @@ class ServiceController extends Controller
 
     public function destroy(Service $service): RedirectResponse
     {
+        if ($service->image) {
+            Storage::disk('public')->delete($service->image);
+        }
+
         $service->delete();
         $this->content->invalidate();
 
@@ -59,6 +75,7 @@ class ServiceController extends Controller
         $data = $request->validate([
             'slug' => ['nullable', 'string', 'max:255', 'unique:services,slug,'.($service?->id ?? 'NULL')],
             'icon' => ['required', 'in:erp,web,store,marketing'],
+            'image_file' => ['nullable', 'image', 'max:4096'],
             'highlight' => ['nullable', 'boolean'],
             'sort_order' => ['required', 'integer', 'min:0'],
             'title_ar' => ['required', 'string', 'max:255'],
@@ -147,5 +164,14 @@ class ServiceController extends Controller
         }
 
         return $features;
+    }
+
+    protected function storeImage(Request $request): ?string
+    {
+        if (! $request->hasFile('image_file')) {
+            return null;
+        }
+
+        return $request->file('image_file')->store('services', 'public');
     }
 }

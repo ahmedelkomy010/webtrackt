@@ -25,7 +25,7 @@
     @endif
 </div>
 
-<form method="POST" action="{{ $isEdit ? route('admin.services.update', $service) : route('admin.services.store') }}" class="space-y-6">
+<form method="POST" action="{{ $isEdit ? route('admin.services.update', $service) : route('admin.services.store') }}" enctype="multipart/form-data" class="space-y-6">
     @csrf
     @if ($isEdit) @method('PUT') @endif
 
@@ -41,6 +41,13 @@
                     <option value="{{ $icon }}" @selected(old('icon', $service->icon) === $icon)>{{ $icon }}</option>
                 @endforeach
             </select>
+        </div>
+        <div class="sm:col-span-2">
+            <label class="block text-sm font-medium mb-1">صورة الخدمة (كارت + صفحة الخدمة)</label>
+            @if ($service->image)
+                <img src="{{ asset('storage/'.$service->image) }}" alt="" class="w-full max-w-xs h-32 object-cover rounded-xl mb-2 border">
+            @endif
+            <input type="file" name="image_file" accept="image/*" class="w-full text-sm">
         </div>
         <div>
             <label class="block text-sm font-medium mb-1">الترتيب</label>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar-SA" dir="rtl">
+<html lang="{{ \App\Support\Locale::htmlLang($locale ?? 'ar') }}" dir="{{ \App\Support\Locale::dir($locale ?? 'ar') }}">
 <head>
     <meta charset="utf-8">
     @include('partials.mobile-meta')
@@ -7,6 +7,17 @@
     @include('partials.favicon')
 
     @php
+        use App\Support\Locale;
+        use App\Support\SiteUrl;
+        use App\Services\AboutSettingsService;
+
+        $pageLocale = $locale ?? Locale::AR;
+        $pageCountry = $country ?? SiteUrl::DEFAULT_COUNTRY;
+        $aboutSettings = $aboutSettings ?? app(AboutSettingsService::class)->all();
+        $basePath = rtrim(parse_url(url('/'), PHP_URL_PATH) ?: '', '/');
+        if ($basePath === '/') {
+            $basePath = '';
+        }
         $seo = app(\App\Services\SeoService::class);
         $siteUrl = $seo->siteUrl();
         $phoneIntl = config('tract.phone_intl');
@@ -28,7 +39,30 @@
             'phoneLocal' => config('tract.phone'),
             'whatsapp' => $whatsapp,
             'csrfToken' => csrf_token(),
+            'locale' => $pageLocale,
+            'country' => $pageCountry,
+            'basePath' => $basePath,
+            'storageUrl' => asset('storage'),
+            'about' => $aboutSettings,
         ];
+
+        $contactSettings = $contactSettings ?? [];
+        $tractConfig = array_merge($tractConfig, [
+            'contact' => [
+                'phone'      => $contactSettings['phone']      ?? config('tract.phone'),
+                'phoneIntl'  => $contactSettings['phone_intl'] ?? config('tract.phone_intl'),
+                'whatsapp'   => $contactSettings['whatsapp']   ?? config('tract.whatsapp'),
+                'email'      => $contactSettings['email']      ?? config('tract.email'),
+            ],
+            'social' => [
+                'twitter'   => $contactSettings['twitter_url']   ?? '',
+                'instagram' => $contactSettings['instagram_url'] ?? '',
+                'facebook'  => $contactSettings['facebook_url']  ?? '',
+                'snapchat'  => $contactSettings['snapchat_url']  ?? '',
+                'linkedin'  => $contactSettings['linkedin_url']  ?? '',
+                'tiktok'    => $contactSettings['tiktok_url']    ?? '',
+            ],
+        ]);
 
         $jsonLd = [
             '@context' => 'https://schema.org',
@@ -60,10 +94,10 @@
     @endphp
 
     @include('partials.seo-head', [
-        'title' => $seo->title('ar'),
-        'description' => $seo->description('ar'),
-        'keywords' => $seo->keywords('ar').', '.$seo->keywords('en'),
-        'canonical' => $siteUrl.'/',
+        'title' => $seo->title($pageLocale),
+        'description' => $seo->description($pageLocale),
+        'keywords' => $seo->keywords($pageLocale).', '.$seo->keywords('en'),
+        'canonical' => $siteUrl.Locale::home($pageLocale, $pageCountry),
         'ogImage' => $seo->ogImageUrl(),
         'jsonLd' => $jsonLd,
     ])
@@ -85,7 +119,7 @@
     </noscript>
     {{-- Urdu font loaded only when needed (heavy — load deferred) --}}
     <script>
-        if (localStorage.getItem('tract_locale') === 'ur') {
+        if (@json($pageLocale) === 'ur' || localStorage.getItem('tract_locale') === 'ur') {
             var l = document.createElement('link');
             l.rel = 'stylesheet';
             l.href = 'https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;500;600;700&display=swap';

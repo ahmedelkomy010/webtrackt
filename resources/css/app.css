@@ -44,7 +44,12 @@ body.mobile-menu-open {
 
 .app-shell {
     min-height: 100dvh;
-    padding-bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px));
+}
+
+@media (max-width: 1023px) {
+    .app-shell {
+        padding-bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px));
+    }
 }
 
 @media (min-width: 1024px) {
@@ -71,7 +76,7 @@ body.mobile-menu-open {
     inset-inline: 0;
     bottom: 0;
     z-index: 60;
-    display: grid;
+    display: none;
     grid-template-columns: repeat(4, 1fr);
     gap: 0.25rem;
     padding: 0.35rem 0.5rem calc(0.35rem + env(safe-area-inset-bottom, 0px));
@@ -80,6 +85,12 @@ body.mobile-menu-open {
     -webkit-backdrop-filter: blur(16px);
     border-top: 1px solid rgba(226, 232, 240, 0.9);
     box-shadow: 0 -8px 30px rgba(15, 23, 42, 0.08);
+}
+
+@media (max-width: 1023px) {
+    .mobile-bottom-nav {
+        display: grid;
+    }
 }
 
 .mobile-bottom-nav__item {

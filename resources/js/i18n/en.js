@@ -38,6 +38,7 @@ export default {
         title: 'Integrated Solutions for Your Digital Transformation',
         subtitle: 'From idea to execution — we accompany you at every stage to achieve tangible results',
         viewDetails: 'View details & offers',
+        viewAll: 'View all services',
         erp: {
             title: 'ERP Systems',
             description: 'Specialized in unified contract systems and turnkey projects — integrated management for contracting and projects from planning to delivery.',

@@ -1,8 +1,11 @@
 <script setup>
 import { computed } from 'vue';
 import { useSite } from '../composables/useSite';
+import { useContent } from '../composables/useContent';
+import { storageUrl } from '../utils/storage';
 
 const { config, country, countryName, locale, t } = useSite();
+const { content } = useContent();
 
 const heroDescription = computed(() => {
     const descriptions = {
@@ -12,6 +15,9 @@ const heroDescription = computed(() => {
     };
     return descriptions[locale.value] || config.description;
 });
+
+const siteImages = computed(() => content.value?.about ?? config.about ?? {});
+const heroSideImage = computed(() => storageUrl(siteImages.value.hero_side_image));
 </script>
 
 <template>
@@ -105,43 +111,21 @@ const heroDescription = computed(() => {
                 <div class="relative mt-8 lg:mt-0">
                     <div class="relative mx-auto max-w-md lg:max-w-none">
                         <div class="absolute inset-0 bg-gradient-to-br from-tract-500/20 to-gold-500/20 rounded-3xl blur-2xl transform rotate-3" />
-                        <div class="relative bg-white/80 backdrop-blur rounded-3xl shadow-2xl border border-white/50 p-8 space-y-5">
-                            <div class="flex items-center justify-between gap-3 pb-4 border-b border-slate-100">
-                                <p class="text-sm font-medium text-slate-600">{{ t('nav.country') }}</p>
-                                <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-50 border border-slate-100">
-                                    <img :src="country.flagImg" :alt="countryName" width="24" height="18" class="w-6 h-4 object-cover rounded shrink-0" loading="lazy">
-                                    <span class="text-sm font-semibold text-slate-800">{{ countryName }}</span>
-                                </div>
-                            </div>
-                            <div class="flex items-start gap-4 p-5 rounded-2xl bg-tract-50 border border-tract-200 ring-1 ring-tract-100">
-                                <div class="w-12 h-12 rounded-xl bg-tract-600 flex items-center justify-center shrink-0">
-                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
-                                </div>
-                                <div>
-                                    <p class="font-bold text-slate-900 mb-1">{{ t('hero.cardErpTitle') }}</p>
-                                    <p class="text-sm text-tract-700 leading-relaxed">{{ t('hero.cardErpDesc') }}</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
-                                <div class="w-12 h-12 rounded-xl bg-gold-500 flex items-center justify-center shrink-0">
-                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg>
-                                </div>
-                                <div>
-                                    <p class="font-semibold text-slate-900">{{ t('hero.cardWebTitle') }}</p>
-                                    <p class="text-sm text-slate-500">{{ t('hero.cardWebDesc') }}</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
-                                <div class="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center shrink-0">
-                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
-                                </div>
-                                <div>
-                                    <p class="font-semibold text-slate-900">{{ t('hero.cardMarketingTitle') }}</p>
-                                    <p class="text-sm text-slate-500">{{ t('hero.cardMarketingDesc') }}</p>
-                                </div>
-                            </div>
-                            <div class="pt-4 border-t border-slate-100">
-                                <p class="text-center text-sm font-medium text-tract-700" dir="ltr">{{ config.tagline }}</p>
+                        <div class="relative rounded-3xl shadow-2xl border border-white/50 overflow-hidden bg-slate-100 min-h-[420px]">
+                            <img
+                                v-if="heroSideImage"
+                                :src="heroSideImage"
+                                alt="Trackkt"
+                                class="w-full h-full min-h-[420px] object-cover"
+                            >
+                            <div
+                                v-else
+                                class="flex flex-col items-center justify-center min-h-[420px] p-8 text-center border-2 border-dashed border-slate-300 m-3 rounded-2xl"
+                            >
+                                <svg class="w-12 h-12 text-slate-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <p class="text-slate-500 text-sm">صورة Hero — ارفعها من لوحة التحكم</p>
                             </div>
                         </div>
                     </div>

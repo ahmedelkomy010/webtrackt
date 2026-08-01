@@ -1,9 +1,22 @@
 import { ref, computed, watch } from 'vue';
 import { translate } from '../i18n';
 import { countries, defaultCountry } from '../data/countries';
+import { parsePath, switchCountryUrl, switchLocaleUrl } from '../utils/locale';
 
-const locale = ref(localStorage.getItem('tract_locale') || 'ar');
-const countryCode = ref(localStorage.getItem('tract_country') || defaultCountry);
+function readContextFromPage() {
+    const fromPath = parsePath();
+    return {
+        locale: fromPath.locale || window.__TRACT__?.locale || 'ar',
+        country: fromPath.country || window.__TRACT__?.country || defaultCountry,
+    };
+}
+
+const initial = readContextFromPage();
+const locale = ref(initial.locale);
+const countryCode = ref(initial.country);
+
+localStorage.setItem('tract_locale', locale.value);
+localStorage.setItem('tract_country', countryCode.value);
 
 const htmlLangMap = { ar: 'ar-SA', en: 'en', ur: 'ur' };
 
@@ -21,6 +34,13 @@ watch(countryCode, (value) => {
     localStorage.setItem('tract_country', value);
 });
 
+function navigateIfDifferent(target) {
+    const current = window.location.pathname + window.location.search + window.location.hash;
+    if (target !== current) {
+        window.location.assign(target);
+    }
+}
+
 export function useSite() {
     const config = window.__TRACT__ ?? {
         name: 'تراكت',
@@ -34,6 +54,9 @@ export function useSite() {
         phoneLocal: '',
         whatsapp: '',
         csrfToken: '',
+        basePath: '',
+        storageUrl: '/storage',
+        about: {},
     };
 
     const country = computed(() => countries[countryCode.value] || countries[defaultCountry]);
@@ -50,11 +73,11 @@ export function useSite() {
     });
 
     const setLocale = (value) => {
-        locale.value = value;
+        navigateIfDifferent(switchLocaleUrl(value));
     };
 
     const setCountry = (value) => {
-        countryCode.value = value;
+        navigateIfDifferent(switchCountryUrl(value));
     };
 
     return {

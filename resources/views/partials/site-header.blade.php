@@ -1,18 +1,25 @@
 @php
-    $loc = $locale ?? 'ar';
+    use App\Support\Locale;
+    use App\Support\SiteUrl;
+
+    $loc = $locale ?? Locale::AR;
+    $cty = $country ?? SiteUrl::DEFAULT_COUNTRY;
     $labels = [
         'home' => $loc === 'en' ? 'Home' : ($loc === 'ur' ? 'ہوم' : 'الرئيسية'),
         'services' => $loc === 'en' ? 'Services' : ($loc === 'ur' ? 'خدمات' : 'خدماتنا'),
         'blog' => $loc === 'en' ? 'Blog' : ($loc === 'ur' ? 'بلاگ' : 'المدونة'),
         'contact' => $loc === 'en' ? 'Contact' : ($loc === 'ur' ? 'رابطہ' : 'تواصل'),
     ];
-    $langQuery = $loc !== 'ar' ? ['lang' => $loc] : [];
+    $basePath = SiteUrl::stripContext(request()->path());
+    $isHome = $basePath === '';
+    $isServices = str_starts_with($basePath, 'services');
+    $isBlog = str_starts_with($basePath, 'blog');
 @endphp
 
 <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 safe-top">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-14 sm:h-16 lg:h-20">
-            <a href="/" class="flex items-center gap-2.5 min-w-0">
+            <a href="{{ Locale::home($loc, $cty) }}" class="flex items-center gap-2.5 min-w-0">
                 <img src="{{ asset('images/logo.png') }}" alt="{{ config('tract.name') }}" class="h-9 w-9 sm:h-10 sm:w-10 object-contain shrink-0">
                 <div class="min-w-0">
                     <span class="block font-bold text-slate-900 text-sm sm:text-base truncate">{{ config('tract.name') }}</span>
@@ -21,10 +28,10 @@
             </a>
 
             <nav class="hidden lg:flex items-center gap-4 text-sm font-medium">
-                <a href="/" class="text-slate-600 hover:text-tract-700 {{ request()->path() === '/' ? 'text-tract-700 font-semibold' : '' }}">{{ $labels['home'] }}</a>
-                <a href="{{ route('services.index', $langQuery) }}" class="text-slate-600 hover:text-tract-700 {{ request()->routeIs('services.*') ? 'text-tract-700 font-semibold' : '' }}">{{ $labels['services'] }}</a>
-                <a href="{{ route('blog.index', $langQuery) }}" class="text-slate-600 hover:text-tract-700 {{ request()->routeIs('blog.*') ? 'text-tract-700 font-semibold' : '' }}">{{ $labels['blog'] }}</a>
-                <a href="/#contact" class="inline-flex px-4 py-2 rounded-xl bg-tract-600 text-white hover:bg-tract-700">{{ $labels['contact'] }}</a>
+                <a href="{{ Locale::home($loc, $cty) }}" class="text-slate-600 hover:text-tract-700 {{ $isHome ? 'text-tract-700 font-semibold' : '' }}">{{ $labels['home'] }}</a>
+                <a href="{{ Locale::path('services', $loc, $cty) }}" class="text-slate-600 hover:text-tract-700 {{ $isServices ? 'text-tract-700 font-semibold' : '' }}">{{ $labels['services'] }}</a>
+                <a href="{{ Locale::path('blog', $loc, $cty) }}" class="text-slate-600 hover:text-tract-700 {{ $isBlog ? 'text-tract-700 font-semibold' : '' }}">{{ $labels['blog'] }}</a>
+                <a href="{{ Locale::home($loc, $cty) }}#contact" class="inline-flex px-4 py-2 rounded-xl bg-tract-600 text-white hover:bg-tract-700">{{ $labels['contact'] }}</a>
             </nav>
 
             <button type="button" class="lg:hidden touch-target p-2 rounded-xl text-slate-600 hover:bg-slate-100" aria-label="Menu" data-mobile-menu-toggle>
@@ -38,15 +45,15 @@
         <div class="mobile-drawer__backdrop" data-mobile-menu-close></div>
         <div class="mobile-drawer__panel safe-bottom">
             <div class="p-4 space-y-1">
-                <a href="/" class="mobile-drawer__link">{{ $labels['home'] }}</a>
-                <a href="{{ route('services.index', $langQuery) }}" class="mobile-drawer__link">{{ $labels['services'] }}</a>
-                <a href="{{ route('blog.index', $langQuery) }}" class="mobile-drawer__link">{{ $labels['blog'] }}</a>
-                <a href="/#contact" class="mobile-drawer__link">{{ $labels['contact'] }}</a>
+                <a href="{{ Locale::home($loc, $cty) }}" class="mobile-drawer__link">{{ $labels['home'] }}</a>
+                <a href="{{ Locale::path('services', $loc, $cty) }}" class="mobile-drawer__link">{{ $labels['services'] }}</a>
+                <a href="{{ Locale::path('blog', $loc, $cty) }}" class="mobile-drawer__link">{{ $labels['blog'] }}</a>
+                <a href="{{ Locale::home($loc, $cty) }}#contact" class="mobile-drawer__link">{{ $labels['contact'] }}</a>
             </div>
             <div class="p-4 border-t border-slate-100 flex gap-3">
-                <a href="?lang=ar" class="flex-1 text-center py-3 rounded-xl text-sm font-medium {{ $loc === 'ar' ? 'bg-tract-600 text-white' : 'bg-slate-100 text-slate-700' }}">العربية</a>
-                <a href="?lang=en" class="flex-1 text-center py-3 rounded-xl text-sm font-medium {{ $loc === 'en' ? 'bg-tract-600 text-white' : 'bg-slate-100 text-slate-700' }}">English</a>
-                <a href="?lang=ur" class="flex-1 text-center py-3 rounded-xl text-sm font-medium {{ $loc === 'ur' ? 'bg-tract-600 text-white' : 'bg-slate-100 text-slate-700' }}">اردو</a>
+                <a href="{{ Locale::switchUrl(request(), Locale::AR) }}" class="flex-1 text-center py-3 rounded-xl text-sm font-medium {{ $loc === 'ar' ? 'bg-tract-600 text-white' : 'bg-slate-100 text-slate-700' }}">العربية</a>
+                <a href="{{ Locale::switchUrl(request(), Locale::EN) }}" class="flex-1 text-center py-3 rounded-xl text-sm font-medium {{ $loc === 'en' ? 'bg-tract-600 text-white' : 'bg-slate-100 text-slate-700' }}">English</a>
+                <a href="{{ Locale::switchUrl(request(), Locale::UR) }}" class="flex-1 text-center py-3 rounded-xl text-sm font-medium {{ $loc === 'ur' ? 'bg-tract-600 text-white' : 'bg-slate-100 text-slate-700' }}">اردو</a>
             </div>
         </div>
     </div>

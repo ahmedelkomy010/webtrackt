@@ -1,6 +1,11 @@
 @extends('layouts.blog')
 
 @php
+    use App\Support\Locale;
+    use App\Support\SiteUrl;
+
+    $cty = $country ?? SiteUrl::DEFAULT_COUNTRY;
+
     $pageTitle = match ($locale) {
         'en' => 'Blog — Digital Marketing & ERP Insights',
         'ur' => 'بلاگ — ڈیجیٹل مارکیٹنگ اور ERP',
@@ -21,7 +26,7 @@
 @section('title', $pageTitle)
 @section('meta_description', $pageDesc)
 @section('meta_keywords', $pageKeywords)
-@section('canonical', $siteUrl.'/blog'.($locale !== 'ar' ? '?lang='.$locale : ''))
+@section('canonical', $siteUrl.Locale::path('blog', $locale, $cty))
 
 @section('schema')
 @php
@@ -67,7 +72,7 @@
                 @foreach ($posts as $post)
                     <article class="group bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-xl hover:border-tract-200 transition-all">
                         @if ($post->featured_image)
-                            <a href="{{ route('blog.show', ['slug' => $post->slug, 'lang' => $locale !== 'ar' ? $locale : null]) }}">
+                            <a href="{{ Locale::path('blog/'.$post->slug, $locale, $cty) }}">
                                 <img src="{{ asset('storage/'.$post->featured_image) }}" alt="{{ $post->localized('title', $locale) }}" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
                             </a>
                         @else
@@ -78,12 +83,12 @@
                         <div class="p-6">
                             <time datetime="{{ $post->published_at?->toIso8601String() }}" class="text-xs text-slate-400">{{ $post->published_at?->format('Y-m-d') }}</time>
                             <h2 class="text-xl font-bold text-slate-900 mt-2 mb-3 group-hover:text-tract-700 transition-colors">
-                                <a href="{{ route('blog.show', ['slug' => $post->slug, 'lang' => $locale !== 'ar' ? $locale : null]) }}">
+                                <a href="{{ Locale::path('blog/'.$post->slug, $locale, $cty) }}">
                                     {{ $post->localized('title', $locale) }}
                                 </a>
                             </h2>
                             <p class="text-slate-600 text-sm leading-relaxed mb-4 line-clamp-3">{{ $post->localized('excerpt', $locale) }}</p>
-                            <a href="{{ route('blog.show', ['slug' => $post->slug, 'lang' => $locale !== 'ar' ? $locale : null]) }}" class="text-tract-600 text-sm font-semibold hover:text-tract-700">
+                            <a href="{{ Locale::path('blog/'.$post->slug, $locale, $cty) }}" class="text-tract-600 text-sm font-semibold hover:text-tract-700">
                                 {{ $locale === 'en' ? 'Read more →' : ($locale === 'ur' ? 'مزید پڑھیں ←' : 'اقرأ المزيد ←') }}
                             </a>
                         </div>

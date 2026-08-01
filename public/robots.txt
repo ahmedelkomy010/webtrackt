@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Allow: /blog
 
-Sitemap: https://trakkt.com/sitemap.xml
+Sitemap: https://trackkt.com/sitemap.xml

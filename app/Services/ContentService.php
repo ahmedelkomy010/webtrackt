@@ -9,6 +9,7 @@ use App\Models\Service;
 use App\Models\SiteSetting;
 use App\Models\Stat;
 use App\Models\WhyUsItem;
+use App\Services\AboutSettingsService;
 use Illuminate\Support\Facades\Cache;
 
 class ContentService
@@ -36,6 +37,7 @@ class ContentService
                     'id' => $s->id,
                     'slug' => $s->slug,
                     'icon' => $s->icon,
+                    'image' => $s->image,
                     'highlight' => $s->highlight,
                     'title' => $s->title,
                     'description' => $s->description,
@@ -91,6 +93,7 @@ class ContentService
             'settings' => SiteSetting::all()
                 ->pluck('value', 'key')
                 ->all(),
+            'about' => app(AboutSettingsService::class)->all(),
         ];
     }
 

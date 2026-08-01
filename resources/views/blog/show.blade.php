@@ -1,10 +1,14 @@
 @extends('layouts.blog')
 
 @php
+    use App\Support\Locale;
+    use App\Support\SiteUrl;
+
+    $cty = $country ?? SiteUrl::DEFAULT_COUNTRY;
     $title = $post->seoTitle($locale);
     $description = $post->seoDescription($locale);
     $keywords = $post->seoKeywords($locale);
-    $canonical = $siteUrl.'/blog/'.$post->slug.($locale !== 'ar' ? '?lang='.$locale : '');
+    $canonical = $siteUrl.Locale::path('blog/'.$post->slug, $locale, $cty);
     $image = $post->featured_image ? $siteUrl.'/storage/'.$post->featured_image : app(\App\Services\SeoService::class)->ogImageUrl();
 @endphp
 
@@ -16,6 +20,12 @@
 @section('og_image', $image)
 
 @section('schema')
+@php
+    $customSchema = $post->customSchema($locale);
+@endphp
+@if ($customSchema)
+<script type="application/ld+json">{!! $customSchema !!}</script>
+@else
 @php
     $articleSchema = [
         '@context' => 'https://schema.org',
@@ -50,6 +60,7 @@
     ];
 @endphp
 <script type="application/ld+json">{!! json_encode($articleSchema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) !!}</script>
+@endif
 @endsection
 
 @section('content')
@@ -58,7 +69,7 @@
         <nav class="text-sm text-slate-500 mb-8" aria-label="Breadcrumb">
             <a href="/" class="hover:text-tract-600">{{ $locale === 'en' ? 'Home' : ($locale === 'ur' ? 'ہوم' : 'الرئيسية') }}</a>
             <span class="mx-2">/</span>
-            <a href="{{ route('blog.index', ['lang' => $locale !== 'ar' ? $locale : null]) }}" class="hover:text-tract-600">{{ $locale === 'en' ? 'Blog' : ($locale === 'ur' ? 'بلاگ' : 'المدونة') }}</a>
+            <a href="{{ Locale::path('blog', $locale, $cty) }}" class="hover:text-tract-600">{{ $locale === 'en' ? 'Blog' : ($locale === 'ur' ? 'بلاگ' : 'المدونة') }}</a>
             <span class="mx-2">/</span>
             <span class="text-slate-700">{{ $title }}</span>
         </nav>
@@ -102,7 +113,7 @@
         <h2 class="text-2xl font-bold text-slate-900 mb-8">{{ $locale === 'en' ? 'Related articles' : ($locale === 'ur' ? 'متعلقہ مضامین' : 'مقالات ذات صلة') }}</h2>
         <div class="grid sm:grid-cols-3 gap-6">
             @foreach ($related as $item)
-                <a href="{{ route('blog.show', ['slug' => $item->slug, 'lang' => $locale !== 'ar' ? $locale : null]) }}" class="p-5 rounded-2xl border border-slate-100 hover:border-tract-200 hover:shadow-lg transition-all">
+                <a href="{{ Locale::path('blog/'.$item->slug, $locale, $cty) }}" class="p-5 rounded-2xl border border-slate-100 hover:border-tract-200 hover:shadow-lg transition-all">
                     <h3 class="font-bold text-slate-900 hover:text-tract-700">{{ $item->localized('title', $locale) }}</h3>
                     <p class="text-sm text-slate-500 mt-2 line-clamp-2">{{ $item->localized('excerpt', $locale) }}</p>
                 </a>

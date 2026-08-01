@@ -15,6 +15,7 @@ class Post extends Model
         'meta_title',
         'meta_description',
         'meta_keywords',
+        'schema_json',
         'featured_image',
         'is_published',
         'published_at',
@@ -30,6 +31,7 @@ class Post extends Model
             'meta_title' => 'array',
             'meta_description' => 'array',
             'meta_keywords' => 'array',
+            'schema_json' => 'array',
             'is_published' => 'boolean',
             'published_at' => 'datetime',
         ];
@@ -70,6 +72,19 @@ class Post extends Model
     public function seoKeywords(string $locale = 'ar'): string
     {
         return $this->localized('meta_keywords', $locale);
+    }
+
+    public function customSchema(string $locale = 'ar'): ?string
+    {
+        $data = $this->schema_json;
+
+        if (! is_array($data)) {
+            return null;
+        }
+
+        $schema = trim($data[$locale] ?? $data['ar'] ?? '');
+
+        return $schema !== '' ? $schema : null;
     }
 
     public function url(): string

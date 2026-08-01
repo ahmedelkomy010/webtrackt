@@ -1,8 +1,11 @@
+/* Use dynamic contact settings from admin if available, fallback to defaults */
+const _c = window.__TRACT__?.contact || {};
+
 export const baseContact = {
-    phone: '0502943846',
-    phoneIntl: '+966 50 294 3846',
-    whatsapp: '966502943846',
-    email: 'info@trackkt.com',
+    phone:     _c.phone     || '0502943846',
+    phoneIntl: _c.phoneIntl || '+966 50 294 3846',
+    whatsapp:  _c.whatsapp  || '966502943846',
+    email:     _c.email     || 'info@trackkt.com',
 };
 
 /* Returns a flag image URL from flagcdn.com for a given 2-letter country code */
