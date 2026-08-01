@@ -68,22 +68,15 @@
                     </div>
 
                     <div>
-                        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
-                            <label class="block text-sm font-medium">محتوى المقال *</label>
-                            <div class="flex flex-wrap gap-1">
-                                <button type="button" class="editor-btn px-2 py-1 text-xs rounded-lg bg-slate-100 hover:bg-tract-50" data-action="h2" data-lang="{{ $lang }}">H2</button>
-                                <button type="button" class="editor-btn px-2 py-1 text-xs rounded-lg bg-slate-100 hover:bg-tract-50" data-action="h3" data-lang="{{ $lang }}">H3</button>
-                                <button type="button" class="editor-btn px-2 py-1 text-xs rounded-lg bg-slate-100 hover:bg-tract-50" data-action="p" data-lang="{{ $lang }}">فقرة</button>
-                                <button type="button" class="editor-btn px-2 py-1 text-xs rounded-lg bg-slate-100 hover:bg-tract-50" data-action="ul" data-lang="{{ $lang }}">قائمة</button>
-                                <button type="button" class="editor-btn px-2 py-1 text-xs rounded-lg bg-slate-100 hover:bg-tract-50" data-action="strong" data-lang="{{ $lang }}">عريض</button>
-                                <button type="button" class="editor-btn px-2 py-1 text-xs rounded-lg bg-slate-100 hover:bg-tract-50" data-action="link" data-lang="{{ $lang }}">رابط</button>
-                                <label class="editor-btn px-2 py-1 text-xs rounded-lg bg-tract-50 text-tract-700 cursor-pointer hover:bg-tract-100">
-                                    صورة
-                                    <input type="file" accept="image/*" class="hidden editor-image-input" data-lang="{{ $lang }}">
-                                </label>
-                            </div>
-                        </div>
-                        <textarea name="content_{{ $lang }}" rows="14" required class="w-full px-4 py-2.5 rounded-xl border font-mono text-sm content-editor" data-lang="{{ $lang }}" placeholder="<h2>عنوان فرعي</h2><p>محتوى...</p>">{{ old('content_'.$lang, $post->content[$lang] ?? '') }}</textarea>
+                        <label class="block text-sm font-medium mb-2">محتوى المقال *</label>
+                        <textarea
+                            id="content_{{ $lang }}"
+                            name="content_{{ $lang }}"
+                            required
+                            class="content-editor"
+                            data-lang="{{ $lang }}"
+                            data-dir="{{ in_array($lang, ['ar', 'ur']) ? 'rtl' : 'ltr' }}"
+                        >{{ old('content_'.$lang, $post->content[$lang] ?? '') }}</textarea>
                         <div class="mt-2 flex flex-wrap gap-4 text-xs">
                             <span class="word-stat text-slate-600" data-lang="{{ $lang }}">الكلمات: <strong class="word-count">0</strong></span>
                             <span class="text-slate-500">الهدف: {{ $minWords }}+ كلمة</span>
@@ -207,7 +200,40 @@
 .admin-tab:hover { background: #fff; color: #047857; }
 .admin-tab.is-active { background: #fff; color: #047857; box-shadow: 0 1px 3px rgba(15,23,42,0.08); }
 .admin-tab-panel.hidden { display: none; }
+
+.tox-tinymce {
+    border-radius: 0.75rem !important;
+    border-color: #e2e8f0 !important;
+    overflow: hidden;
+}
+.tox .tox-toolbar-overlord,
+.tox .tox-toolbar,
+.tox .tox-toolbar__primary {
+    background: #f8fafc !important;
+}
+.tox .tox-edit-area__iframe {
+    background: #fff !important;
+}
+.tox .tox-statusbar {
+    border-top: 1px solid #e2e8f0 !important;
+    background: #f8fafc !important;
+}
+.tox .tox-mbtn,
+.tox .tox-tbtn {
+    color: #334155 !important;
+}
+.tox .tox-tbtn:hover {
+    background: #e2e8f0 !important;
+}
+.tox .tox-tbtn--enabled,
+.tox .tox-tbtn--enabled:hover {
+    background: #dcfce7 !important;
+    color: #047857 !important;
+}
 </style>
+
+<script src="https://cdn.jsdelivr.net/npm/tinymce@7/tinymce.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tinymce@7/langs/ar.js"></script>
 
 <script>
 (function () {
@@ -264,27 +290,23 @@
         updateSeoPreview();
     };
 
-    const wrapSelection = (textarea, before, after = '') => {
-        const start = textarea.selectionStart;
-        const end = textarea.selectionEnd;
-        const selected = textarea.value.substring(start, end) || 'نص';
-        const replacement = before + selected + after;
-        textarea.value = textarea.value.substring(0, start) + replacement + textarea.value.substring(end);
-        textarea.focus();
-        textarea.selectionStart = start + before.length;
-        textarea.selectionEnd = start + before.length + selected.length;
-        textarea.dispatchEvent(new Event('input'));
+    const getEditorContent = (lang) => {
+        const ta = document.querySelector(`.content-editor[data-lang="${lang}"]`);
+        if (!ta) return '';
+        const editor = window.tinymce?.get(`content_${lang}`);
+        return editor ? editor.getContent() : ta.value;
     };
 
     const updateContentStats = (lang) => {
         const ta = document.querySelector(`.content-editor[data-lang="${lang}"]`);
         if (!ta) return;
-        const words = countWords(ta.value);
+        const html = getEditorContent(lang);
+        const words = countWords(html);
         const block = ta.closest('.post-lang-block');
         const metaTitle = document.querySelector(`[name="meta_title_${lang}"]`)?.value || document.querySelector(`[name="title_${lang}"]`)?.value;
         const metaDesc = document.querySelector(`[name="meta_description_${lang}"]`)?.value;
-        const h2 = (ta.value.match(/<h2/gi) || []).length;
-        const hasImage = /<img/i.test(ta.value) || document.querySelector('[name="featured_image_file"]')?.files?.length;
+        const h2 = (html.match(/<h2/gi) || []).length;
+        const hasImage = /<img/i.test(html) || document.querySelector('[name="featured_image_file"]')?.files?.length;
 
         block.querySelector('.word-count').textContent = words;
         block.querySelector('.reading-time').textContent = `وقت القراءة: ~${Math.max(1, Math.ceil(words / 200))} د`;
@@ -317,48 +339,85 @@
         updateCharCount(field);
     });
 
-    document.querySelectorAll('.content-editor').forEach((ta) => {
-        ta.addEventListener('input', () => updateContentStats(ta.dataset.lang));
-        updateContentStats(ta.dataset.lang);
+    const initTinyMce = () => {
+        if (!window.tinymce) return;
+
+        document.querySelectorAll('.content-editor').forEach((ta) => {
+            const lang = ta.dataset.lang;
+            const isRtl = ta.dataset.dir === 'rtl';
+
+            window.tinymce.init({
+                target: ta,
+                base_url: 'https://cdn.jsdelivr.net/npm/tinymce@7',
+                suffix: '.min',
+                height: 480,
+                min_height: 360,
+                menubar: 'file edit view insert format table tools',
+                plugins: 'lists link image table code directionality autoresize advlist',
+                toolbar: 'undo redo | blocks | bold italic underline | alignleft aligncenter alignright alignjustify | table | bullist numlist | link image | code',
+                block_formats: 'Paragraph=p; Heading 2=h2; Heading 3=h3; Heading 4=h4',
+                branding: false,
+                promotion: false,
+                resize: true,
+                statusbar: true,
+                directionality: isRtl ? 'rtl' : 'ltr',
+                language: lang === 'ar' ? 'ar' : undefined,
+                content_style: `
+                    body {
+                        font-family: system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
+                        font-size: 16px;
+                        line-height: 1.7;
+                        color: #1e293b;
+                        ${isRtl ? 'direction: rtl; text-align: right;' : 'direction: ltr; text-align: left;'}
+                    }
+                    h2 { font-size: 1.5rem; font-weight: 700; margin: 1.25rem 0 0.75rem; color: #0f172a; }
+                    h3 { font-size: 1.25rem; font-weight: 700; margin: 1rem 0 0.5rem; color: #0f172a; }
+                    p { margin: 0 0 0.75rem; }
+                    img { max-width: 100%; height: auto; border-radius: 0.75rem; margin: 1rem 0; }
+                    a { color: #047857; text-decoration: underline; }
+                    ul, ol { margin: 0 0 0.75rem; padding-${isRtl ? 'right' : 'left'}: 1.5rem; }
+                `,
+                table_default_styles: { width: '100%' },
+                table_responsive_width: true,
+                image_title: true,
+                automatic_uploads: true,
+                file_picker_types: 'image',
+                images_upload_handler: (blobInfo) => new Promise((resolve, reject) => {
+                    const fd = new FormData();
+                    fd.append('image', blobInfo.blob(), blobInfo.filename());
+                    fd.append('_token', csrf);
+                    fetch(uploadUrl, {
+                        method: 'POST',
+                        body: fd,
+                        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                    })
+                        .then((res) => res.json())
+                        .then((data) => {
+                            if (data.url) resolve(data.url);
+                            else reject('فشل رفع الصورة');
+                        })
+                        .catch(() => reject('فشل رفع الصورة'));
+                }),
+                setup: (editor) => {
+                    editor.on('change keyup undo redo SetContent', () => {
+                        editor.save();
+                        updateContentStats(lang);
+                    });
+                },
+                init_instance_callback: () => updateContentStats(lang),
+            });
+        });
+    };
+
+    document.getElementById('post-form')?.addEventListener('submit', () => {
+        window.tinymce?.triggerSave();
     });
 
-    document.querySelectorAll('.editor-btn[data-action]').forEach((btn) => {
-        btn.addEventListener('click', () => {
-            const lang = btn.dataset.lang;
-            const ta = document.querySelector(`.content-editor[data-lang="${lang}"]`);
-            const map = {
-                h2: ['<h2>', '</h2>'], h3: ['<h3>', '</h3>'], p: ['<p>', '</p>'],
-                ul: ['<ul>\n<li>', '</li>\n</ul>'], strong: ['<strong>', '</strong>'],
-            };
-            if (btn.dataset.action === 'link') {
-                const url = prompt('الرابط (URL):', 'https://');
-                if (url) wrapSelection(ta, `<a href="${url}">`, '</a>');
-                return;
-            }
-            const [b, a] = map[btn.dataset.action] || ['', ''];
-            wrapSelection(ta, b, a);
-        });
-    });
-
-    document.querySelectorAll('.editor-image-input').forEach((input) => {
-        input.addEventListener('change', async () => {
-            const file = input.files[0];
-            if (!file) return;
-            const lang = input.dataset.lang;
-            const ta = document.querySelector(`.content-editor[data-lang="${lang}"]`);
-            const fd = new FormData();
-            fd.append('image', file);
-            fd.append('_token', csrf);
-            try {
-                const res = await fetch(uploadUrl, { method: 'POST', body: fd, headers: { 'X-Requested-With': 'XMLHttpRequest' } });
-                const data = await res.json();
-                if (data.url) wrapSelection(ta, `<img src="${data.url}" alt="${file.name}" class="rounded-xl my-4 max-w-full" />`, '');
-            } catch (e) {
-                alert('فشل رفع الصورة');
-            }
-            input.value = '';
-        });
-    });
+    if (window.tinymce) {
+        initTinyMce();
+    } else {
+        document.querySelector('script[src*="tinymce.min.js"]')?.addEventListener('load', initTinyMce);
+    }
 
     updateSeoPreview();
 })();
