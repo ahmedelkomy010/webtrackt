@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\StatController;
 use App\Http\Controllers\Admin\WhyUsController;
 use App\Http\Controllers\Admin\ContactSettingsController;
+use App\Http\Controllers\Admin\RobotsTxtController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\HomeController;
@@ -76,6 +77,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('posts/upload-image', [PostController::class, 'uploadImage'])->name('posts.upload-image');
         Route::get('seo', [SeoController::class, 'edit'])->name('seo.edit');
         Route::put('seo', [SeoController::class, 'update'])->name('seo.update');
+        Route::get('robots-txt', [RobotsTxtController::class, 'edit'])->name('robots.edit');
+        Route::put('robots-txt', [RobotsTxtController::class, 'update'])->name('robots.update');
+        Route::delete('robots-txt', [RobotsTxtController::class, 'destroy'])->name('robots.destroy');
         Route::get('contact-settings', [ContactSettingsController::class, 'edit'])->name('contact.edit');
         Route::put('contact-settings', [ContactSettingsController::class, 'update'])->name('contact.update');
         Route::get('about-settings', [AboutSettingsController::class, 'edit'])->name('about.edit');
