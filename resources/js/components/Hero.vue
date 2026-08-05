@@ -2,9 +2,10 @@
 import { computed } from 'vue';
 import { useSite } from '../composables/useSite';
 import { useContent } from '../composables/useContent';
+import { localizedPath } from '../utils/locale';
 import { storageUrl } from '../utils/storage';
 
-const { config, country, countryName, locale, t } = useSite();
+const { config, country, countryName, locale, countryCode, t } = useSite();
 const { content } = useContent();
 
 const heroDescription = computed(() => {
@@ -79,7 +80,7 @@ const heroSideImage = computed(() => storageUrl(siteImages.value.hero_side_image
 
                     <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                         <a
-                            href="#contact"
+                            :href="localizedPath('contact', locale, countryCode)"
                             class="inline-flex items-center justify-center px-8 py-4 rounded-2xl bg-tract-700 text-white font-semibold hover:bg-tract-800 shadow-xl shadow-tract-700/30 transition-all hover:-translate-y-1"
                         >
                             {{ t('hero.ctaPrimary') }}

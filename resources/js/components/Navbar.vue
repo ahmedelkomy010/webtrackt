@@ -21,16 +21,22 @@ const resolveNavHref = (href) => {
     if (href === '/blog' || href === 'blog') {
         return localizedPath('blog', locale.value, countryCode.value);
     }
+    if (href === '#about' || href === '/about' || href === 'about') {
+        return localizedPath('about', locale.value, countryCode.value);
+    }
+    if (href === '#contact' || href === '/contact' || href === 'contact') {
+        return localizedPath('contact', locale.value, countryCode.value);
+    }
     return href;
 };
 
 const defaultLinks = computed(() => [
     { href: localizedPath('services', locale.value, countryCode.value), label: t('nav.services') },
-    { href: '#about', label: t('nav.about') },
+    { href: localizedPath('about', locale.value, countryCode.value), label: t('nav.about') },
     { href: '#why-us', label: t('nav.whyUs') },
     { href: '#reviews', label: t('nav.reviews') },
     { href: localizedPath('blog', locale.value, countryCode.value), label: t('nav.blog'), external: false },
-    { href: '#contact', label: t('nav.contact') },
+    { href: localizedPath('contact', locale.value, countryCode.value), label: t('nav.contact') },
 ]);
 
 const links = computed(() => {
@@ -99,8 +105,8 @@ onUnmounted(() => {
 <template>
     <header
         :class="[
-            'fixed top-0 inset-x-0 z-50 transition-all duration-300 safe-top',
-            isScrolled ? 'glass shadow-sm border-b border-emerald-100/50' : 'bg-transparent',
+            'sticky top-0 inset-x-0 z-50 transition-all duration-300 safe-top',
+            isScrolled ? 'glass shadow-sm border-b border-emerald-100/50' : 'bg-white/80 backdrop-blur-md',
         ]"
     >
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -203,7 +209,7 @@ onUnmounted(() => {
                     </div>
 
                     <a
-                        href="#contact"
+                        :href="localizedPath('contact', locale.value, countryCode.value)"
                         class="hidden lg:inline-flex items-center px-5 py-2.5 rounded-xl bg-tract-700 text-white text-sm font-semibold hover:bg-tract-800 shadow-lg shadow-tract-700/25 transition-all hover:-translate-y-0.5"
                     >
                         {{ t('nav.startProject') }}
@@ -245,7 +251,7 @@ onUnmounted(() => {
                     >
                         {{ link.label }}
                     </a>
-                    <a href="#contact" class="mobile-drawer__link text-tract-700" @click="closeMobile">{{ t('nav.startProject') }}</a>
+                    <a :href="localizedPath('contact', locale.value, countryCode.value)" class="mobile-drawer__link text-tract-700" @click="closeMobile">{{ t('nav.startProject') }}</a>
                 </div>
                 <div class="p-4 border-t border-slate-100 space-y-3">
                     <p class="text-xs font-semibold text-slate-500 px-1">{{ t('nav.country') }}</p>

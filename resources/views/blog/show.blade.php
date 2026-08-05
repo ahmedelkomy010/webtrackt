@@ -84,8 +84,8 @@
             <img src="{{ asset('storage/'.$post->featured_image) }}" alt="{{ $title }}" class="w-full rounded-2xl mb-10 shadow-lg">
         @endif
 
-        <div class="prose prose-lg max-w-none prose-headings:text-slate-900 prose-a:text-tract-600 prose-strong:text-slate-900">
-            {!! $post->localized('content', $locale) !!}
+        <div class="rich-content" dir="{{ in_array($locale, ['ar', 'ur']) ? 'rtl' : 'ltr' }}">
+            {!! \App\Support\RichContent::format($post->localized('content', $locale)) !!}
         </div>
 
         @if ($keywords)
@@ -102,7 +102,7 @@
         <div class="mt-10 p-6 rounded-2xl bg-gradient-to-r from-tract-600 to-tract-800 text-white">
             <h3 class="text-xl font-bold mb-2">{{ $locale === 'en' ? 'Ready to start your project?' : ($locale === 'ur' ? 'اپنا پروجیکٹ شروع کریں؟' : 'جاهز لبدء مشروعك؟') }}</h3>
             <p class="text-tract-100 mb-4 text-sm">{{ $locale === 'en' ? 'Contact Trackkt for ERP, web development, and digital marketing.' : ($locale === 'ur' ? 'ERP، ویب ڈvelopment اور ڈیجیٹل مارکیٹنگ کے لیے Trackkt سے رابطہ کریں۔' : 'تواصل مع تراكت لحلول ERP والمواقع والتسويق الإلكتروني.') }}</p>
-            <a href="/#contact" class="inline-flex px-5 py-2.5 rounded-xl bg-white text-tract-700 font-semibold text-sm hover:bg-tract-50 transition-colors">{{ $locale === 'en' ? 'Contact us' : ($locale === 'ur' ? 'رابطہ کریں' : 'تواصل معنا') }}</a>
+            <a href="{{ \App\Support\Locale::path('contact', $locale, $country ?? \App\Support\SiteUrl::DEFAULT_COUNTRY) }}" class="inline-flex px-5 py-2.5 rounded-xl bg-white text-tract-700 font-semibold text-sm hover:bg-tract-50 transition-colors">{{ $locale === 'en' ? 'Contact us' : ($locale === 'ur' ? 'رابطہ کریں' : 'تواصل معنا') }}</a>
         </div>
     </div>
 </article>

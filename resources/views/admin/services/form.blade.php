@@ -75,8 +75,15 @@
                 <textarea name="description_{{ $lang }}" rows="3" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200">{{ old('description_'.$lang, $service->description[$lang] ?? '') }}</textarea>
             </div>
             <div>
-                <label class="block text-sm font-medium mb-1">محتوى صفحة الخدمة (HTML)</label>
-                <textarea name="body_{{ $lang }}" rows="5" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 font-mono text-sm">{{ old('body_'.$lang, $service->body[$lang] ?? '') }}</textarea>
+                <label class="block text-sm font-medium mb-2">محتوى صفحة الخدمة</label>
+                <p class="text-xs text-slate-500 mb-2">استخدم العناوين (H2/H3)، القوائم، والجداول لتنسيق المقال — يظهر بشكل منظم في صفحة الخدمة</p>
+                <textarea
+                    id="body_{{ $lang }}"
+                    name="body_{{ $lang }}"
+                    class="service-body-editor"
+                    data-lang="{{ $lang }}"
+                    data-dir="{{ in_array($lang, ['ar', 'ur']) ? 'rtl' : 'ltr' }}"
+                >{{ old('body_'.$lang, $service->body[$lang] ?? '') }}</textarea>
             </div>
             <div>
                 <label class="block text-sm font-medium mb-1">المميزات (سطر لكل ميزة) *</label>
@@ -155,4 +162,100 @@
         {{ $isEdit ? 'حفظ التعديلات' : 'إضافة الخدمة' }}
     </button>
 </form>
+
+<style>
+.tox-tinymce {
+    border-radius: 0.75rem !important;
+    border-color: #e2e8f0 !important;
+    overflow: hidden;
+}
+.tox .tox-toolbar-overlord,
+.tox .tox-toolbar,
+.tox .tox-toolbar__primary {
+    background: #f8fafc !important;
+}
+.tox .tox-edit-area__iframe {
+    background: #fff !important;
+}
+.tox .tox-statusbar {
+    border-top: 1px solid #e2e8f0 !important;
+    background: #f8fafc !important;
+}
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/tinymce@7/tinymce.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tinymce@7/langs/ar.js"></script>
+<script>
+(function () {
+    const uploadUrl = @json(route('admin.posts.upload-image'));
+    const csrf = @json(csrf_token());
+
+    const initTinyMce = () => {
+        if (!window.tinymce) return;
+
+        document.querySelectorAll('.service-body-editor').forEach((ta) => {
+            const lang = ta.dataset.lang;
+            const isRtl = ta.dataset.dir === 'rtl';
+
+            window.tinymce.init({
+                target: ta,
+                base_url: 'https://cdn.jsdelivr.net/npm/tinymce@7',
+                suffix: '.min',
+                height: 420,
+                min_height: 320,
+                menubar: 'edit view insert format table',
+                plugins: 'lists link image table code directionality autoresize advlist',
+                toolbar: 'undo redo | blocks | bold italic underline | alignleft aligncenter alignright | bullist numlist | link image | table | code',
+                block_formats: 'Paragraph=p; Heading 2=h2; Heading 3=h3; Heading 4=h4',
+                branding: false,
+                promotion: false,
+                resize: true,
+                statusbar: true,
+                directionality: isRtl ? 'rtl' : 'ltr',
+                language: lang === 'ar' ? 'ar' : undefined,
+                content_style: `
+                    body {
+                        font-family: system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
+                        font-size: 16px;
+                        line-height: 1.7;
+                        color: #1e293b;
+                        ${isRtl ? 'direction: rtl; text-align: right;' : 'direction: ltr; text-align: left;'}
+                    }
+                    h2 { font-size: 1.5rem; font-weight: 700; margin: 1.25rem 0 0.75rem; color: #0f172a; }
+                    h3 { font-size: 1.25rem; font-weight: 700; margin: 1rem 0 0.5rem; color: #0f172a; }
+                    p { margin: 0 0 0.75rem; }
+                    ul, ol { margin: 0 0 0.75rem; padding-${isRtl ? 'right' : 'left'}: 1.5rem; }
+                    img { max-width: 100%; height: auto; border-radius: 0.75rem; }
+                    a { color: #047857; text-decoration: underline; }
+                `,
+                automatic_uploads: true,
+                file_picker_types: 'image',
+                images_upload_handler: (blobInfo) => new Promise((resolve, reject) => {
+                    const fd = new FormData();
+                    fd.append('image', blobInfo.blob(), blobInfo.filename());
+                    fd.append('_token', csrf);
+                    fetch(uploadUrl, {
+                        method: 'POST',
+                        body: fd,
+                        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                    })
+                        .then((res) => res.json())
+                        .then((data) => data.url ? resolve(data.url) : reject('فشل رفع الصورة'))
+                        .catch(() => reject('فشل رفع الصورة'));
+                }),
+            });
+        });
+    };
+
+    document.querySelector('form')?.addEventListener('submit', () => {
+        window.tinymce?.triggerSave();
+    });
+
+    if (window.tinymce) {
+        initTinyMce();
+    } else {
+        document.querySelector('script[src*="tinymce.min.js"]')?.addEventListener('load', initTinyMce);
+    }
+})();
+</script>
 @endsection

@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted } from 'vue';
 import { fetchContent } from './composables/useContent';
+import TopTicker from './components/TopTicker.vue';
 import Navbar from './components/Navbar.vue';
 import Hero from './components/Hero.vue';
 import Services from './components/Services.vue';
@@ -20,6 +21,7 @@ onMounted(() => {
 
 <template>
     <div class="min-h-screen gradient-mesh app-shell">
+        <TopTicker />
         <Navbar />
         <main>
             <Hero />

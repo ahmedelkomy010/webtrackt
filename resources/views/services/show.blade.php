@@ -48,8 +48,8 @@
 
 @if ($body)
 <section class="py-12 lg:py-16 bg-white">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 prose prose-lg max-w-none prose-headings:text-slate-900 prose-a:text-tract-600">
-        {!! $body !!}
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        @include('partials.rich-content', ['content' => $body, 'locale' => $locale])
     </div>
 </section>
 @endif
@@ -92,7 +92,7 @@
                             </li>
                         @endforeach
                     </ul>
-                    <a href="/#contact" class="block w-full text-center py-3 rounded-xl font-semibold text-sm transition-colors {{ ($offer['highlight'] ?? false) ? 'bg-tract-600 text-white hover:bg-tract-700' : 'bg-white border border-tract-200 text-tract-700 hover:bg-tract-50' }}">
+                    <a href="{{ Locale::path('contact', $locale, $cty) }}" class="block w-full text-center py-3 rounded-xl font-semibold text-sm transition-colors {{ ($offer['highlight'] ?? false) ? 'bg-tract-600 text-white hover:bg-tract-700' : 'bg-white border border-tract-200 text-tract-700 hover:bg-tract-50' }}">
                         {{ $locale === 'en' ? 'Request this offer' : ($locale === 'ur' ? 'یہ پیشکش طلب کریں' : 'اطلب هذا العرض') }}
                     </a>
                 </article>
@@ -129,7 +129,7 @@
     <div class="max-w-3xl mx-auto px-4 text-center text-white">
         <h2 class="text-2xl sm:text-3xl font-bold mb-4">{{ $locale === 'en' ? 'Ready to get started?' : ($locale === 'ur' ? 'شروع کرنے کے لیے تیار ہیں؟' : 'جاهز لبدء مشروعك؟') }}</h2>
         <p class="text-tract-100 mb-6">{{ $locale === 'en' ? 'Contact Trackkt for a free consultation about '.$title : ($locale === 'ur' ? 'مفت مشاورت کے لیے Trackkt سے رابطہ کریں' : 'تواصل مع Trackkt للحصول على استشارة مجانية حول '.$title) }}</p>
-        <a href="{{ Locale::home($locale, $cty) }}#contact" class="inline-flex px-8 py-3 rounded-xl bg-white text-tract-700 font-semibold hover:bg-tract-50 transition-colors">{{ $locale === 'en' ? 'Contact us now' : ($locale === 'ur' ? 'ابھی رابطہ کریں' : 'تواصل معنا الآن') }}</a>
+        <a href="{{ Locale::path('contact', $locale, $cty) }}" class="inline-flex px-8 py-3 rounded-xl bg-white text-tract-700 font-semibold hover:bg-tract-50 transition-colors">{{ $locale === 'en' ? 'Contact us now' : ($locale === 'ur' ? 'ابھی رابطہ کریں' : 'تواصل معنا الآن') }}</a>
     </div>
 </section>
 @endsection

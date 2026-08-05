@@ -19,6 +19,7 @@
     @yield('schema')
 </head>
 <body class="antialiased bg-slate-50 text-slate-800 app-shell">
+    @include('partials.top-ticker', ['locale' => $loc])
     @include('partials.site-header', ['locale' => $loc])
     <main>@yield('content')</main>
     <footer class="bg-slate-900 text-slate-400 py-10 mt-8 sm:mt-16">

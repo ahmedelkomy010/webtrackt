@@ -94,6 +94,7 @@ class ContentService
                 ->pluck('value', 'key')
                 ->all(),
             'about' => app(AboutSettingsService::class)->all(),
+            'ticker' => app(\App\Services\TickerSettingsService::class)->all(),
         ];
     }
 

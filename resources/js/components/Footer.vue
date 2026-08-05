@@ -2,17 +2,18 @@
 import { computed } from 'vue';
 import { useSite } from '../composables/useSite';
 import { useContent, loc } from '../composables/useContent';
+import { localizedPath } from '../utils/locale';
 import { publicAsset } from '../utils/assets';
 
-const { config, country, countryName, locale, t } = useSite();
+const { config, country, countryName, locale, countryCode, t } = useSite();
 const { content } = useContent();
 const year = new Date().getFullYear();
 
 const defaultLinks = computed(() => [
-    { href: '#services', label: t('nav.services') },
-    { href: '#about', label: t('nav.about') },
+    { href: localizedPath('services', locale.value, countryCode.value), label: t('nav.services') },
+    { href: localizedPath('about', locale.value, countryCode.value), label: t('nav.about') },
     { href: '#why-us', label: t('nav.whyUs') },
-    { href: '#contact', label: t('nav.contact') },
+    { href: localizedPath('contact', locale.value, countryCode.value), label: t('nav.contact') },
 ]);
 
 const links = computed(() => {

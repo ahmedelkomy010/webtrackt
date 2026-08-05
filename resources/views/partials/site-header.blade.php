@@ -7,6 +7,7 @@
     $labels = [
         'home' => $loc === 'en' ? 'Home' : ($loc === 'ur' ? 'ہوم' : 'الرئيسية'),
         'services' => $loc === 'en' ? 'Services' : ($loc === 'ur' ? 'خدمات' : 'خدماتنا'),
+        'about' => $loc === 'en' ? 'About' : ($loc === 'ur' ? 'ہمارے بارے' : 'من نحن'),
         'blog' => $loc === 'en' ? 'Blog' : ($loc === 'ur' ? 'بلاگ' : 'المدونة'),
         'contact' => $loc === 'en' ? 'Contact' : ($loc === 'ur' ? 'رابطہ' : 'تواصل'),
     ];
@@ -14,6 +15,8 @@
     $isHome = $basePath === '';
     $isServices = str_starts_with($basePath, 'services');
     $isBlog = str_starts_with($basePath, 'blog');
+    $isAbout = str_starts_with($basePath, 'about');
+    $isContact = str_starts_with($basePath, 'contact');
 @endphp
 
 <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 safe-top">
@@ -30,8 +33,9 @@
             <nav class="hidden lg:flex items-center gap-4 text-sm font-medium">
                 <a href="{{ Locale::home($loc, $cty) }}" class="text-slate-600 hover:text-tract-700 {{ $isHome ? 'text-tract-700 font-semibold' : '' }}">{{ $labels['home'] }}</a>
                 <a href="{{ Locale::path('services', $loc, $cty) }}" class="text-slate-600 hover:text-tract-700 {{ $isServices ? 'text-tract-700 font-semibold' : '' }}">{{ $labels['services'] }}</a>
+                <a href="{{ Locale::path('about', $loc, $cty) }}" class="text-slate-600 hover:text-tract-700 {{ $isAbout ? 'text-tract-700 font-semibold' : '' }}">{{ $labels['about'] }}</a>
                 <a href="{{ Locale::path('blog', $loc, $cty) }}" class="text-slate-600 hover:text-tract-700 {{ $isBlog ? 'text-tract-700 font-semibold' : '' }}">{{ $labels['blog'] }}</a>
-                <a href="{{ Locale::home($loc, $cty) }}#contact" class="inline-flex px-4 py-2 rounded-xl bg-tract-600 text-white hover:bg-tract-700">{{ $labels['contact'] }}</a>
+                <a href="{{ Locale::path('contact', $loc, $cty) }}" class="inline-flex px-4 py-2 rounded-xl bg-tract-600 text-white hover:bg-tract-700 {{ $isContact ? 'ring-2 ring-tract-300' : '' }}">{{ $labels['contact'] }}</a>
             </nav>
 
             <button type="button" class="lg:hidden touch-target p-2 rounded-xl text-slate-600 hover:bg-slate-100" aria-label="Menu" data-mobile-menu-toggle>
@@ -47,8 +51,9 @@
             <div class="p-4 space-y-1">
                 <a href="{{ Locale::home($loc, $cty) }}" class="mobile-drawer__link">{{ $labels['home'] }}</a>
                 <a href="{{ Locale::path('services', $loc, $cty) }}" class="mobile-drawer__link">{{ $labels['services'] }}</a>
+                <a href="{{ Locale::path('about', $loc, $cty) }}" class="mobile-drawer__link">{{ $labels['about'] }}</a>
                 <a href="{{ Locale::path('blog', $loc, $cty) }}" class="mobile-drawer__link">{{ $labels['blog'] }}</a>
-                <a href="{{ Locale::home($loc, $cty) }}#contact" class="mobile-drawer__link">{{ $labels['contact'] }}</a>
+                <a href="{{ Locale::path('contact', $loc, $cty) }}" class="mobile-drawer__link">{{ $labels['contact'] }}</a>
             </div>
             <div class="p-4 border-t border-slate-100 flex gap-3">
                 <a href="{{ Locale::switchUrl(request(), Locale::AR) }}" class="flex-1 text-center py-3 rounded-xl text-sm font-medium {{ $loc === 'ar' ? 'bg-tract-600 text-white' : 'bg-slate-100 text-slate-700' }}">العربية</a>

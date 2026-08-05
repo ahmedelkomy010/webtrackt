@@ -10,10 +10,12 @@
         use App\Support\Locale;
         use App\Support\SiteUrl;
         use App\Services\AboutSettingsService;
+        use App\Services\TickerSettingsService;
 
         $pageLocale = $locale ?? Locale::AR;
         $pageCountry = $country ?? SiteUrl::DEFAULT_COUNTRY;
         $aboutSettings = $aboutSettings ?? app(AboutSettingsService::class)->all();
+        $tickerSettings = app(TickerSettingsService::class)->all();
         $basePath = rtrim(parse_url(url('/'), PHP_URL_PATH) ?: '', '/');
         if ($basePath === '/') {
             $basePath = '';
@@ -44,6 +46,7 @@
             'basePath' => $basePath,
             'storageUrl' => asset('storage'),
             'about' => $aboutSettings,
+            'ticker' => $tickerSettings,
         ];
 
         $contactSettings = $contactSettings ?? [];

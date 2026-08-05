@@ -13,7 +13,11 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\StatController;
 use App\Http\Controllers\Admin\WhyUsController;
 use App\Http\Controllers\Admin\ContactSettingsController;
-use App\Http\Controllers\Admin\RobotsTxtController;
+use App\Http\Controllers\Admin\RobotsTxtController as AdminRobotsTxtController;
+use App\Http\Controllers\Admin\TickerSettingsController;
+use App\Http\Controllers\AboutPageController;
+use App\Http\Controllers\ContactPageController;
+use App\Http\Controllers\RobotsTxtController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\HomeController;
@@ -37,11 +41,15 @@ foreach (Locale::PREFIX as $localeCode => $localePrefix) {
                 Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
                 Route::get('/services', [ServicePageController::class, 'index'])->name('services.index');
                 Route::get('/services/{slug}', [ServicePageController::class, 'show'])->name('services.show');
+                Route::get('/about', AboutPageController::class)->name('about');
+                Route::get('/contact', ContactPageController::class)->name('contact');
             } else {
                 Route::get('/blog', [BlogController::class, 'index']);
                 Route::get('/blog/{slug}', [BlogController::class, 'show']);
                 Route::get('/services', [ServicePageController::class, 'index']);
                 Route::get('/services/{slug}', [ServicePageController::class, 'show']);
+                Route::get('/about', AboutPageController::class);
+                Route::get('/contact', ContactPageController::class);
             }
         };
 
@@ -58,6 +66,7 @@ Route::post('/api/contact', [App\Http\Controllers\ContactController::class, 'sto
 Route::post('/api/reviews', [App\Http\Controllers\ReviewController::class, 'store']);
 
 Route::get('/sitemap.xml', SitemapController::class);
+Route::get('/robots.txt', RobotsTxtController::class);
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware('guest')->group(function () {
@@ -77,9 +86,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('posts/upload-image', [PostController::class, 'uploadImage'])->name('posts.upload-image');
         Route::get('seo', [SeoController::class, 'edit'])->name('seo.edit');
         Route::put('seo', [SeoController::class, 'update'])->name('seo.update');
-        Route::get('robots-txt', [RobotsTxtController::class, 'edit'])->name('robots.edit');
-        Route::put('robots-txt', [RobotsTxtController::class, 'update'])->name('robots.update');
-        Route::delete('robots-txt', [RobotsTxtController::class, 'destroy'])->name('robots.destroy');
+        Route::get('robots-txt', [AdminRobotsTxtController::class, 'edit'])->name('robots.edit');
+        Route::put('robots-txt', [AdminRobotsTxtController::class, 'update'])->name('robots.update');
+        Route::delete('robots-txt', [AdminRobotsTxtController::class, 'destroy'])->name('robots.destroy');
+        Route::get('ticker', [TickerSettingsController::class, 'edit'])->name('ticker.edit');
+        Route::put('ticker', [TickerSettingsController::class, 'update'])->name('ticker.update');
         Route::get('contact-settings', [ContactSettingsController::class, 'edit'])->name('contact.edit');
         Route::put('contact-settings', [ContactSettingsController::class, 'update'])->name('contact.update');
         Route::get('about-settings', [AboutSettingsController::class, 'edit'])->name('about.edit');

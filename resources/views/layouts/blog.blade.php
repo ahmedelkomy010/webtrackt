@@ -40,6 +40,7 @@
     @yield('schema')
 </head>
 <body class="antialiased bg-slate-50 text-slate-800 app-shell">
+    @include('partials.top-ticker', ['locale' => $locale])
     @include('partials.site-header', ['locale' => $locale])
     <main>@yield('content')</main>
 
