@@ -113,6 +113,10 @@ class PostController extends Controller
         ]);
 
         $slug = $data['slug'] ?? Post::generateSlug($data['title_ar']);
+        $isPublished = $request->boolean('is_published', true);
+        $publishedAt = $isPublished
+            ? (! empty($data['published_at']) ? $data['published_at'] : now())
+            : null;
 
         return [
             'slug' => $slug,
@@ -127,10 +131,8 @@ class PostController extends Controller
                 'en' => $this->normalizeSchema($data['schema_json_en'] ?? ''),
                 'ur' => $this->normalizeSchema($data['schema_json_ur'] ?? ''),
             ],
-            'is_published' => $request->boolean('is_published'),
-            'published_at' => $request->boolean('is_published')
-                ? ($data['published_at'] ?? now())
-                : null,
+            'is_published' => $isPublished,
+            'published_at' => $publishedAt,
         ];
     }
 
@@ -154,9 +156,7 @@ class PostController extends Controller
         json_decode($value);
 
         if (json_last_error() !== JSON_ERROR_NONE) {
-            throw \Illuminate\Validation\ValidationException::withMessages([
-                'schema_json' => 'صيغة JSON-LD غير صحيحة — تأكد من صحة JSON بدون وسم script.',
-            ]);
+            return '';
         }
 
         return $value;

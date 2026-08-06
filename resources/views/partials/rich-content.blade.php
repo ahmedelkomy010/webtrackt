@@ -6,7 +6,7 @@
 @endphp
 
 @if ($html)
-<div class="rich-content" dir="{{ $dir }}">
+<div class="rich-content{{ ($variant ?? '') === 'light' ? ' rich-content--light' : '' }}" dir="{{ $dir }}">
     {!! $html !!}
 </div>
 @endif

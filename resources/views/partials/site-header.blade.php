@@ -17,6 +17,8 @@
     $isBlog = str_starts_with($basePath, 'blog');
     $isAbout = str_starts_with($basePath, 'about');
     $isContact = str_starts_with($basePath, 'contact');
+    $isPrivacy = str_starts_with($basePath, 'privacy');
+    $labels['privacy'] = $loc === 'en' ? 'Privacy' : ($loc === 'ur' ? 'رازداری' : 'الخصوصية');
 @endphp
 
 <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 safe-top">
@@ -35,6 +37,7 @@
                 <a href="{{ Locale::path('services', $loc, $cty) }}" class="text-slate-600 hover:text-tract-700 {{ $isServices ? 'text-tract-700 font-semibold' : '' }}">{{ $labels['services'] }}</a>
                 <a href="{{ Locale::path('about', $loc, $cty) }}" class="text-slate-600 hover:text-tract-700 {{ $isAbout ? 'text-tract-700 font-semibold' : '' }}">{{ $labels['about'] }}</a>
                 <a href="{{ Locale::path('blog', $loc, $cty) }}" class="text-slate-600 hover:text-tract-700 {{ $isBlog ? 'text-tract-700 font-semibold' : '' }}">{{ $labels['blog'] }}</a>
+                <a href="{{ Locale::path('privacy', $loc, $cty) }}" class="text-slate-600 hover:text-tract-700 {{ $isPrivacy ? 'text-tract-700 font-semibold' : '' }}">{{ $labels['privacy'] }}</a>
                 <a href="{{ Locale::path('contact', $loc, $cty) }}" class="inline-flex px-4 py-2 rounded-xl bg-tract-600 text-white hover:bg-tract-700 {{ $isContact ? 'ring-2 ring-tract-300' : '' }}">{{ $labels['contact'] }}</a>
             </nav>
 
@@ -53,6 +56,7 @@
                 <a href="{{ Locale::path('services', $loc, $cty) }}" class="mobile-drawer__link">{{ $labels['services'] }}</a>
                 <a href="{{ Locale::path('about', $loc, $cty) }}" class="mobile-drawer__link">{{ $labels['about'] }}</a>
                 <a href="{{ Locale::path('blog', $loc, $cty) }}" class="mobile-drawer__link">{{ $labels['blog'] }}</a>
+                <a href="{{ Locale::path('privacy', $loc, $cty) }}" class="mobile-drawer__link">{{ $labels['privacy'] }}</a>
                 <a href="{{ Locale::path('contact', $loc, $cty) }}" class="mobile-drawer__link">{{ $labels['contact'] }}</a>
             </div>
             <div class="p-4 border-t border-slate-100 flex gap-3">

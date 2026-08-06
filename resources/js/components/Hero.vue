@@ -8,6 +8,11 @@ import { storageUrl } from '../utils/storage';
 const { config, country, countryName, locale, countryCode, t } = useSite();
 const { content } = useContent();
 
+const homePage = computed(() => content.value?.pages?.home ?? config.pages?.home ?? {});
+
+const heroBadge = computed(() => homePage.value.hero_badge?.[locale.value] ?? t('hero.specialty'));
+const heroHeadline = computed(() => homePage.value.hero_headline?.[locale.value] ?? t('hero.headline'));
+const heroHeadlineHighlight = computed(() => homePage.value.hero_headline_highlight?.[locale.value] ?? t('hero.headlineHighlight'));
 const heroDescription = computed(() => {
     const descriptions = {
         ar: config.description,
@@ -34,7 +39,7 @@ const heroSideImage = computed(() => storageUrl(siteImages.value.hero_side_image
                     <!-- Specialty badge -->
                     <div class="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-gradient-to-r from-tract-600 to-tract-700 text-white text-sm font-semibold mb-4 shadow-lg shadow-tract-600/25">
                         <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-                        {{ t('hero.specialty') }}
+                        {{ heroBadge }}
                     </div>
 
                     <!-- Selected country with flag -->
@@ -56,8 +61,8 @@ const heroSideImage = computed(() => storageUrl(siteImages.value.hero_side_image
                     </div>
 
                     <h1 class="text-3xl sm:text-5xl lg:text-6xl font-bold text-slate-900 leading-tight mb-6">
-                        {{ t('hero.headline') }}
-                        <span class="text-gradient block sm:inline">{{ t('hero.headlineHighlight') }}</span>
+                        {{ heroHeadline }}
+                        <span class="text-gradient block sm:inline">{{ heroHeadlineHighlight }}</span>
                     </h1>
 
                     <p class="text-lg sm:text-xl text-slate-600 mb-6 leading-relaxed max-w-xl mx-auto lg:mx-0">

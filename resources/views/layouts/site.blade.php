@@ -18,20 +18,11 @@
     @vite(['resources/css/app.css'])
     @yield('schema')
 </head>
-<body class="antialiased bg-slate-50 text-slate-800 app-shell">
+<body class="antialiased bg-slate-50 text-slate-800 min-h-dvh flex flex-col">
     @include('partials.top-ticker', ['locale' => $loc])
     @include('partials.site-header', ['locale' => $loc])
-    <main>@yield('content')</main>
-    <footer class="bg-slate-900 text-slate-400 py-10 mt-8 sm:mt-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-center sm:text-start">
-            <p>&copy; {{ date('Y') }} {{ config('tract.name') }} — {{ config('tract.name_en') }}</p>
-            <div class="flex gap-4">
-                <a href="{{ Locale::switchUrl(request(), Locale::AR) }}" class="hover:text-white {{ $loc === 'ar' ? 'text-white font-semibold' : '' }}">العربية</a>
-                <a href="{{ Locale::switchUrl(request(), Locale::EN) }}" class="hover:text-white {{ $loc === 'en' ? 'text-white font-semibold' : '' }}">English</a>
-                <a href="{{ Locale::switchUrl(request(), Locale::UR) }}" class="hover:text-white {{ $loc === 'ur' ? 'text-white font-semibold' : '' }}">اردو</a>
-            </div>
-        </div>
-    </footer>
+    <main class="flex-1 w-full">@yield('content')</main>
+    @include('partials.site-footer', ['locale' => $loc])
     @include('partials.mobile-bottom-nav', ['locale' => $loc])
 </body>
 </html>

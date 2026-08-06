@@ -2,6 +2,7 @@
 
 @php
     use App\Support\Locale;
+    use App\Support\PageCopy;
     use App\Support\SiteUrl;
 
     $cty = $country ?? SiteUrl::DEFAULT_COUNTRY;
@@ -10,10 +11,21 @@
     $phoneLocal = $contactSettings['phone'] ?? config('tract.phone');
     $email = $contactSettings['email'] ?? config('tract.email');
     $whatsapp = preg_replace('/[^0-9]/', '', $contactSettings['whatsapp'] ?? config('tract.whatsapp'));
+    $copy = PageCopy::contact($locale);
+    $title = PageCopy::localized($page, 'title', $locale);
+    $badge = PageCopy::localized($page, 'badge', $locale);
+    $subtitle = PageCopy::localized($page, 'subtitle', $locale);
+    $body = PageCopy::localized($page, 'body', $locale);
+    $formLabels = [
+        'submit' => $copy['submit'],
+        'submitting' => $copy['submitting'],
+        'success' => $copy['success'],
+        'error' => $copy['error'],
+    ];
 @endphp
 
-@section('title', $copy['title'])
-@section('meta_description', $copy['subtitle'])
+@section('title', $title)
+@section('meta_description', strip_tags($body))
 @section('canonical', $canonical)
 
 @section('content')
@@ -22,11 +34,15 @@
         <nav class="text-sm text-tract-200 mb-8">
             <a href="{{ Locale::home($locale, $cty) }}" class="hover:text-white">{{ $locale === 'en' ? 'Home' : ($locale === 'ur' ? 'ہوم' : 'الرئيسية') }}</a>
             <span class="mx-2">/</span>
-            <span class="text-white">{{ $copy['title'] }}</span>
+            <span class="text-white">{{ $title }}</span>
         </nav>
-        <span class="inline-block px-4 py-1.5 rounded-full bg-white/10 text-sm font-semibold mb-4">{{ $copy['badge'] }}</span>
-        <h1 class="text-3xl sm:text-4xl font-bold mb-3">{{ $copy['heading'] }}</h1>
-        <p class="text-lg text-tract-100 max-w-2xl">{{ $copy['subtitle'] }}</p>
+        <span class="inline-block px-4 py-1.5 rounded-full bg-white/10 text-sm font-semibold mb-4">{{ $badge }}</span>
+        <h1 class="text-3xl sm:text-4xl font-bold mb-3">{{ $subtitle }}</h1>
+        @if ($body)
+            <div class="text-lg max-w-2xl">
+                @include('partials.rich-content', ['content' => $body, 'locale' => $locale, 'variant' => 'light'])
+            </div>
+        @endif
     </div>
 </section>
 
@@ -108,7 +124,7 @@
     const successEl = document.getElementById('contact-success');
     const errorEl = document.getElementById('contact-error');
     const submitBtn = document.getElementById('contact-submit');
-    const labels = @json(['submit' => $copy['submit'], 'submitting' => $copy['submitting'], 'success' => $copy['success'], 'error' => $copy['error']]);
+    const labels = @json($formLabels);
     const csrf = @json(csrf_token());
 
     form?.addEventListener('submit', async (e) => {

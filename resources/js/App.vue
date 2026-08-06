@@ -20,10 +20,10 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="min-h-screen gradient-mesh app-shell">
+    <div class="min-h-dvh gradient-mesh app-shell">
         <TopTicker />
         <Navbar />
-        <main>
+        <main class="flex-1 w-full">
             <Hero />
             <Services />
             <About />

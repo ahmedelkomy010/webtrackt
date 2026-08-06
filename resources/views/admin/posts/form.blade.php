@@ -45,7 +45,7 @@
                     @endif
                 </div>
                 <label class="flex items-center gap-2 sm:col-span-2">
-                    <input type="checkbox" name="is_published" value="1" @checked(old('is_published', $post->is_published)) class="rounded text-tract-600">
+                    <input type="checkbox" name="is_published" value="1" @checked(old('is_published', $post->exists ? $post->is_published : true)) class="rounded text-tract-600">
                     <span class="text-sm font-medium">نشر المقال — يظهر في المدونة و sitemap</span>
                 </label>
             </div>

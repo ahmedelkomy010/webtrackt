@@ -14,7 +14,8 @@ class BlogController extends Controller
         $locale = Locale::fromRequest($request);
 
         $posts = Post::published()
-            ->latest('published_at')
+            ->orderByDesc('published_at')
+            ->orderByDesc('created_at')
             ->paginate(12);
 
         $siteUrl = rtrim(config('tract.website'), '/');
@@ -31,7 +32,8 @@ class BlogController extends Controller
 
         $related = Post::published()
             ->where('id', '!=', $post->id)
-            ->latest('published_at')
+            ->orderByDesc('published_at')
+            ->orderByDesc('created_at')
             ->take(3)
             ->get();
 

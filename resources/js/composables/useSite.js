@@ -57,6 +57,7 @@ export function useSite() {
         basePath: '',
         storageUrl: '/storage',
         about: {},
+        pages: {},
     };
 
     const country = computed(() => countries[countryCode.value] || countries[defaultCountry]);

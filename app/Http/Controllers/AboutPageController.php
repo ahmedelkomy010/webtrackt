@@ -3,20 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Services\AboutSettingsService;
+use App\Services\PageContentService;
 use App\Support\Locale;
-use App\Support\PageCopy;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class AboutPageController extends Controller
 {
-    public function __invoke(Request $request, AboutSettingsService $about): View
+    public function __invoke(Request $request, AboutSettingsService $about, PageContentService $pages): View
     {
         $locale = Locale::fromRequest($request);
         $siteUrl = rtrim(config('tract.website'), '/');
-        $copy = PageCopy::about($locale);
         $aboutSettings = $about->all();
+        $page = $pages->page('about');
 
-        return view('pages.about', compact('locale', 'siteUrl', 'copy', 'aboutSettings'));
+        return view('pages.about', compact('locale', 'siteUrl', 'aboutSettings', 'page'));
     }
 }

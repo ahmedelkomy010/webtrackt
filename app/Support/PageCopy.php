@@ -4,6 +4,22 @@ namespace App\Support;
 
 class PageCopy
 {
+    public static function fieldSet(string $key, string $ar, string $en, string $ur): array
+    {
+        return ['ar' => $ar, 'en' => $en, 'ur' => $ur];
+    }
+
+    public static function localized(array $page, string $field, string $locale): string
+    {
+        $value = $page[$field] ?? [];
+
+        if (! is_array($value)) {
+            return (string) $value;
+        }
+
+        return $value[$locale] ?? $value['ar'] ?? $value['en'] ?? '';
+    }
+
     public static function about(string $locale): array
     {
         return match ($locale) {

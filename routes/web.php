@@ -14,7 +14,9 @@ use App\Http\Controllers\Admin\StatController;
 use App\Http\Controllers\Admin\WhyUsController;
 use App\Http\Controllers\Admin\ContactSettingsController;
 use App\Http\Controllers\Admin\RobotsTxtController as AdminRobotsTxtController;
+use App\Http\Controllers\Admin\PageContentController;
 use App\Http\Controllers\Admin\TickerSettingsController;
+use App\Http\Controllers\PrivacyPageController;
 use App\Http\Controllers\AboutPageController;
 use App\Http\Controllers\ContactPageController;
 use App\Http\Controllers\RobotsTxtController;
@@ -43,6 +45,7 @@ foreach (Locale::PREFIX as $localeCode => $localePrefix) {
                 Route::get('/services/{slug}', [ServicePageController::class, 'show'])->name('services.show');
                 Route::get('/about', AboutPageController::class)->name('about');
                 Route::get('/contact', ContactPageController::class)->name('contact');
+                Route::get('/privacy', PrivacyPageController::class)->name('privacy');
             } else {
                 Route::get('/blog', [BlogController::class, 'index']);
                 Route::get('/blog/{slug}', [BlogController::class, 'show']);
@@ -50,6 +53,7 @@ foreach (Locale::PREFIX as $localeCode => $localePrefix) {
                 Route::get('/services/{slug}', [ServicePageController::class, 'show']);
                 Route::get('/about', AboutPageController::class);
                 Route::get('/contact', ContactPageController::class);
+                Route::get('/privacy', PrivacyPageController::class);
             }
         };
 
@@ -91,6 +95,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('robots-txt', [AdminRobotsTxtController::class, 'destroy'])->name('robots.destroy');
         Route::get('ticker', [TickerSettingsController::class, 'edit'])->name('ticker.edit');
         Route::put('ticker', [TickerSettingsController::class, 'update'])->name('ticker.update');
+        Route::get('pages', [PageContentController::class, 'index'])->name('pages.index');
+        Route::get('pages/{page}', [PageContentController::class, 'edit'])->name('pages.edit');
+        Route::put('pages/{page}', [PageContentController::class, 'update'])->name('pages.update');
         Route::get('contact-settings', [ContactSettingsController::class, 'edit'])->name('contact.edit');
         Route::put('contact-settings', [ContactSettingsController::class, 'update'])->name('contact.update');
         Route::get('about-settings', [AboutSettingsController::class, 'edit'])->name('about.edit');

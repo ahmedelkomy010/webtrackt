@@ -12,8 +12,8 @@ const year = new Date().getFullYear();
 const defaultLinks = computed(() => [
     { href: localizedPath('services', locale.value, countryCode.value), label: t('nav.services') },
     { href: localizedPath('about', locale.value, countryCode.value), label: t('nav.about') },
-    { href: '#why-us', label: t('nav.whyUs') },
     { href: localizedPath('contact', locale.value, countryCode.value), label: t('nav.contact') },
+    { href: localizedPath('privacy', locale.value, countryCode.value), label: locale.value === 'en' ? 'Privacy' : (locale.value === 'ur' ? 'رازداری' : 'الخصوصية') },
 ]);
 
 const links = computed(() => {
@@ -45,7 +45,7 @@ const logoWebp = computed(() => publicAsset('images/logo.webp'));
 </script>
 
 <template>
-    <footer class="bg-slate-900 text-slate-300 pt-16 pb-8">
+    <footer class="site-footer mt-auto">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
                 <div class="sm:col-span-2 lg:col-span-1">
@@ -95,9 +95,9 @@ const logoWebp = computed(() => publicAsset('images/logo.webp'));
                 </div>
             </div>
 
-            <div class="pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
-                <p>&copy; {{ year }} {{ config.name }} — {{ config.nameEn }}. {{ t('footer.rights') }}</p>
-                <p class="text-tract-500 font-medium" dir="ltr">{{ config.tagline }}</p>
+            <div class="site-footer__bar flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
+                <p class="text-slate-400 font-semibold">&copy; {{ year }} {{ config.name }} — {{ config.nameEn }}. {{ t('footer.rights') }}</p>
+                <p class="text-tract-400 font-bold" dir="ltr">{{ config.tagline }}</p>
             </div>
         </div>
     </footer>

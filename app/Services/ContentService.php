@@ -95,6 +95,7 @@ class ContentService
                 ->all(),
             'about' => app(AboutSettingsService::class)->all(),
             'ticker' => app(\App\Services\TickerSettingsService::class)->all(),
+            'pages' => app(\App\Services\PageContentService::class)->all(),
         ];
     }
 
