@@ -9,7 +9,6 @@ import { publicAsset } from '../utils/assets';
 const { config, locale, countryCode, countryName, t, setLocale, setCountry } = useSite();
 const { content } = useContent();
 
-const isScrolled = ref(false);
 const mobileOpen = ref(false);
 const countryOpen = ref(false);
 const langOpen = ref(false);
@@ -63,10 +62,6 @@ const currentCountry = computed(() => countryList.find((c) => c.code === country
 const logoPng = computed(() => publicAsset('images/logo.png'));
 const logoWebp = computed(() => publicAsset('images/logo.webp'));
 
-const handleScroll = () => {
-    isScrolled.value = window.scrollY > 20;
-};
-
 const closeDropdowns = () => {
     countryOpen.value = false;
     langOpen.value = false;
@@ -91,27 +86,20 @@ watch(mobileOpen, (open) => {
 });
 
 onMounted(() => {
-    window.addEventListener('scroll', handleScroll);
     document.addEventListener('click', closeDropdowns);
 });
 
 onUnmounted(() => {
-    window.removeEventListener('scroll', handleScroll);
     document.removeEventListener('click', closeDropdowns);
     document.body.classList.remove('mobile-menu-open');
 });
 </script>
 
 <template>
-    <header
-        :class="[
-            'sticky top-0 inset-x-0 z-50 transition-all duration-300 safe-top',
-            isScrolled ? 'glass shadow-sm border-b border-emerald-100/50' : 'bg-white/80 backdrop-blur-md',
-        ]"
-    >
-        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header class="site-header sticky top-0 z-50 safe-top">
+        <nav class="site-header__inner max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-14 sm:h-16 lg:h-20 gap-2">
-                <a href="#" class="flex items-center gap-2.5 group shrink-0 min-w-0">
+                <a href="#" class="site-header__brand flex items-center gap-2.5 group shrink-0 min-w-0">
                     <picture>
                         <source :srcset="logoWebp" type="image/webp">
                         <img
@@ -134,15 +122,20 @@ onUnmounted(() => {
                         v-for="link in links"
                         :key="link.href"
                         :href="link.href"
-                        class="text-sm font-medium text-slate-600 hover:text-tract-700 transition-colors"
+                        class="site-header__link"
                     >
                         {{ link.label }}
+                    </a>
+                    <a
+                        :href="localizedPath('contact', locale.value, countryCode.value)"
+                        class="site-header__cta"
+                    >
+                        {{ t('nav.startProject') }}
                     </a>
                 </div>
 
                 <div class="flex items-center gap-2 sm:gap-3">
-                    <!-- Country selector -->
-                    <div class="relative" @click.stop>
+                    <div class="relative hidden sm:block" @click.stop>
                         <button
                             type="button"
                             :aria-label="`${t('nav.country')}: ${countryName}`"
@@ -152,7 +145,7 @@ onUnmounted(() => {
                             @click="countryOpen = !countryOpen; langOpen = false"
                         >
                             <img :src="currentCountry?.flagImg" :alt="countryName" width="20" height="15" class="w-5 h-4 object-cover rounded shrink-0" aria-hidden="true" loading="lazy">
-                            <span class="hidden sm:inline max-w-[80px] truncate">{{ countryName }}</span>
+                            <span class="hidden md:inline max-w-[80px] truncate">{{ countryName }}</span>
                             <svg class="w-4 h-4 shrink-0" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
                         </button>
                         <div
@@ -177,8 +170,7 @@ onUnmounted(() => {
                         </div>
                     </div>
 
-                    <!-- Language selector -->
-                    <div class="relative" @click.stop>
+                    <div class="relative hidden sm:block" @click.stop>
                         <button
                             type="button"
                             :aria-label="`${t('nav.language')}: ${currentLang}`"
@@ -188,7 +180,7 @@ onUnmounted(() => {
                             @click="langOpen = !langOpen; countryOpen = false"
                         >
                             <svg class="w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" /></svg>
-                            <span class="hidden sm:inline">{{ currentLang }}</span>
+                            <span class="hidden md:inline">{{ currentLang }}</span>
                             <svg class="w-4 h-4 shrink-0" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
                         </button>
                         <div
@@ -208,16 +200,10 @@ onUnmounted(() => {
                         </div>
                     </div>
 
-                    <a
-                        :href="localizedPath('contact', locale.value, countryCode.value)"
-                        class="hidden lg:inline-flex items-center px-5 py-2.5 rounded-xl bg-tract-700 text-white text-sm font-semibold hover:bg-tract-800 shadow-lg shadow-tract-700/25 transition-all hover:-translate-y-0.5"
-                    >
-                        {{ t('nav.startProject') }}
-                    </a>
-
                     <button
-                        class="lg:hidden touch-target p-2 rounded-xl text-slate-600 hover:bg-slate-100"
+                        class="site-header__toggle lg:hidden"
                         :aria-label="t('nav.menu')"
+                        :aria-expanded="mobileOpen"
                         @click="mobileOpen = !mobileOpen"
                     >
                         <svg v-if="!mobileOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -230,59 +216,47 @@ onUnmounted(() => {
                 </div>
             </div>
         </nav>
+    </header>
 
-        <!-- Full-screen mobile drawer -->
-        <div v-show="mobileOpen" class="mobile-drawer lg:hidden">
-            <div class="mobile-drawer__backdrop" @click="closeMobile" />
-            <div class="mobile-drawer__panel safe-bottom">
-                <div class="p-4 border-b border-slate-100 flex items-center justify-between">
-                    <p class="font-bold text-slate-900">{{ t('nav.menu') }}</p>
-                    <button type="button" class="touch-target p-2 rounded-xl hover:bg-slate-100" @click="closeMobile">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                    </button>
-                </div>
-                <div class="p-3 space-y-1">
-                    <a
-                        v-for="link in links"
-                        :key="link.href"
-                        :href="link.href"
-                        class="mobile-drawer__link"
-                        @click="closeMobile"
-                    >
-                        {{ link.label }}
-                    </a>
-                    <a :href="localizedPath('contact', locale.value, countryCode.value)" class="mobile-drawer__link text-tract-700" @click="closeMobile">{{ t('nav.startProject') }}</a>
-                </div>
-                <div class="p-4 border-t border-slate-100 space-y-3">
-                    <p class="text-xs font-semibold text-slate-500 px-1">{{ t('nav.country') }}</p>
-                    <div class="grid grid-cols-2 gap-2">
-                        <button
-                            v-for="c in countryList"
-                            :key="c.code"
-                            type="button"
-                            class="flex items-center gap-2 p-3 rounded-xl border text-sm font-medium transition-colors"
-                            :class="countryCode === c.code ? 'border-tract-300 bg-tract-50 text-tract-700' : 'border-slate-200 text-slate-700'"
-                            @click="selectCountry(c.code)"
-                        >
-                            <img :src="c.flagImg" :alt="c.location[locale] || c.location.ar" width="24" height="18" class="w-6 h-4 object-cover rounded shrink-0" loading="lazy" aria-hidden="true">
-                            <span class="truncate">{{ c.location[locale] || c.location.ar }}</span>
-                        </button>
-                    </div>
-                    <p class="text-xs font-semibold text-slate-500 px-1 pt-2">{{ t('nav.language') }}</p>
-                    <div class="grid grid-cols-3 gap-2">
-                        <button
-                            v-for="lang in languages"
-                            :key="lang.code"
-                            type="button"
-                            class="py-3 rounded-xl text-sm font-semibold transition-colors"
-                            :class="locale === lang.code ? 'bg-tract-600 text-white' : 'bg-slate-100 text-slate-700'"
-                            @click="selectLang(lang.code)"
-                        >
-                            {{ lang.label }}
-                        </button>
-                    </div>
-                </div>
+    <div v-show="mobileOpen" class="mobile-drawer lg:hidden">
+        <div class="mobile-drawer__backdrop" @click="closeMobile" />
+        <div class="mobile-drawer__panel safe-bottom">
+            <div class="mobile-drawer__head">
+                <p class="font-bold text-slate-900">{{ t('nav.menu') }}</p>
+                <button type="button" class="touch-target p-2 rounded-xl hover:bg-slate-100" @click="closeMobile">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </div>
+            <div class="mobile-drawer__links">
+                <a
+                    v-for="link in links"
+                    :key="link.href"
+                    :href="link.href"
+                    class="mobile-drawer__link"
+                    @click="closeMobile"
+                >
+                    {{ link.label }}
+                </a>
+                <a
+                    :href="localizedPath('contact', locale.value, countryCode.value)"
+                    class="mobile-drawer__cta"
+                    @click="closeMobile"
+                >
+                    {{ t('nav.startProject') }}
+                </a>
+            </div>
+            <div class="mobile-drawer__langs">
+                <button
+                    v-for="lang in languages"
+                    :key="lang.code"
+                    type="button"
+                    class="mobile-drawer__lang"
+                    :class="{ 'is-active': locale === lang.code }"
+                    @click="selectLang(lang.code); closeMobile()"
+                >
+                    {{ lang.label }}
+                </button>
             </div>
         </div>
-    </header>
+    </div>
 </template>
