@@ -2,39 +2,37 @@
 
 @php
     use App\Support\Locale;
+    use App\Support\PageCopy;
     use App\Support\SiteUrl;
 
     $cty = $country ?? SiteUrl::DEFAULT_COUNTRY;
-
-    $pageTitle = $locale === 'en' ? 'Our Work' : ($locale === 'ur' ? 'ہمارے کام' : 'أعمالنا');
-    $pageDesc = $locale === 'en'
-        ? 'Explore our portfolio of completed projects — websites, stores, ERP systems, and digital marketing.'
-        : ($locale === 'ur'
-            ? 'مکمل شدہ منصوبوں کا پورٹ فولیو — ویب سائٹس، اسٹورز، ERP اور ڈیجیٹل مارکیٹنگ۔'
-            : 'استكشف مجموعة مشاريعنا المنفذة — مواقع، متاجر، أنظمة ERP، وتسويق رقمي.');
+    $title = PageCopy::localized($page, 'title', $locale);
+    $badge = PageCopy::localized($page, 'badge', $locale);
+    $headline = PageCopy::localized($page, 'subtitle', $locale);
+    $lead = strip_tags(PageCopy::localized($page, 'body', $locale));
 @endphp
 
-@section('title', $pageTitle)
-@section('meta_description', $pageDesc)
+@section('title', $title)
+@section('meta_description', strip_tags($lead))
 @section('canonical', $siteUrl.Locale::path('works', $locale, $cty))
 
 @section('content')
-<section class="py-10 sm:py-14 lg:py-20 bg-gradient-to-br from-tract-700 to-tract-900 text-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <nav class="text-sm text-tract-200 mb-8">
-            <a href="{{ Locale::home($locale, $cty) }}" class="hover:text-white">{{ $locale === 'en' ? 'Home' : ($locale === 'ur' ? 'ہوم' : 'الرئيسية') }}</a>
-            <span class="mx-2">/</span>
-            <span class="text-white">{{ $pageTitle }}</span>
-        </nav>
-        <span class="inline-block px-4 py-1.5 rounded-full bg-white/10 text-tract-200 text-sm font-semibold mb-4">{{ $pageTitle }}</span>
-        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold max-w-3xl">{{ $pageDesc }}</h1>
-    </div>
-</section>
+@include('partials.page-hero', [
+    'locale' => $locale,
+    'cty' => $cty,
+    'pageTitle' => $title,
+    'badge' => $badge,
+    'headline' => $headline,
+    'lead' => $lead,
+])
 
 <section class="py-12 lg:py-20 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         @if ($works->isEmpty())
-            <p class="text-center text-slate-500 py-16">{{ $locale === 'en' ? 'No projects yet.' : ($locale === 'ur' ? 'ابھی کوئی منصوبہ نہیں۔' : 'لا توجد أعمال بعد.') }}</p>
+            <div class="text-center py-16 px-6 rounded-2xl border border-dashed border-slate-200 bg-slate-50">
+                <p class="text-slate-600 text-lg font-semibold mb-2">{{ $locale === 'en' ? 'No projects yet.' : ($locale === 'ur' ? 'ابھی کوئی منصوبہ نہیں۔' : 'لا توجد أعمال بعد.') }}</p>
+                <p class="text-slate-500 text-sm">{{ $locale === 'en' ? 'Projects will appear here once added from the dashboard.' : ($locale === 'ur' ? 'ڈیش بورڈ سے منصوبے شامل کرنے کے بعد یہاں ظاہر ہوں گے۔' : 'ستظهر المشاريع هنا بعد إضافتها من لوحة التحكم.') }}</p>
+            </div>
         @else
             <div class="works-grid">
                 @foreach ($works as $work)

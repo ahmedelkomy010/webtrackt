@@ -5,7 +5,7 @@
 @section('content')
 <div class="mb-6">
     <h1 class="text-2xl font-bold text-slate-900">محتوى الصفحات</h1>
-    <p class="text-slate-600 text-sm mt-1">تحكم في نصوص الصفحة الرئيسية، من نحن، التواصل، وسياسة الخصوصية</p>
+    <p class="text-slate-600 text-sm mt-1">تحكم في نصوص الصفحة الرئيسية، من نحن، أعمالنا، التواصل، وسياسة الخصوصية</p>
 </div>
 
 <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">

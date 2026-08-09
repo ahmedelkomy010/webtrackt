@@ -10,7 +10,7 @@ class PageContentService
 {
     public const CACHE_KEY = 'tract.page.content';
 
-    public const PAGES = ['home', 'about', 'contact', 'privacy'];
+    public const PAGES = ['home', 'about', 'contact', 'privacy', 'works'];
 
     public function all(): array
     {
@@ -87,7 +87,11 @@ class PageContentService
             'about' => [
                 'title' => ['ar' => 'من نحن', 'en' => 'About Us', 'ur' => 'ہمارے بارے میں'],
                 'badge' => ['ar' => 'عن تراكت', 'en' => 'About Trackkt', 'ur' => 'Trackkt کے بارے میں'],
-                'subtitle' => ['ar' => 'شريكك التقني في', 'en' => 'Your technology partner in', 'ur' => 'آپ کا ٹیکنالوجی پارٹنر'],
+                'subtitle' => [
+                    'ar' => 'شريكك التقني في بناء حلول رقمية تحقق النمو وتُسرّع نجاح أعمالك',
+                    'en' => 'Your technology partner building digital solutions that drive growth and accelerate business success',
+                    'ur' => 'آپ کا ٹیکنالوجی پارٹنر جو ڈیجیٹل حل بناتا ہے اور کاروبار کی کامیابی کو تیز کرتا ہے',
+                ],
                 'body' => [
                     'ar' => '<p>'.PageCopy::about('ar')['description'].'</p>',
                     'en' => '<p>'.PageCopy::about('en')['description'].'</p>',
@@ -112,6 +116,20 @@ class PageContentService
                     'ar' => '<h2>مقدمة</h2><p>نحن في تراكت نلتزم بحماية خصوصيتك. توضح هذه السياسة كيفية جمع واستخدام وحماية بياناتك عند استخدام موقعنا وخدماتنا.</p><h2>البيانات التي نجمعها</h2><ul><li>الاسم والبريد الإلكتروني ورقم الجوال عند التواصل معنا</li><li>بيانات التصفح الأساسية لتحسين تجربة المستخدم</li></ul><h2>استخدام البيانات</h2><p>نستخدم بياناتك للرد على استفساراتك وتقديم خدماتنا وتحسين الموقع.</p><h2>التواصل</h2><p>لأي استفسار حول الخصوصية تواصل معنا عبر صفحة التواصل.</p>',
                     'en' => '<h2>Introduction</h2><p>At Trackkt we are committed to protecting your privacy. This policy explains how we collect, use, and safeguard your data.</p><h2>Data we collect</h2><ul><li>Name, email, and phone when you contact us</li><li>Basic browsing data to improve user experience</li></ul><h2>Contact</h2><p>For privacy inquiries, please use our contact page.</p>',
                     'ur' => '<h2>تعارف</h2><p>Trackkt میں ہم آپ ki رازداری ki حفاظت کے پابند ہیں۔</p>',
+                ],
+            ],
+            'works' => [
+                'title' => ['ar' => 'أعمالنا', 'en' => 'Our Work', 'ur' => 'ہمارے کام'],
+                'badge' => ['ar' => 'أعمالنا', 'en' => 'Portfolio', 'ur' => 'پورٹ فولیو'],
+                'subtitle' => [
+                    'ar' => 'مشاريع نفخر بإنجازها',
+                    'en' => 'Projects we are proud of',
+                    'ur' => 'منصوبے جن پر فخر ہے',
+                ],
+                'body' => [
+                    'ar' => 'استكشف مجموعة مشاريعنا المنفذة — مواقع، متاجر، أنظمة ERP، وحملات تسويق رقمي.',
+                    'en' => 'Explore our portfolio of completed projects — websites, stores, ERP systems, and digital marketing.',
+                    'ur' => 'مکمل شدہ منصوبوں کا پورٹ فولیو — ویب سائٹس، اسٹورز، ERP اور ڈیجیٹل مارکیٹنگ۔',
                 ],
             ],
             default => [],

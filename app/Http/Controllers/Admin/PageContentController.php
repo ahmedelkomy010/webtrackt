@@ -78,6 +78,7 @@ class PageContentController extends Controller
             'about' => 'من نحن',
             'contact' => 'تواصل معنا',
             'privacy' => 'سياسة الخصوصية',
+            'works' => 'أعمالنا',
         ];
     }
 }

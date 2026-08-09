@@ -20,19 +20,14 @@
 @section('canonical', $canonical)
 
 @section('content')
-<section class="py-10 sm:py-14 lg:py-20 bg-gradient-to-br from-tract-700 to-tract-900 text-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <nav class="text-sm text-tract-200 mb-8">
-            <a href="{{ Locale::home($locale, $cty) }}" class="hover:text-white">{{ $locale === 'en' ? 'Home' : ($locale === 'ur' ? 'ہوم' : 'الرئيسية') }}</a>
-            <span class="mx-2">/</span>
-            <span class="text-white">{{ $title }}</span>
-        </nav>
-        <span class="inline-block px-4 py-1.5 rounded-full bg-white/10 text-tract-200 text-sm font-semibold mb-4">{{ $badge }}</span>
-        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold max-w-3xl">
-            <span class="text-tract-300">{{ config('tract.name') }}</span>@if($subtitle) — {{ $subtitle }} {{ $countryName }}@endif
-        </h1>
-    </div>
-</section>
+@include('partials.page-hero', [
+    'locale' => $locale,
+    'cty' => $cty,
+    'pageTitle' => $title,
+    'badge' => $badge,
+    'headline' => $subtitle,
+    'lead' => config('tract.name').' — '.config('tract.name_en'),
+])
 
 <section class="py-12 lg:py-20 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

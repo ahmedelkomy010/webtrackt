@@ -158,6 +158,7 @@ export default {
         subtitle: 'Selected projects — websites, stores, systems, and marketing campaigns',
         viewProject: 'View project →',
         viewAll: 'View all projects',
+        empty: 'Our projects will appear here soon — visit our work page',
     },
     faq: {
         badge: 'FAQ',

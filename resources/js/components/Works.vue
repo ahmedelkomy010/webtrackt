@@ -25,7 +25,7 @@ const previewWorks = computed(() => works.value.slice(0, 6));
 </script>
 
 <template>
-    <section v-if="works.length" id="works" class="py-16 lg:py-24 bg-white">
+    <section id="works" class="py-16 lg:py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-12 lg:mb-16">
                 <span class="inline-block px-4 py-1.5 rounded-full bg-tract-50 text-tract-700 text-sm font-semibold mb-4">{{ t('works.badge') }}</span>
@@ -33,7 +33,7 @@ const previewWorks = computed(() => works.value.slice(0, 6));
                 <p class="text-lg text-slate-600">{{ t('works.subtitle') }}</p>
             </div>
 
-            <div class="works-grid">
+            <div v-if="works.length" class="works-grid">
                 <a
                     v-for="work in previewWorks"
                     :key="work.id"
@@ -50,6 +50,13 @@ const previewWorks = computed(() => works.value.slice(0, 6));
                         <p class="works-card__desc">{{ work.description }}</p>
                         <span class="works-card__link">{{ t('works.viewProject') }}</span>
                     </div>
+                </a>
+            </div>
+
+            <div v-else class="text-center py-12 px-6 rounded-2xl border border-dashed border-slate-200 bg-slate-50">
+                <p class="text-slate-600 font-semibold mb-4">{{ t('works.empty') }}</p>
+                <a :href="worksPageUrl" class="inline-flex items-center px-6 py-3 rounded-xl bg-tract-700 text-white font-semibold hover:bg-tract-800 transition-colors">
+                    {{ t('works.viewAll') }}
                 </a>
             </div>
 
