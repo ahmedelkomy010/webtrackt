@@ -6,7 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @include('partials.favicon')
     <title>@yield('title', 'لوحة التحكم') — Trackkt Admin</title>
-    @vite(['resources/css/app.css'])
+    @vite(['resources/css/app.css', 'resources/js/mobile-menu.js'])
 </head>
 <body class="antialiased bg-slate-100 text-slate-800 min-h-screen">
     @php
@@ -14,6 +14,9 @@
             ['route' => 'admin.dashboard', 'label' => 'الرئيسية', 'icon' => 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6'],
             ['route' => 'admin.services.index', 'label' => 'الخدمات', 'icon' => 'M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10'],
             ['route' => 'admin.stats.index', 'label' => 'الإحصائيات', 'icon' => 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z'],
+            ['route' => 'admin.success-partners.index', 'label' => 'شركاؤنا في النجاح', 'icon' => 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z'],
+            ['route' => 'admin.works.index', 'label' => 'أعمالنا', 'icon' => 'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z'],
+            ['route' => 'admin.faqs.index', 'label' => 'أسئلة شائعة', 'icon' => 'M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'],
             ['route' => 'admin.why-us.index', 'label' => 'لماذا تراكت', 'icon' => 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'],
             ['route' => 'admin.nav-links.index', 'label' => 'روابط القائمة', 'icon' => 'M4 6h16M4 12h16M4 18h16'],
             ['route' => 'admin.posts.index', 'label' => 'المدونة SEO', 'icon' => 'M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z'],
@@ -70,9 +73,9 @@
                     <img src="{{ asset('images/logo.png') }}" alt="Trackkt" class="h-8 w-8 shrink-0">
                     <span class="font-bold text-sm truncate">لوحة التحكم</span>
                 </a>
-                <button type="button" class="touch-target p-2 rounded-xl hover:bg-slate-100" data-mobile-menu-toggle aria-label="Menu">
-                    <svg class="w-6 h-6 mobile-menu-icon-open" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
-                    <svg class="w-6 h-6 mobile-menu-icon-close hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                <button type="button" class="site-header__toggle touch-target" data-mobile-menu-toggle aria-label="Menu" aria-expanded="false">
+                    <svg class="site-header__toggle-icon site-header__toggle-icon--open" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+                    <svg class="site-header__toggle-icon site-header__toggle-icon--close" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                 </button>
             </header>
 
@@ -113,24 +116,5 @@
             </main>
         </div>
     </div>
-    <script>
-    (function () {
-        const toggle = document.querySelector('[data-mobile-menu-toggle]');
-        const menu = document.querySelector('[data-mobile-menu]');
-        if (!toggle || !menu) return;
-        const openIcon = toggle.querySelector('.mobile-menu-icon-open');
-        const closeIcon = toggle.querySelector('.mobile-menu-icon-close');
-        const setOpen = (open) => {
-            menu.hidden = !open;
-            document.body.classList.toggle('mobile-menu-open', open);
-            openIcon?.classList.toggle('hidden', open);
-            closeIcon?.classList.toggle('hidden', !open);
-        };
-        toggle.addEventListener('click', () => setOpen(menu.hidden));
-        menu.querySelectorAll('[data-mobile-menu-close], .mobile-drawer__link').forEach((el) => {
-            el.addEventListener('click', () => setOpen(false));
-        });
-    })();
-    </script>
 </body>
 </html>

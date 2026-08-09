@@ -46,6 +46,7 @@
         ['href' => Locale::path('services', $loc, $cty), 'label' => $loc === 'en' ? 'Services' : ($loc === 'ur' ? 'خدمات' : 'خدماتنا')],
         ['href' => Locale::path('about', $loc, $cty), 'label' => $loc === 'en' ? 'About us' : ($loc === 'ur' ? 'ہمارے بارے' : 'من نحن')],
         ['href' => Locale::path('blog', $loc, $cty), 'label' => $loc === 'en' ? 'Blog' : ($loc === 'ur' ? 'بلاگ' : 'المدونة')],
+        ['href' => Locale::path('works', $loc, $cty), 'label' => $loc === 'en' ? 'Our Work' : ($loc === 'ur' ? 'ہمارے کام' : 'أعمالنا')],
         ['href' => Locale::path('contact', $loc, $cty), 'label' => $loc === 'en' ? 'Contact' : ($loc === 'ur' ? 'رابطہ' : 'تواصل معنا')],
         ['href' => Locale::path('privacy', $loc, $cty), 'label' => $labels['privacy']],
     ];

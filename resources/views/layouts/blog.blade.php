@@ -35,11 +35,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    @vite(['resources/css/app.css'])
+    @vite(['resources/css/app.css', 'resources/js/mobile-menu.js'])
     @include('partials.analytics')
     @yield('schema')
 </head>
-<body class="antialiased bg-slate-50 text-slate-800 min-h-dvh flex flex-col">
+<body class="antialiased bg-slate-50 text-slate-800 min-h-dvh flex flex-col app-shell">
     @include('partials.top-ticker', ['locale' => $locale])
     @include('partials.site-header', ['locale' => $locale])
     <main class="flex-1 w-full">@yield('content')</main>

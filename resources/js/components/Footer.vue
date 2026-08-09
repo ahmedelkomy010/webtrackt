@@ -13,6 +13,7 @@ const defaultLinks = computed(() => [
     { href: localizedPath('services', locale.value, countryCode.value), label: t('nav.services') },
     { href: localizedPath('about', locale.value, countryCode.value), label: t('nav.about') },
     { href: localizedPath('blog', locale.value, countryCode.value), label: t('nav.blog') },
+    { href: localizedPath('works', locale.value, countryCode.value), label: t('nav.works') },
     { href: localizedPath('contact', locale.value, countryCode.value), label: t('nav.contact') },
     { href: localizedPath('privacy', locale.value, countryCode.value), label: locale.value === 'en' ? 'Privacy' : (locale.value === 'ur' ? 'رازداری' : 'الخصوصية') },
 ]);

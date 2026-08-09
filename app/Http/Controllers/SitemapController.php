@@ -20,6 +20,7 @@ class SitemapController extends Controller
         foreach ([Locale::AR, Locale::EN, Locale::UR] as $locale) {
             $entries[] = [$siteUrl.Locale::home($locale), now()->toAtomString(), 'weekly', '1.0'];
             $entries[] = [$siteUrl.Locale::path('services', $locale), now()->toAtomString(), 'weekly', '0.9'];
+            $entries[] = [$siteUrl.Locale::path('works', $locale), now()->toAtomString(), 'weekly', '0.85'];
             $entries[] = [$siteUrl.Locale::path('blog', $locale), now()->toAtomString(), 'daily', '0.9'];
         }
 

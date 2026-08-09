@@ -3,12 +3,15 @@
 namespace App\Services;
 
 use App\Models\ContactMessage;
+use App\Models\FaqItem;
 use App\Models\NavLink;
 use App\Models\Review;
 use App\Models\Service;
 use App\Models\SiteSetting;
 use App\Models\Stat;
+use App\Models\SuccessPartner;
 use App\Models\WhyUsItem;
+use App\Models\Work;
 use App\Services\AboutSettingsService;
 use Illuminate\Support\Facades\Cache;
 
@@ -90,6 +93,39 @@ class ContentService
                 ])
                 ->values()
                 ->all(),
+            'partners' => SuccessPartner::where('is_active', true)
+                ->orderBy('sort_order')
+                ->get()
+                ->map(fn (SuccessPartner $p) => [
+                    'id' => $p->id,
+                    'logo' => $p->logo,
+                    'name' => $p->name,
+                    'url' => $p->url,
+                ])
+                ->values()
+                ->all(),
+            'faqs' => FaqItem::where('is_active', true)
+                ->orderBy('sort_order')
+                ->get()
+                ->map(fn (FaqItem $f) => [
+                    'id' => $f->id,
+                    'question' => $f->question,
+                    'answer' => $f->answer,
+                ])
+                ->values()
+                ->all(),
+            'works' => Work::where('is_active', true)
+                ->orderBy('sort_order')
+                ->get()
+                ->map(fn (Work $w) => [
+                    'id' => $w->id,
+                    'image' => $w->image,
+                    'title' => $w->title,
+                    'description' => $w->description,
+                    'url' => $w->url,
+                ])
+                ->values()
+                ->all(),
             'settings' => SiteSetting::all()
                 ->pluck('value', 'key')
                 ->all(),
@@ -111,6 +147,9 @@ class ContentService
             'published_posts' => \App\Models\Post::published()->count(),
             'reviews' => Review::count(),
             'pending_reviews' => Review::where('is_approved', false)->count(),
+            'partners' => SuccessPartner::count(),
+            'faqs' => FaqItem::count(),
+            'works' => Work::count(),
             'unread_messages' => ContactMessage::where('created_at', '>=', now()->subDays(7))->count(),
         ];
     }

@@ -5,6 +5,7 @@ export default {
         about: 'About Us',
         whyUs: 'Why Trackkt',
         blog: 'Blog',
+        works: 'Our Work',
         reviews: 'Reviews',
         contact: 'Contact',
         startProject: 'Start Your Project',
@@ -144,5 +145,23 @@ export default {
         registered: 'Registered Company — Commercial Register',
         taxCard: 'Tax Certificate',
         rights: 'All rights reserved.',
+    },
+    partners: {
+        badge: 'Our Partners',
+        title: 'Our Success Partners',
+        subtitle: 'We are proud to work with leading national and regional companies across industries',
+        logoAlt: 'Partner logo',
+    },
+    works: {
+        badge: 'Our Work',
+        title: 'Projects We Are Proud Of',
+        subtitle: 'Selected projects — websites, stores, systems, and marketing campaigns',
+        viewProject: 'View project →',
+        viewAll: 'View all projects',
+    },
+    faq: {
+        badge: 'FAQ',
+        title: 'Frequently Asked Questions',
+        subtitle: 'Answers to the most common questions from our clients',
     },
 };

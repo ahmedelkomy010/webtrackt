@@ -9,6 +9,7 @@
         'services' => $loc === 'en' ? 'Services' : ($loc === 'ur' ? 'خدمات' : 'خدماتنا'),
         'about' => $loc === 'en' ? 'About' : ($loc === 'ur' ? 'ہمارے بارے' : 'من نحن'),
         'blog' => $loc === 'en' ? 'Blog' : ($loc === 'ur' ? 'بلاگ' : 'المدونة'),
+        'works' => $loc === 'en' ? 'Our Work' : ($loc === 'ur' ? 'ہمارے کام' : 'أعمالنا'),
         'contact' => $loc === 'en' ? 'Contact' : ($loc === 'ur' ? 'رابطہ' : 'تواصل'),
         'privacy' => $loc === 'en' ? 'Privacy' : ($loc === 'ur' ? 'رازداری' : 'الخصوصية'),
         'menu' => $loc === 'en' ? 'Menu' : ($loc === 'ur' ? 'مینو' : 'القائمة'),
@@ -18,6 +19,7 @@
     $isHome = $basePath === '';
     $isServices = str_starts_with($basePath, 'services');
     $isBlog = str_starts_with($basePath, 'blog');
+    $isWorks = str_starts_with($basePath, 'works');
     $isAbout = str_starts_with($basePath, 'about');
     $isContact = str_starts_with($basePath, 'contact');
     $isPrivacy = str_starts_with($basePath, 'privacy');
@@ -27,11 +29,12 @@
         ['href' => Locale::path('services', $loc, $cty), 'label' => $labels['services'], 'active' => $isServices],
         ['href' => Locale::path('about', $loc, $cty), 'label' => $labels['about'], 'active' => $isAbout],
         ['href' => Locale::path('blog', $loc, $cty), 'label' => $labels['blog'], 'active' => $isBlog],
+        ['href' => Locale::path('works', $loc, $cty), 'label' => $labels['works'], 'active' => $isWorks],
         ['href' => Locale::path('privacy', $loc, $cty), 'label' => $labels['privacy'], 'active' => $isPrivacy],
     ];
 @endphp
 
-<header class="site-header sticky top-0 z-50 safe-top">
+<header class="site-header sticky top-0 safe-top">
     <div class="site-header__inner max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between gap-3 h-14 sm:h-16 lg:h-20">
             <a href="{{ Locale::home($loc, $cty) }}" class="site-header__brand flex items-center gap-2.5 min-w-0">
@@ -47,13 +50,14 @@
                 <a href="{{ Locale::path('services', $loc, $cty) }}" class="site-header__link {{ $isServices ? 'is-active' : '' }}">{{ $labels['services'] }}</a>
                 <a href="{{ Locale::path('about', $loc, $cty) }}" class="site-header__link {{ $isAbout ? 'is-active' : '' }}">{{ $labels['about'] }}</a>
                 <a href="{{ Locale::path('blog', $loc, $cty) }}" class="site-header__link {{ $isBlog ? 'is-active' : '' }}">{{ $labels['blog'] }}</a>
+                <a href="{{ Locale::path('works', $loc, $cty) }}" class="site-header__link {{ $isWorks ? 'is-active' : '' }}">{{ $labels['works'] }}</a>
                 <a href="{{ Locale::path('privacy', $loc, $cty) }}" class="site-header__link {{ $isPrivacy ? 'is-active' : '' }}">{{ $labels['privacy'] }}</a>
                 <a href="{{ Locale::path('contact', $loc, $cty) }}" class="site-header__cta {{ $isContact ? 'is-active' : '' }}">{{ $labels['contact'] }}</a>
             </nav>
 
             <button type="button" class="site-header__toggle lg:hidden touch-target" aria-label="{{ $labels['menu'] }}" data-mobile-menu-toggle aria-expanded="false">
-                <svg class="w-6 h-6 mobile-menu-icon-open" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
-                <svg class="w-6 h-6 mobile-menu-icon-close hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                <svg class="site-header__toggle-icon site-header__toggle-icon--open" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+                <svg class="site-header__toggle-icon site-header__toggle-icon--close" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
         </div>
     </div>
@@ -81,27 +85,3 @@
         </div>
     </div>
 </div>
-
-<script>
-(function () {
-    const toggle = document.querySelector('[data-mobile-menu-toggle]');
-    const menu = document.querySelector('[data-mobile-menu]');
-    if (!toggle || !menu) return;
-
-    const openIcon = toggle.querySelector('.mobile-menu-icon-open');
-    const closeIcon = toggle.querySelector('.mobile-menu-icon-close');
-
-    const setOpen = (open) => {
-        menu.hidden = !open;
-        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-        document.body.classList.toggle('mobile-menu-open', open);
-        openIcon?.classList.toggle('hidden', open);
-        closeIcon?.classList.toggle('hidden', !open);
-    };
-
-    toggle.addEventListener('click', () => setOpen(menu.hidden));
-    menu.querySelectorAll('[data-mobile-menu-close], .mobile-drawer__link, .mobile-drawer__cta').forEach((el) => {
-        el.addEventListener('click', () => setOpen(false));
-    });
-})();
-</script>

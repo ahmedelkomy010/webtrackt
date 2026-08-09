@@ -15,10 +15,10 @@
     <meta name="description" content="@yield('meta_description', config('tract.seo.description'))">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="@yield('canonical', $siteUrl ?? config('tract.website'))">
-    @vite(['resources/css/app.css'])
+    @vite(['resources/css/app.css', 'resources/js/mobile-menu.js'])
     @yield('schema')
 </head>
-<body class="antialiased bg-slate-50 text-slate-800 min-h-dvh flex flex-col">
+<body class="antialiased bg-slate-50 text-slate-800 min-h-dvh flex flex-col app-shell">
     @include('partials.top-ticker', ['locale' => $loc])
     @include('partials.site-header', ['locale' => $loc])
     <main class="flex-1 w-full">@yield('content')</main>

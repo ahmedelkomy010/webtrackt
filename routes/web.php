@@ -11,11 +11,14 @@ use App\Http\Controllers\Admin\SeoController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\StatController;
+use App\Http\Controllers\Admin\SuccessPartnerController;
 use App\Http\Controllers\Admin\WhyUsController;
 use App\Http\Controllers\Admin\ContactSettingsController;
+use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\RobotsTxtController as AdminRobotsTxtController;
 use App\Http\Controllers\Admin\PageContentController;
 use App\Http\Controllers\Admin\TickerSettingsController;
+use App\Http\Controllers\Admin\WorkController;
 use App\Http\Controllers\PrivacyPageController;
 use App\Http\Controllers\AboutPageController;
 use App\Http\Controllers\ContactPageController;
@@ -25,6 +28,7 @@ use App\Http\Controllers\ContentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ServicePageController;
 use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\WorksPageController;
 use App\Support\Locale;
 use App\Support\SiteUrl;
 use Illuminate\Support\Facades\Route;
@@ -44,6 +48,7 @@ foreach (Locale::PREFIX as $localeCode => $localePrefix) {
                 Route::get('/services', [ServicePageController::class, 'index'])->name('services.index');
                 Route::get('/services/{slug}', [ServicePageController::class, 'show'])->name('services.show');
                 Route::get('/about', AboutPageController::class)->name('about');
+                Route::get('/works', WorksPageController::class)->name('works.index');
                 Route::get('/contact', ContactPageController::class)->name('contact');
                 Route::get('/privacy', PrivacyPageController::class)->name('privacy');
             } else {
@@ -52,6 +57,7 @@ foreach (Locale::PREFIX as $localeCode => $localePrefix) {
                 Route::get('/services', [ServicePageController::class, 'index']);
                 Route::get('/services/{slug}', [ServicePageController::class, 'show']);
                 Route::get('/about', AboutPageController::class);
+                Route::get('/works', WorksPageController::class);
                 Route::get('/contact', ContactPageController::class);
                 Route::get('/privacy', PrivacyPageController::class);
             }
@@ -84,6 +90,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::resource('services', ServiceController::class)->except(['show']);
         Route::resource('stats', StatController::class)->except(['show']);
+        Route::resource('success-partners', SuccessPartnerController::class)->except(['show']);
+        Route::resource('faqs', FaqController::class)->except(['show']);
+        Route::resource('works', WorkController::class)->except(['show']);
         Route::resource('why-us', WhyUsController::class)->except(['show'])->parameters(['why-us' => 'why_u']);
         Route::resource('nav-links', NavLinkController::class)->except(['show'])->parameters(['nav-links' => 'nav_link']);
         Route::resource('posts', PostController::class)->except(['show']);

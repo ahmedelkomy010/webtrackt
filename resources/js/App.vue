@@ -9,6 +9,9 @@ import About from './components/About.vue';
 import WhyUs from './components/WhyUs.vue';
 import Stats from './components/Stats.vue';
 import Reviews from './components/Reviews.vue';
+import SuccessPartners from './components/SuccessPartners.vue';
+import Works from './components/Works.vue';
+import Faq from './components/Faq.vue';
 import Contact from './components/Contact.vue';
 import Footer from './components/Footer.vue';
 import MobileBottomNav from './components/MobileBottomNav.vue';
@@ -30,6 +33,9 @@ onMounted(() => {
             <WhyUs />
             <Stats />
             <Reviews />
+            <SuccessPartners />
+            <Works />
+            <Faq />
             <Contact />
         </main>
         <Footer />

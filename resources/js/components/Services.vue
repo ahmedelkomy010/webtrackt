@@ -51,7 +51,7 @@ const servicesPageUrl = computed(() => localizedPath('services', locale.value, c
                 <p class="text-lg text-slate-600">{{ t('services.subtitle') }}</p>
             </div>
 
-            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 lg:gap-10 max-w-6xl mx-auto">
                 <a
                     v-for="service in services"
                     :key="service.slug || service.title"
@@ -69,10 +69,10 @@ const servicesPageUrl = computed(() => localizedPath('services', locale.value, c
                     >
                         {{ t('hero.specialty') }}
                     </div>
-                    <div v-if="service.imageUrl" class="w-full h-36 overflow-hidden">
-                        <img :src="service.imageUrl" :alt="service.title" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div v-if="service.imageUrl" class="service-card__media">
+                        <img :src="service.imageUrl" :alt="service.title" class="service-card__image group-hover:scale-[1.02] transition-transform duration-300">
                     </div>
-                    <div v-else class="w-full h-36 bg-gradient-to-br from-tract-500 to-tract-700 flex items-center justify-center">
+                    <div v-else class="service-card__media service-card__media--fallback">
                         <svg v-if="service.icon === 'erp'" class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4" /></svg>
                         <svg v-else-if="service.icon === 'web'" class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg>
                         <svg v-else-if="service.icon === 'store'" class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>

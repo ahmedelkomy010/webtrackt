@@ -73,6 +73,16 @@
         @endforeach
     </section>
 
+    {{-- ══ PARTNERS ════════════════════════════════════════════════════════ --}}
+    @if(!empty($content['partners']))
+    <section>
+        <h2>شركاؤنا في النجاح</h2>
+        @foreach($content['partners'] as $partner)
+        <div>{{ $loc($partner['name'] ?? []) }}</div>
+        @endforeach
+    </section>
+    @endif
+
     {{-- ══ CONTACT ══════════════════════════════════════════════════════════ --}}
     <section>
         <h2>تواصل معنا</h2>

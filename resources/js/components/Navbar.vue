@@ -26,6 +26,9 @@ const resolveNavHref = (href) => {
     if (href === '#contact' || href === '/contact' || href === 'contact') {
         return localizedPath('contact', locale.value, countryCode.value);
     }
+    if (href === '/works' || href === 'works') {
+        return localizedPath('works', locale.value, countryCode.value);
+    }
     return href;
 };
 
@@ -35,6 +38,8 @@ const defaultLinks = computed(() => [
     { href: '#why-us', label: t('nav.whyUs') },
     { href: '#reviews', label: t('nav.reviews') },
     { href: localizedPath('blog', locale.value, countryCode.value), label: t('nav.blog'), external: false },
+    { href: localizedPath('works', locale.value, countryCode.value), label: t('nav.works') },
+    { href: '#faq', label: t('faq.badge') },
     { href: localizedPath('contact', locale.value, countryCode.value), label: t('nav.contact') },
 ]);
 
@@ -96,7 +101,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <header class="site-header sticky top-0 z-50 safe-top">
+    <header class="site-header sticky top-0 safe-top">
         <nav class="site-header__inner max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-14 sm:h-16 lg:h-20 gap-2">
                 <a href="#" class="site-header__brand flex items-center gap-2.5 group shrink-0 min-w-0">
@@ -201,15 +206,17 @@ onUnmounted(() => {
                     </div>
 
                     <button
-                        class="site-header__toggle lg:hidden"
+                        type="button"
+                        class="site-header__toggle lg:hidden touch-target"
+                        :class="{ 'is-open': mobileOpen }"
                         :aria-label="t('nav.menu')"
                         :aria-expanded="mobileOpen"
-                        @click="mobileOpen = !mobileOpen"
+                        @click.stop="mobileOpen = !mobileOpen"
                     >
-                        <svg v-if="!mobileOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="site-header__toggle-icon site-header__toggle-icon--open" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
-                        <svg v-else class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="site-header__toggle-icon site-header__toggle-icon--close" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
