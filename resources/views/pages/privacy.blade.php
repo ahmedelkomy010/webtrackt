@@ -18,7 +18,7 @@
 @section('canonical', $canonical)
 
 @section('content')
-<section class="py-10 sm:py-14 lg:py-16 bg-gradient-to-br from-tract-600 to-tract-900 text-white">
+<section class="py-10 sm:py-14 lg:py-16 hero-surface">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <nav class="text-sm text-tract-200 mb-8">
             <a href="{{ Locale::home($locale, $cty) }}" class="hover:text-white">{{ $locale === 'en' ? 'Home' : ($locale === 'ur' ? 'ہوم' : 'الرئيسية') }}</a>

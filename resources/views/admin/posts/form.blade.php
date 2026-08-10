@@ -197,8 +197,8 @@
     color: #64748b;
     transition: background 0.2s, color 0.2s;
 }
-.admin-tab:hover { background: #fff; color: #047857; }
-.admin-tab.is-active { background: #fff; color: #047857; box-shadow: 0 1px 3px rgba(15,23,42,0.08); }
+.admin-tab:hover { background: #fff; color: #2a5f9e; }
+.admin-tab.is-active { background: #fff; color: #2a5f9e; box-shadow: 0 1px 3px rgba(15,23,42,0.08); }
 .admin-tab-panel.hidden { display: none; }
 
 .tox-tinymce {
@@ -227,8 +227,8 @@
 }
 .tox .tox-tbtn--enabled,
 .tox .tox-tbtn--enabled:hover {
-    background: #dcfce7 !important;
-    color: #047857 !important;
+    background: #d9ecff !important;
+    color: #2a5f9e !important;
 }
 </style>
 
@@ -374,7 +374,7 @@
                     h3 { font-size: 1.25rem; font-weight: 700; margin: 1rem 0 0.5rem; color: #0f172a; }
                     p { margin: 0 0 0.75rem; }
                     img { max-width: 100%; height: auto; border-radius: 0.75rem; margin: 1rem 0; }
-                    a { color: #047857; text-decoration: underline; }
+                    a { color: #2a5f9e; text-decoration: underline; }
                     ul, ol { margin: 0 0 0.75rem; padding-${isRtl ? 'right' : 'left'}: 1.5rem; }
                 `,
                 table_default_styles: { width: '100%' },

@@ -18,7 +18,7 @@
 @section('canonical', $canonical)
 
 @section('content')
-<section class="py-10 sm:py-12 lg:py-20 bg-gradient-to-br from-tract-600 to-tract-900 text-white">
+<section class="py-10 sm:py-12 lg:py-20 hero-surface">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <nav class="text-sm text-tract-200 mb-8">
             <a href="{{ Locale::home($locale, $cty) }}" class="hover:text-white">{{ $locale === 'en' ? 'Home' : ($locale === 'ur' ? 'ہوم' : 'الرئيسية') }}</a>
@@ -69,32 +69,51 @@
 </section>
 
 @if (count($offers))
-<section class="py-16 lg:py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center max-w-2xl mx-auto mb-12">
-            <span class="inline-block px-4 py-1.5 rounded-full bg-gold-500/10 text-gold-600 text-sm font-semibold mb-4">{{ $locale === 'en' ? 'Our Offers' : ($locale === 'ur' ? 'ہماری پیشکشیں' : 'عروضنا') }}</span>
-            <h2 class="text-3xl font-bold text-slate-900 mb-3">{{ $locale === 'en' ? 'Choose the plan that fits you' : ($locale === 'ur' ? 'اپنے لیے مناسب پلان منتخب کریں' : 'اختر الباقة المناسبة لك') }}</h2>
-            <p class="text-slate-600">{{ $locale === 'en' ? 'Flexible packages designed for your business needs' : ($locale === 'ur' ? 'آپ کے کاروبار کے لیے لچکدار پیکجز' : 'باقات مرنة مصممة لاحتياجات عملك') }}</p>
-        </div>
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            @foreach ($offers as $offer)
-                <article class="relative p-6 sm:p-8 rounded-2xl border transition-all hover:shadow-xl {{ ($offer['highlight'] ?? false) ? 'border-tract-400 ring-2 ring-tract-200 bg-gradient-to-b from-tract-50 to-white shadow-lg lg:scale-[1.02]' : 'border-slate-200 bg-slate-50 hover:border-tract-200' }}">
-                    @if ($offer['highlight'] ?? false)
-                        <span class="absolute -top-3 start-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-tract-600 text-white text-xs font-bold">{{ $locale === 'en' ? 'Most Popular' : ($locale === 'ur' ? 'سب سے مقبول' : 'الأكثر طلباً') }}</span>
+<section class="pricing-section" aria-labelledby="pricing-heading">
+    <div class="pricing-section__bg" aria-hidden="true"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <header class="pricing-section__header">
+            <span class="pricing-section__eyebrow">{{ $locale === 'en' ? 'Our Offers' : ($locale === 'ur' ? 'ہماری پیشکشیں' : 'عروضنا') }}</span>
+            <h2 id="pricing-heading" class="pricing-section__title">{{ $locale === 'en' ? 'Choose the plan that fits you' : ($locale === 'ur' ? 'اپنے لیے مناسب پلان منتخب کریں' : 'اختر الباقة المناسبة لك') }}</h2>
+            <p class="pricing-section__subtitle">{{ $locale === 'en' ? 'Flexible packages designed for your business needs' : ($locale === 'ur' ? 'آپ کے کاروبار کے لیے لچکدار پیکجز' : 'باقات مرنة مصممة لاحتياجات عملك') }}</p>
+        </header>
+
+        <div class="pricing-grid">
+            @foreach ($offers as $index => $offer)
+                @php $featured = $offer['highlight'] ?? false; @endphp
+                <article class="pricing-card {{ $featured ? 'pricing-card--featured' : '' }}" style="--pricing-delay: {{ $index * 80 }}ms">
+                    @if ($featured)
+                        <span class="pricing-card__badge">{{ $locale === 'en' ? 'Most Popular' : ($locale === 'ur' ? 'سب سے مقبول' : 'الأكثر طلباً') }}</span>
                     @endif
-                    <h3 class="text-xl font-bold text-slate-900 mb-2">{{ $offer['name'] }}</h3>
-                    <p class="text-2xl font-bold text-tract-700 mb-6">{{ $offer['price'] }}</p>
-                    <ul class="space-y-3 mb-8">
-                        @foreach ($offer['features'] as $f)
-                            <li class="flex items-center gap-2 text-sm text-slate-600">
-                                <svg class="w-4 h-4 text-tract-600 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
-                                {{ $f }}
-                            </li>
-                        @endforeach
-                    </ul>
-                    <a href="{{ Locale::path('contact', $locale, $cty) }}" class="block w-full text-center py-3 rounded-xl font-semibold text-sm transition-colors {{ ($offer['highlight'] ?? false) ? 'bg-tract-600 text-white hover:bg-tract-700' : 'bg-white border border-tract-200 text-tract-700 hover:bg-tract-50' }}">
-                        {{ $locale === 'en' ? 'Request this offer' : ($locale === 'ur' ? 'یہ پیشکش طلب کریں' : 'اطلب هذا العرض') }}
-                    </a>
+
+                    <div class="pricing-card__body">
+                        <header class="pricing-card__head">
+                            <h3 class="pricing-card__name">{{ $offer['name'] }}</h3>
+                            @if ($offer['price'])
+                                <p class="pricing-card__price">{{ $offer['price'] }}</p>
+                            @endif
+                        </header>
+
+                        @if (count($offer['features']))
+                            <ul class="pricing-card__features">
+                                @foreach ($offer['features'] as $f)
+                                    @if ($f)
+                                        <li class="pricing-card__feature">
+                                            <span class="pricing-card__check" aria-hidden="true">
+                                                <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                                            </span>
+                                            <span>{{ $f }}</span>
+                                        </li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        @endif
+
+                        <a href="{{ Locale::path('contact', $locale, $cty) }}" class="pricing-card__cta {{ $featured ? 'pricing-card__cta--primary' : '' }}">
+                            {{ $locale === 'en' ? 'Request this offer' : ($locale === 'ur' ? 'یہ پیشکش طلب کریں' : 'اطلب هذا العرض') }}
+                            <svg class="pricing-card__cta-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                        </a>
+                    </div>
                 </article>
             @endforeach
         </div>
@@ -125,7 +144,7 @@
 </section>
 @endif
 
-<section class="py-16 bg-gradient-to-r from-tract-600 to-tract-800">
+<section class="py-16 bg-gradient-to-r from-tract-600 to-tract-700">
     <div class="max-w-3xl mx-auto px-4 text-center text-white">
         <h2 class="text-2xl sm:text-3xl font-bold mb-4">{{ $locale === 'en' ? 'Ready to get started?' : ($locale === 'ur' ? 'شروع کرنے کے لیے تیار ہیں؟' : 'جاهز لبدء مشروعك؟') }}</h2>
         <p class="text-tract-100 mb-6">{{ $locale === 'en' ? 'Contact Trackkt for a free consultation about '.$title : ($locale === 'ur' ? 'مفت مشاورت کے لیے Trackkt سے رابطہ کریں' : 'تواصل مع Trackkt للحصول على استشارة مجانية حول '.$title) }}</p>

@@ -29,15 +29,15 @@ const heroSideImage = computed(() => storageUrl(siteImages.value.hero_side_image
 <template>
     <section class="relative pt-24 pb-16 sm:pt-28 sm:pb-20 lg:pt-36 lg:pb-32 overflow-hidden">
         <div class="absolute inset-0 pointer-events-none">
-            <div class="absolute top-20 start-1/4 w-72 h-72 bg-tract-400/20 rounded-full blur-3xl animate-float" />
-            <div class="absolute bottom-10 end-1/4 w-96 h-96 bg-gold-500/10 rounded-full blur-3xl animate-float" style="animation-delay: -3s" />
+            <div class="absolute top-20 start-1/4 w-72 h-72 bg-tract-300/18 rounded-full blur-3xl animate-float" />
+            <div class="absolute bottom-10 end-1/4 w-96 h-96 bg-tract-400/10 rounded-full blur-3xl animate-float" style="animation-delay: -3s" />
         </div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
             <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                 <div class="fade-in-up text-center lg:text-start">
                     <!-- Specialty badge -->
-                    <div class="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-gradient-to-r from-tract-600 to-tract-700 text-white text-sm font-semibold mb-4 shadow-lg shadow-tract-600/25">
+                    <div class="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-gradient-to-r from-tract-600 to-tract-700 text-white text-sm font-semibold mb-4 shadow-lg shadow-tract-600/20">
                         <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
                         {{ heroBadge }}
                     </div>
@@ -74,7 +74,7 @@ const heroSideImage = computed(() => storageUrl(siteImages.value.hero_side_image
                         <p class="text-base sm:text-lg font-semibold text-slate-800 italic mb-1" dir="ltr">
                             "{{ config.tagline }}"
                         </p>
-                        <p class="text-sm text-tract-700">{{ config.taglineAr }}</p>
+                        <p class="text-sm text-tract-500">{{ config.taglineAr }}</p>
                         <p class="mt-3 text-xs text-slate-500 flex items-center gap-2 justify-center lg:justify-start">
                             <img :src="country.flagImg" :alt="countryName" width="20" height="15" class="w-5 h-4 object-cover rounded shrink-0" loading="lazy">
                             <span>{{ countryName }}</span>
@@ -86,7 +86,7 @@ const heroSideImage = computed(() => storageUrl(siteImages.value.hero_side_image
                     <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                         <a
                             :href="localizedPath('contact', locale, countryCode)"
-                            class="inline-flex items-center justify-center px-8 py-4 rounded-2xl bg-tract-700 text-white font-semibold hover:bg-tract-800 shadow-xl shadow-tract-700/30 transition-all hover:-translate-y-1"
+                            class="inline-flex items-center justify-center px-8 py-4 rounded-2xl bg-tract-600 text-white font-semibold hover:bg-tract-700 shadow-xl shadow-tract-600/20 transition-all hover:-translate-y-1"
                         >
                             {{ t('hero.ctaPrimary') }}
                         </a>
@@ -116,7 +116,7 @@ const heroSideImage = computed(() => storageUrl(siteImages.value.hero_side_image
 
                 <div class="relative mt-8 lg:mt-0">
                     <div class="relative mx-auto max-w-md lg:max-w-none">
-                        <div class="absolute inset-0 bg-gradient-to-br from-tract-500/20 to-gold-500/20 rounded-3xl blur-2xl transform rotate-3" />
+                        <div class="absolute inset-0 bg-gradient-to-br from-tract-500/15 to-tract-300/8 rounded-3xl blur-2xl transform rotate-3" />
                         <div class="relative rounded-3xl shadow-2xl border border-white/50 overflow-hidden bg-slate-100 min-h-[420px]">
                             <img
                                 v-if="heroSideImage"

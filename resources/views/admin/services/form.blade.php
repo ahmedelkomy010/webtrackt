@@ -226,7 +226,7 @@
                     p { margin: 0 0 0.75rem; }
                     ul, ol { margin: 0 0 0.75rem; padding-${isRtl ? 'right' : 'left'}: 1.5rem; }
                     img { max-width: 100%; height: auto; border-radius: 0.75rem; }
-                    a { color: #047857; text-decoration: underline; }
+                    a { color: #2a5f9e; text-decoration: underline; }
                 `,
                 automatic_uploads: true,
                 file_picker_types: 'image',
