@@ -93,7 +93,9 @@ class ServiceController extends Controller
             'is_active' => ['nullable', 'boolean'],
         ]);
 
-        $slug = $data['slug'] ?? Service::generateSlug($data['title_en'], $service?->id);
+        $slug = filled($data['slug'] ?? null)
+            ? trim($data['slug'])
+            : Service::generateSlug($data['title_en'], $service?->id);
 
         return [
             'slug' => $slug,
@@ -114,26 +116,26 @@ class ServiceController extends Controller
         $offers = [];
 
         for ($i = 1; $i <= 3; $i++) {
-            $nameAr = $request->input("offer_{$i}_name_ar");
-            if (! $nameAr) {
+            $nameAr = trim($this->requestString($request, "offer_{$i}_name_ar"));
+            if ($nameAr === '') {
                 continue;
             }
 
             $offers[] = [
                 'name' => [
                     'ar' => $nameAr,
-                    'en' => $request->input("offer_{$i}_name_en", $nameAr),
-                    'ur' => $request->input("offer_{$i}_name_ur", $nameAr),
+                    'en' => $this->requestString($request, "offer_{$i}_name_en", $nameAr),
+                    'ur' => $this->requestString($request, "offer_{$i}_name_ur", $nameAr),
                 ],
                 'price' => [
-                    'ar' => $request->input("offer_{$i}_price_ar", ''),
-                    'en' => $request->input("offer_{$i}_price_en", ''),
-                    'ur' => $request->input("offer_{$i}_price_ur", ''),
+                    'ar' => $this->requestString($request, "offer_{$i}_price_ar"),
+                    'en' => $this->requestString($request, "offer_{$i}_price_en"),
+                    'ur' => $this->requestString($request, "offer_{$i}_price_ur"),
                 ],
                 'features' => $this->buildFeatures(
-                    $request->input("offer_{$i}_features_ar", ''),
-                    $request->input("offer_{$i}_features_en", ''),
-                    $request->input("offer_{$i}_features_ur", '')
+                    $this->requestString($request, "offer_{$i}_features_ar"),
+                    $this->requestString($request, "offer_{$i}_features_en"),
+                    $this->requestString($request, "offer_{$i}_features_ur")
                 ),
                 'highlight' => $request->boolean("offer_{$i}_highlight"),
             ];
@@ -142,12 +144,23 @@ class ServiceController extends Controller
         return $offers;
     }
 
-    protected function splitLines(string $text): array
+    protected function requestString(Request $request, string $key, string $default = ''): string
     {
-        return array_values(array_filter(array_map('trim', preg_split('/\r\n|\r|\n/', $text))));
+        $value = $request->input($key, $default);
+
+        if ($value === null || $value === '') {
+            return $default;
+        }
+
+        return is_string($value) ? $value : (string) $value;
     }
 
-    protected function buildFeatures(string $ar, string $en, string $ur): array
+    protected function splitLines(?string $text): array
+    {
+        return array_values(array_filter(array_map('trim', preg_split('/\r\n|\r|\n/', $text ?? ''))));
+    }
+
+    protected function buildFeatures(?string $ar, ?string $en, ?string $ur): array
     {
         $linesAr = $this->splitLines($ar);
         $linesEn = $this->splitLines($en);

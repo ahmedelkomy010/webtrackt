@@ -68,11 +68,11 @@
             <h3 class="font-bold text-slate-900 border-b pb-2">{{ $langLabel }}</h3>
             <div>
                 <label class="block text-sm font-medium mb-1">العنوان *</label>
-                <input type="text" name="title_{{ $lang }}" value="{{ old('title_'.$lang, $service->title[$lang] ?? '') }}" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200">
+                <input type="text" name="title_{{ $lang }}" value="{{ old('title_'.$lang, data_get($service->title, $lang, '')) }}" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200">
             </div>
             <div>
                 <label class="block text-sm font-medium mb-1">الوصف المختصر *</label>
-                <textarea name="description_{{ $lang }}" rows="3" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200">{{ old('description_'.$lang, $service->description[$lang] ?? '') }}</textarea>
+                <textarea name="description_{{ $lang }}" rows="3" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200">{{ old('description_'.$lang, data_get($service->description, $lang, '')) }}</textarea>
             </div>
             <div>
                 <label class="block text-sm font-medium mb-2">محتوى صفحة الخدمة</label>
@@ -83,7 +83,7 @@
                     class="service-body-editor"
                     data-lang="{{ $lang }}"
                     data-dir="{{ in_array($lang, ['ar', 'ur']) ? 'rtl' : 'ltr' }}"
-                >{{ old('body_'.$lang, $service->body[$lang] ?? '') }}</textarea>
+                >{{ old('body_'.$lang, data_get($service->body, $lang, '')) }}</textarea>
             </div>
             <div>
                 <label class="block text-sm font-medium mb-1">المميزات (سطر لكل ميزة) *</label>
