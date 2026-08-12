@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\NavLinkController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\SeoController;
@@ -24,6 +25,10 @@ use App\Http\Controllers\AboutPageController;
 use App\Http\Controllers\ContactPageController;
 use App\Http\Controllers\RobotsTxtController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PaymentWebhookController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ServicePageController;
@@ -51,6 +56,15 @@ foreach (Locale::PREFIX as $localeCode => $localePrefix) {
                 Route::get('/works', WorksPageController::class)->name('works.index');
                 Route::get('/contact', ContactPageController::class)->name('contact');
                 Route::get('/privacy', PrivacyPageController::class)->name('privacy');
+                Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+                Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+                Route::post('/cart/remove/{key}', [CartController::class, 'remove'])->name('cart.remove');
+                Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+                Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+                Route::get('/checkout/payment/{order}', [PaymentController::class, 'show'])->name('checkout.payment');
+                Route::post('/checkout/payment/{order}', [PaymentController::class, 'process'])->name('checkout.payment.process');
+                Route::get('/checkout/success/{order}', [PaymentController::class, 'success'])->name('checkout.success');
+                Route::get('/checkout/cancel/{order}', [PaymentController::class, 'cancel'])->name('checkout.cancel');
             } else {
                 Route::get('/blog', [BlogController::class, 'index']);
                 Route::get('/blog/{slug}', [BlogController::class, 'show']);
@@ -60,6 +74,15 @@ foreach (Locale::PREFIX as $localeCode => $localePrefix) {
                 Route::get('/works', WorksPageController::class);
                 Route::get('/contact', ContactPageController::class);
                 Route::get('/privacy', PrivacyPageController::class);
+                Route::get('/cart', [CartController::class, 'index']);
+                Route::post('/cart/add', [CartController::class, 'add']);
+                Route::post('/cart/remove/{key}', [CartController::class, 'remove']);
+                Route::get('/checkout', [CheckoutController::class, 'index']);
+                Route::post('/checkout', [CheckoutController::class, 'store']);
+                Route::get('/checkout/payment/{order}', [PaymentController::class, 'show']);
+                Route::post('/checkout/payment/{order}', [PaymentController::class, 'process']);
+                Route::get('/checkout/success/{order}', [PaymentController::class, 'success']);
+                Route::get('/checkout/cancel/{order}', [PaymentController::class, 'cancel']);
             }
         };
 
@@ -70,6 +93,9 @@ foreach (Locale::PREFIX as $localeCode => $localePrefix) {
         }
     }
 }
+
+Route::get('/checkout/callback', [PaymentController::class, 'callback'])->name('checkout.callback');
+Route::post('/api/webhooks/payment/moyasar', [PaymentWebhookController::class, 'moyasar']);
 
 Route::get('/api/content', [ContentController::class, 'index']);
 Route::post('/api/contact', [App\Http\Controllers\ContactController::class, 'store']);
@@ -120,5 +146,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('messages', [ContactMessageController::class, 'index'])->name('messages.index');
         Route::get('messages/{message}', [ContactMessageController::class, 'show'])->name('messages.show');
         Route::delete('messages/{message}', [ContactMessageController::class, 'destroy'])->name('messages.destroy');
+        Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
+        Route::get('orders/{order}', [OrderController::class, 'show'])->name('orders.show');
     });
 });

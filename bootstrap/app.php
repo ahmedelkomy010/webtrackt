@@ -12,6 +12,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->redirectGuestsTo(fn () => route('admin.login'));
+        $middleware->validateCsrfTokens(except: [
+            'api/webhooks/*',
+        ]);
         $middleware->alias([
             'locale' => \App\Http\Middleware\SetLocale::class,
         ]);

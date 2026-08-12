@@ -138,6 +138,8 @@ class ServiceController extends Controller
                     $this->requestString($request, "offer_{$i}_features_ur")
                 ),
                 'highlight' => $request->boolean("offer_{$i}_highlight"),
+                'amount' => $this->resolveOfferAmount($request, $i),
+                'currency' => config('payments.currency', 'SAR'),
             ];
         }
 
@@ -153,6 +155,28 @@ class ServiceController extends Controller
         }
 
         return is_string($value) ? $value : (string) $value;
+    }
+
+    protected function parseOfferAmount(string $amountSar): int
+    {
+        $normalized = str_replace([',', ' '], '', trim($amountSar));
+
+        if ($normalized === '' || ! is_numeric($normalized)) {
+            return 0;
+        }
+
+        return (int) round(((float) $normalized) * 100);
+    }
+
+    protected function resolveOfferAmount(Request $request, int $index): int
+    {
+        $amount = $this->parseOfferAmount($this->requestString($request, "offer_{$index}_amount_sar"));
+
+        if ($amount > 0) {
+            return $amount;
+        }
+
+        return Service::parseAmountFromPrice($this->requestString($request, "offer_{$index}_price_ar"));
     }
 
     protected function splitLines(?string $text): array

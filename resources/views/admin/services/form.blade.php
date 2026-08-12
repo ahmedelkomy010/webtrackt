@@ -142,6 +142,11 @@
                         <input type="text" name="offer_{{ $i }}_price_ur" value="{{ old('offer_'.$i.'_price_ur', data_get($offer, 'price.ur', '')) }}" class="w-full px-3 py-2 rounded-lg border text-sm">
                     </div>
                 </div>
+                <div>
+                    <label class="block text-xs font-medium mb-1">السعر للدفع الإلكتروني (ر.س) *</label>
+                    <input type="number" step="0.01" min="0" name="offer_{{ $i }}_amount_sar" value="{{ old('offer_'.$i.'_amount_sar', data_get($offer, 'amount') ? number_format(data_get($offer, 'amount') / 100, 2, '.', '') : '') }}" placeholder="8500.00" class="w-full max-w-xs px-3 py-2 rounded-lg border text-sm" dir="ltr">
+                    <p class="text-xs text-slate-500 mt-1">مطلوب لتفعيل «اطلب هذا العرض» والدفع. اتركه فارغاً لعرض زر التواصل فقط.</p>
+                </div>
                 <div class="grid sm:grid-cols-3 gap-4">
                     @foreach (['ar' => 'مميزات الباقة', 'en' => 'Features', 'ur' => 'خصوصیات'] as $lang => $label)
                         <div>

@@ -55,7 +55,7 @@ const aboutImage = computed(() => storageUrl(
                     </div>
                 </div>
 
-                <div class="rounded-2xl bg-white/5 border border-white/10 overflow-hidden relative min-h-[400px]">
+                <div class="rounded-2xl bg-white/5 overflow-hidden relative min-h-[400px]">
                     <img
                         v-if="aboutImage"
                         :src="aboutImage"

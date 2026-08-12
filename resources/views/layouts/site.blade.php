@@ -22,6 +22,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;500;600;700&display=swap" rel="stylesheet">
     @endif
     @vite(['resources/css/app.css', 'resources/js/mobile-menu.js'])
+    @stack('head')
     @yield('schema')
 </head>
 <body class="antialiased bg-slate-50 text-slate-800 min-h-dvh flex flex-col app-shell">
@@ -30,5 +31,6 @@
     <main class="flex-1 w-full">@yield('content')</main>
     @include('partials.site-footer', ['locale' => $loc])
     @include('partials.mobile-bottom-nav', ['locale' => $loc])
+    @stack('scripts')
 </body>
 </html>

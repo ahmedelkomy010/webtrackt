@@ -109,10 +109,22 @@
                             </ul>
                         @endif
 
-                        <a href="{{ Locale::path('contact', $locale, $cty) }}" class="pricing-card__cta {{ $featured ? 'pricing-card__cta--primary' : '' }}">
-                            {{ $locale === 'en' ? 'Request this offer' : ($locale === 'ur' ? 'یہ پیشکش طلب کریں' : 'اطلب هذا العرض') }}
-                            <svg class="pricing-card__cta-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
-                        </a>
+                        @if ($offer['purchasable'] ?? false)
+                            <form method="POST" action="{{ Locale::path('cart/add', $locale, $cty) }}" class="pricing-card__cta-form">
+                                @csrf
+                                <input type="hidden" name="service_id" value="{{ $service->id }}">
+                                <input type="hidden" name="offer_index" value="{{ $index }}">
+                                <button type="submit" class="pricing-card__cta {{ $featured ? 'pricing-card__cta--primary' : '' }} w-full">
+                                    {{ $locale === 'en' ? 'Request this offer' : ($locale === 'ur' ? 'یہ پیشکش طلب کریں' : 'اطلب هذا العرض') }}
+                                    <svg class="pricing-card__cta-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                                </button>
+                            </form>
+                        @else
+                            <a href="{{ Locale::path('contact', $locale, $cty) }}" class="pricing-card__cta {{ $featured ? 'pricing-card__cta--primary' : '' }}">
+                                {{ $locale === 'en' ? 'Request this offer' : ($locale === 'ur' ? 'یہ پیشکش طلب کریں' : 'اطلب هذا العرض') }}
+                                <svg class="pricing-card__cta-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                            </a>
+                        @endif
                     </div>
                 </article>
             @endforeach

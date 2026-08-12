@@ -12,7 +12,6 @@
         'works' => $loc === 'en' ? 'Our Work' : ($loc === 'ur' ? 'ہمارے کام' : 'أعمالنا'),
         'contact' => $loc === 'en' ? 'Contact' : ($loc === 'ur' ? 'رابطہ' : 'تواصل'),
         'privacy' => $loc === 'en' ? 'Privacy' : ($loc === 'ur' ? 'رازداری' : 'الخصوصية'),
-        'menu' => $loc === 'en' ? 'Menu' : ($loc === 'ur' ? 'مینو' : 'القائمة'),
         'startProject' => $loc === 'en' ? 'Start your project' : ($loc === 'ur' ? 'اپنا پروجیکٹ شروع کریں' : 'ابدأ مشروعك'),
     ];
     $basePath = SiteUrl::stripContext(request()->path());
@@ -23,15 +22,6 @@
     $isAbout = str_starts_with($basePath, 'about');
     $isContact = str_starts_with($basePath, 'contact');
     $isPrivacy = str_starts_with($basePath, 'privacy');
-
-    $mobileLinks = [
-        ['href' => Locale::home($loc, $cty), 'label' => $labels['home'], 'active' => $isHome],
-        ['href' => Locale::path('services', $loc, $cty), 'label' => $labels['services'], 'active' => $isServices],
-        ['href' => Locale::path('about', $loc, $cty), 'label' => $labels['about'], 'active' => $isAbout],
-        ['href' => Locale::path('blog', $loc, $cty), 'label' => $labels['blog'], 'active' => $isBlog],
-        ['href' => Locale::path('works', $loc, $cty), 'label' => $labels['works'], 'active' => $isWorks],
-        ['href' => Locale::path('privacy', $loc, $cty), 'label' => $labels['privacy'], 'active' => $isPrivacy],
-    ];
 @endphp
 
 <header class="site-header sticky top-0 safe-top">
@@ -54,34 +44,6 @@
                 <a href="{{ Locale::path('privacy', $loc, $cty) }}" class="site-header__link {{ $isPrivacy ? 'is-active' : '' }}">{{ $labels['privacy'] }}</a>
                 <a href="{{ Locale::path('contact', $loc, $cty) }}" class="site-header__cta {{ $isContact ? 'is-active' : '' }}">{{ $labels['contact'] }}</a>
             </nav>
-
-            <button type="button" class="site-header__toggle lg:hidden touch-target" aria-label="{{ $labels['menu'] }}" data-mobile-menu-toggle aria-expanded="false">
-                <svg class="site-header__toggle-icon site-header__toggle-icon--open" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
-                <svg class="site-header__toggle-icon site-header__toggle-icon--close" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-            </button>
         </div>
     </div>
 </header>
-
-<div class="mobile-drawer lg:hidden" data-mobile-menu hidden>
-    <div class="mobile-drawer__backdrop" data-mobile-menu-close></div>
-    <div class="mobile-drawer__panel safe-bottom">
-        <div class="mobile-drawer__head">
-            <p class="font-bold text-slate-900">{{ $labels['menu'] }}</p>
-            <button type="button" class="touch-target p-2 rounded-xl hover:bg-slate-100" data-mobile-menu-close aria-label="Close">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-            </button>
-        </div>
-        <div class="mobile-drawer__links">
-            @foreach ($mobileLinks as $link)
-                <a href="{{ $link['href'] }}" class="mobile-drawer__link {{ $link['active'] ? 'is-active' : '' }}">{{ $link['label'] }}</a>
-            @endforeach
-            <a href="{{ Locale::path('contact', $loc, $cty) }}" class="mobile-drawer__cta">{{ $labels['startProject'] }}</a>
-        </div>
-        <div class="mobile-drawer__langs">
-            <a href="{{ Locale::switchUrl(request(), Locale::AR) }}" class="mobile-drawer__lang {{ $loc === 'ar' ? 'is-active' : '' }}">العربية</a>
-            <a href="{{ Locale::switchUrl(request(), Locale::EN) }}" class="mobile-drawer__lang {{ $loc === 'en' ? 'is-active' : '' }}">English</a>
-            <a href="{{ Locale::switchUrl(request(), Locale::UR) }}" class="mobile-drawer__lang {{ $loc === 'ur' ? 'is-active' : '' }}">اردو</a>
-        </div>
-    </div>
-</div>
