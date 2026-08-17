@@ -6,4 +6,5 @@
 <meta name="apple-mobile-web-app-title" content="{{ config('tract.name_en') }}">
 <meta name="format-detection" content="telephone=yes">
 @include('partials.google-site-verification')
+@include('partials.bing-site-verification')
 <link rel="manifest" href="{{ asset('manifest.webmanifest') }}">

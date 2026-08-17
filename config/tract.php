@@ -20,5 +20,6 @@ return [
         'keywords' => 'تراكت, trackkt, نظام مقاولات, العقد الموحد, ERP, أنظمة ERP, تسليم مفتاح, تسويق إلكتروني, مواقع إلكترونية, متاجر إلكترونية, برمجة, السعودية, الرياض, مقاولات, إدارة مشاريع, ZATCA, فوترة إلكترونية',
         'keywords_en' => 'Trackkt, trackkt, contracting system, unified contract, ERP systems, turnkey projects, digital marketing, e-commerce, Saudi Arabia, web development',
         'google_site_verification' => env('GOOGLE_SITE_VERIFICATION', 'AM3j7zqCC9nuCbibeHZAYkElYFJesXX0zw7Hmtqt9cc'),
+        'bing_site_verification' => env('BING_SITE_VERIFICATION', '1FF33860BA6EDCF59F08F3495FC24E23'),
     ],
 ];
