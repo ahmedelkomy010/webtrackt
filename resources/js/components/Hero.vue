@@ -114,25 +114,25 @@ const heroSideImage = computed(() => storageUrl(siteImages.value.hero_side_image
                     </div>
                 </div>
 
-                <div class="relative mt-8 lg:mt-0">
-                    <div class="relative mx-auto max-w-md lg:max-w-none">
-                        <div class="absolute inset-0 bg-gradient-to-br from-tract-500/15 to-tract-300/8 rounded-3xl blur-2xl transform rotate-3" />
-                        <div class="relative rounded-3xl shadow-2xl border border-white/50 overflow-hidden bg-slate-100 min-h-[420px]">
-                            <img
-                                v-if="heroSideImage"
-                                :src="heroSideImage"
-                                alt="Trackkt"
-                                class="w-full h-full min-h-[420px] object-cover"
-                            >
-                            <div
-                                v-else
-                                class="flex flex-col items-center justify-center min-h-[420px] p-8 text-center border-2 border-dashed border-slate-300 m-3 rounded-2xl"
-                            >
-                                <svg class="w-12 h-12 text-slate-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                </svg>
-                                <p class="text-slate-500 text-sm">صورة Hero — ارفعها من لوحة التحكم</p>
-                            </div>
+                <div class="relative mt-8 lg:mt-0 w-full">
+                    <div class="relative mx-auto w-full max-w-xl sm:max-w-2xl lg:max-w-none">
+                        <div class="absolute inset-0 bg-gradient-to-br from-tract-500/15 to-tract-300/8 rounded-3xl blur-2xl transform rotate-3 pointer-events-none" />
+                        <img
+                            v-if="heroSideImage"
+                            :src="heroSideImage"
+                            alt="Trackkt"
+                            class="relative w-full h-auto max-w-full object-contain"
+                            loading="eager"
+                            fetchpriority="high"
+                        >
+                        <div
+                            v-else
+                            class="relative flex flex-col items-center justify-center min-h-[280px] sm:min-h-[360px] p-8 text-center border-2 border-dashed border-slate-300 rounded-2xl"
+                        >
+                            <svg class="w-12 h-12 text-slate-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            <p class="text-slate-500 text-sm">صورة Hero — ارفعها من لوحة التحكم</p>
                         </div>
                     </div>
                 </div>
